@@ -2851,7 +2851,7 @@ document.getElementById('btn-export').onclick = () => {
         nodes: nodes,
         sitetext: {},
         positions: JSON.parse(localStorage.getItem('slop_positions') || '{}'),
-        ver: '33n'
+        ver: '33o'
       };
       ['site-name','site-sub','leg-platform','leg-media','leg-cultural',
        'leg-legislation','leg-research','leg-societal'].forEach(id => {
@@ -2889,7 +2889,7 @@ document.getElementById('btn-export').onclick = () => {
         '    localStorage.setItem("slop_nodes",JSON.stringify(d.nodes));',
         '    localStorage.setItem("slop_sitetext",JSON.stringify(d.sitetext));',
         '    localStorage.setItem("slop_positions",JSON.stringify(d.positions));',
-        '    localStorage.setItem("slop_layout_ver","33n");',
+        '    localStorage.setItem("slop_layout_ver","33o");',
         '    localStorage.removeItem("slop_ticker_dismissed");',
         '  } catch(e){ console.warn("slop-boot failed",e); }',
         '})();',
@@ -4721,9 +4721,9 @@ resize();
 // Load from localStorage or use seed
 try {
   const layoutVer = localStorage.getItem('slop_layout_ver');
-  if (layoutVer !== '33n') {
+  if (layoutVer !== '33o') {
     localStorage.removeItem('slop_positions');
-    localStorage.setItem('slop_layout_ver', '33n');
+    localStorage.setItem('slop_layout_ver', '33o');
     // v33 migration: force reload from SEED so all new nodes appear
     // (editor notes from SEED are preserved via the merge below)
     localStorage.removeItem('slop_nodes');
@@ -5526,7 +5526,26 @@ const TOUR_STEPS = [
   { target:'axis-x', title:'TIME RUNS LEFT TO RIGHT.', body:'Earlier events on the left, more recent on the right. Drag to pan, scroll or pinch to zoom.', cardPos:'above' },
   { target:'spill-axis', title:'POSITION IS MEANING.', body:'Near the top = SPILLS: reckonings, laws, cultural shifts. Near the bottom = SLOP: the AI content itself.', cardPos:'right' },
   { target:'filters', title:'FILTER THE MAP.', body:'Narrow by category, year, or significance. The trend analysis shows patterns across the timeline.', cardPos:'right' },
-  { target:'node-click', nodeId:9, title:'CLICK ANY BUBBLE.', body:"Every node has a full story: what happened, what it means, the source, and sometimes an editor's note.", cardPos:'left' },
+  { target:'node-click', nodeId:9, title:'CLICK ANY BUBBLE.', body:"Every node has a full story: what happened, what it means, the source, and sometimes an editor's note.", cardPos:'left' },,
+  { id:44, year:2026, title:"Gucci Runs AI Campaign Without Disclosure — Then Defends It", date:"March 2026", source:"Vogue Business", category:"cultural", impact:7, spill:false,
+    description:"Gucci released a series of campaign images — a helmet-haired Milanese socialite, a wood-paneled restaurant, a hyper-gloss couple — that read as high-production editorial. The brand disclosed they were AI-generated only after the fact. Creative director Demna, when asked if the decision was controversial, said: 'I don't think so. I think this is 2026.'",
+    significance:"Fashion's most watched house testing how far AI can go before audiences push back — and finding the answer is further than expected. The question of disclosure is becoming the central battleground.",
+    date_added:"2026-04-01" },
+
+  { id:45, year:2026, title:"Anthropic Opens 'Zero Slop Zone' Pop-Up in NYC — Entry Requires Downloading Claude", date:"March 2026", source:"Vogue Business", category:"platform", impact:8, spill:false,
+    description:"Anthropic opened a pop-up in New York's West Village described as a 'Zero Slop Zone,' encouraging visitors to disconnect from devices, drink coffee, and read a printed essay by the CEO. Baseball caps emblazoned with the word 'thinking' were distributed as a deliberately analogue gesture. Entry still required downloading Claude.",
+    significance:"The company that makes the AI opened a space to escape AI. The irony is structural, not incidental. As a marketing move it is self-aware to the point of commentary — and as a cultural signal it suggests even AI companies are grappling with what they have unleashed.",
+    date_added:"2026-04-01" },
+
+  { id:46, year:2026, title:"Vogue Business Publishes the Anti-AI Slop Playbook", date:"March 2026", source:"Vogue Business", category:"societal", impact:7, spill:true,
+    description:"Vogue Business ran a feature-length piece mapping how brands are responding to AI slop: foregrounding craft and human authorship, leaning into imperfection and messiness as visual signals of authenticity, and in some cases embracing AI's absurdity as cultural commentary. WGSN coined the term 'sensorymaxxing' to describe the shift toward physical and multi-sensory brand experiences as digital content loses trust.",
+    significance:"When the trade bible of the fashion industry publishes a strategic playbook for navigating slop, the conversation has moved from niche anxiety to mainstream brand strategy. Slop is now a business problem with a consulting market.",
+    date_added:"2026-04-01" },
+
+  { id:47, year:2025, title:"The New Yorker Asks What AI Is Doing to Culture", date:"September 2025", source:"The New Yorker", category:"media", impact:9, spill:true,
+    description:"The New Yorker published a long-form piece examining AI's effect on culture — not as a technology story but as a question about what art, meaning, and human creativity are for. The piece moves through galleries, conversations with artists and critics, and a direct interaction with an AI about a painting at The Whitney, which the author describes as surprisingly open to the technology.",
+    significance:"The New Yorker framing AI as a cultural question rather than a tech one marks a shift in register. This is the cultural establishment — Gopnik, The Whitney, the magazine of record for American intellectual life — processing AI not as disruption but as a condition. That is a different and more unsettling conversation.",
+    date_added:"2026-04-01" }
 ];
 
 let _tourStep = 0;
