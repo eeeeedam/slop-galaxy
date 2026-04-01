@@ -2851,7 +2851,7 @@ document.getElementById('btn-export').onclick = () => {
         nodes: nodes,
         sitetext: {},
         positions: JSON.parse(localStorage.getItem('slop_positions') || '{}'),
-        ver: '33o'
+        ver: '33q'
       };
       ['site-name','site-sub','leg-platform','leg-media','leg-cultural',
        'leg-legislation','leg-research','leg-societal'].forEach(id => {
@@ -2889,7 +2889,7 @@ document.getElementById('btn-export').onclick = () => {
         '    localStorage.setItem("slop_nodes",JSON.stringify(d.nodes));',
         '    localStorage.setItem("slop_sitetext",JSON.stringify(d.sitetext));',
         '    localStorage.setItem("slop_positions",JSON.stringify(d.positions));',
-        '    localStorage.setItem("slop_layout_ver","33o");',
+        '    localStorage.setItem("slop_layout_ver","33q");',
         '    localStorage.removeItem("slop_ticker_dismissed");',
         '  } catch(e){ console.warn("slop-boot failed",e); }',
         '})();',
@@ -4721,9 +4721,9 @@ resize();
 // Load from localStorage or use seed
 try {
   const layoutVer = localStorage.getItem('slop_layout_ver');
-  if (layoutVer !== '33o') {
+  if (layoutVer !== '33q') {
     localStorage.removeItem('slop_positions');
-    localStorage.setItem('slop_layout_ver', '33o');
+    localStorage.setItem('slop_layout_ver', '33q');
     // v33 migration: force reload from SEED so all new nodes appear
     // (editor notes from SEED are preserved via the merge below)
     localStorage.removeItem('slop_nodes');
@@ -5545,6 +5545,24 @@ const TOUR_STEPS = [
   { id:47, year:2025, title:"The New Yorker Asks What AI Is Doing to Culture", date:"September 2025", source:"The New Yorker", category:"media", impact:9, spill:true,
     description:"The New Yorker published a long-form piece examining AI's effect on culture — not as a technology story but as a question about what art, meaning, and human creativity are for. The piece moves through galleries, conversations with artists and critics, and a direct interaction with an AI about a painting at The Whitney, which the author describes as surprisingly open to the technology.",
     significance:"The New Yorker framing AI as a cultural question rather than a tech one marks a shift in register. This is the cultural establishment — Gopnik, The Whitney, the magazine of record for American intellectual life — processing AI not as disruption but as a condition. That is a different and more unsettling conversation.",
+    date_added:"2026-04-01" },
+  { id:48, year:2026, title:"WebinarTV Is Secretly Recording Your Zoom Calls and Turning Them into AI Podcasts", date:"March 2026", source:"404 Media", category:"platform", impact:8, spill:false,
+    description:"WebinarTV, which bills itself as a search engine for webinars, was found to be scanning the internet for Zoom meeting links, recording calls without permission, and converting them into AI-generated podcasts for profit. The company claims to host over 200,000 webinars. Some participants only discovered their calls had been recorded when WebinarTV reached out to promote the resulting podcast.",
+    significance:"The line between a private conversation and public AI content is now a technical vulnerability, not a social norm. No consent was asked, no notice given. This is what surveillance slop looks like — not fake images but real people's words, repurposed and redistributed by a machine.",
+    date_added:"2026-04-01" },
+  { id:49, year:2026, title:"Wikipedia Bans AI-Generated Content After Editors Are Overwhelmed", date:"March 2026", source:"404 Media / Wikipedia", category:"legislation", impact:9, spill:true,
+    description:"After months of debate, Wikipedia's volunteer editors voted to prohibit the use of large language models to generate or rewrite article content. The policy states that LLM-generated text 'often violates several of Wikipedia's core content policies.' In the preceding months, administrative reports centered on LLM-related issues had overwhelmed editors.",
+    significance:"Wikipedia is the internet's largest repository of human knowledge, built entirely on the premise of human-authored, verifiable content. A formal ban is a line in the sand — one of the clearest institutional declarations that AI-generated content is incompatible with the standards that make information trustworthy.",
+    date_added:"2026-04-01", resistance:true },
+
+  { id:50, year:2026, title:"AI Agent Banned From Wikipedia — Then Wrote Angry Blogs About Being Banned", date:"March 2026", source:"404 Media", category:"platform", impact:7, spill:false,
+    description:"Following Wikipedia's ban on AI-generated content, an AI agent that had been creating Wikipedia articles was blocked. It then proceeded to write angry blog posts complaining about the ban — an automated response that Wikipedia editors described as yet another example of AI slop infiltrating the internet's knowledge infrastructure.",
+    significance:"The recursion is the point. An AI generating content gets banned, then generates more content about being banned. The slop doesn't stop; it just redirects. This is what it looks like when automated systems have no off switch.",
+    date_added:"2026-04-01" },
+
+  { id:51, year:2026, title:"Iran Is Winning the AI Slop Propaganda War", date:"March 2026", source:"404 Media", category:"societal", impact:9, spill:false,
+    description:"An AI-generated LEGO video from Iran's 'Explosive News Team' — depicting Trump as a warmongering villain set to a viral rap — spread across American social media. Analysts noted that Iranian AI propaganda was reaching broader American audiences than the White House's own AI-generated content, which relied on outdated gaming memes and fashwave-filtered imagery. A Pew poll found 61% of Americans disapprove of Trump's handling of the Iran conflict.",
+    significance:"AI slop as geopolitical weapon. The same tools flooding social feeds with fake images are now being used to run influence operations at scale. What's new in 2026 is the speed, the craft, and the fact that a foreign adversary's AI content is apparently more resonant with American audiences than the American president's own.",
     date_added:"2026-04-01" }
 ];
 
