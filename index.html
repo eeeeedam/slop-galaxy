@@ -1424,6 +1424,10 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
 <div id="panel">
   <button class="x" id="xpanel">✕</button>
   <div id="dp-featured-badge" style="display:none;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.14em;color:var(--accent2);text-transform:uppercase;margin-bottom:8px;">◆ KEY MOMENT</div>
+  <div id="dp-image-wrap" style="display:none;margin-bottom:12px;border-radius:2px;overflow:hidden;">
+    <img id="dp-image" src="" alt="" style="width:100%;max-height:200px;object-fit:cover;display:block;">
+    <div id="dp-image-credit" style="font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.08em;color:var(--sub-color);padding:3px 8px;background:rgba(0,0,0,0.04);"></div>
+  </div>
   <div class="pcat" id="dp-cat"></div>
   <div class="ptitle" id="dp-title"></div>
   <div class="pmeta"><span id="dp-date"></span><span id="dp-src"></span><a id="dp-src-link" href="#" target="_blank" style="display:none;margin-left:6px;color:var(--sub-color);font-size:9px;text-decoration:none;border-bottom:1px solid var(--dim);transition:color .18s" title="View source">↗</a></div>
@@ -1733,18 +1737,38 @@ A story that got 10 minutes of Twitter attention but revealed something structur
 scores higher than a flashy story with no lasting consequence.`;
 const SEED = [
   // ── 2022 ──
-  { id:1, year:2022, title:"ChatGPT Crosses 1M Users in 5 Days", date:"December 2022", source:"OpenAI", category:"cultural", impact:9, description:"OpenAI's ChatGPT reached one million users within five days of launch — faster than Netflix, Spotify, or Instagram. The floodgates were now open.", significance:"This was the moment general audiences discovered they could outsource writing to a machine. The demand signal that would drive mass AI content generation was born overnight.", link:"https://openai.com", slop_spill:5, date_added:1740614400000, short_label:"ChatGPT hits 1M users in 5 days", featured:true },
+  { id:1, year:2022, title:"ChatGPT Crosses 1M Users in 5 Days", date:"December 2022", source:"OpenAI", category:"cultural", impact:9, description:"OpenAI's ChatGPT reached one million users within five days of launch — faster than Netflix, Spotify, or Instagram. The floodgates were now open.", significance:"This was the moment general audiences discovered they could outsource writing to a machine. The demand signal that would drive mass AI content generation was born overnight.", link:"https://openai.com", slop_spill:5, date_added:1740614400000, short_label:"ChatGPT hits 1M users in 5 days", featured:true,
+    image:"https://raw.githubusercontent.com/eeeeedam/sloptilyoudrop-site/2f6070e229245dccd91ac64815e3d98dd2235920/samatweet.png",
+    image_credit:"OpenAI" },
   // ── 2023 ──
-  { id:2, year:2023, title:"Amazon Flooded With AI-Generated Books", date:"February 2023", source:"Reuters", category:"platform", impact:7, description:"Amazon's Kindle Direct Publishing platform was overwhelmed with AI-generated books, many posing as authoritative guides on topics like identifying mushrooms — with potentially dangerous errors.", significance:"The first major consumer marketplace to buckle under AI slop. It proved that platforms optimized for volume, not quality, would become vectors of misinformation at industrial scale.", link:"https://www.theguardian.com/books/2023/sep/20/amazon-restricts-authors-from-self-publishing-more-than-three-books-a-day-after-ai-concerns", slop_spill:1, date_added:1740614400000, short_label:"Amazon KDP flooded with AI books" },
-  { id:3, year:2023, title:"CNET Quietly Publishes 77 AI-Written Articles", date:"January 2023", source:"CNET / Futurism", category:"media", impact:8, description:"CNET was discovered to have been quietly publishing dozens of financial explainer articles written by AI without disclosure. Many contained factual errors. The outlet eventually issued corrections.", significance:"Established media brands using AI secretly and poorly — then getting caught — set the template. It showed that cost-cutting, not reader service, was driving AI adoption in newsrooms.", link:"https://futurism.com/the-byte/cnet-publishing-articles-by-ai", slop_spill:3, date_added:1740614400000, short_label:"CNET's secret AI articles" },
-  { id:4, year:2023, title:"Google Search Surfaces AI Hallucinations as Top Results", date:"May 2023", source:"The Guardian", category:"platform", impact:9, description:"After launching AI Overviews (SGE), Google's search results began surfacing confident AI summaries containing fabricated information — including medical and legal advice.", significance:"When the world's dominant information retrieval system begins generating answers rather than retrieving facts, the epistemic stakes of AI slop become civilizational.", link:"https://www.theguardian.com/technology/2023/aug/02/google-ai-search-information-bard", slop_spill:5, date_added:1740614400000, short_label:"Google hallucinates facts" },
-  { id:5, year:2023, title:"Sony World Photography Award Winner Was AI", date:"April 2023", source:"BBC", category:"cultural", impact:7, description:"German artist Boris Eldagsen declined the Sony World Photography Award after revealing his winning entry was AI-generated — intending it as a provocation to test whether the judges could tell the difference. They could not.", significance:"Creative labor was reframed as a cost center. The idea that 'good enough' images could be free fundamentally devalued human visual authorship.", link:"https://www.bbc.com/news/entertainment-arts-65296763", slop_spill:4, date_added:1740614400000, short_label:"AI wins photography prize" },
-  { id:6, year:2023, title:"WGA Strike: Writers Demand AI Protections", date:"May–September 2023", source:"WGA / Variety", category:"legislation", impact:8, description:"Hollywood writers went on strike for 148 days, with AI regulation as a central demand. The resulting contract limited — but didn't eliminate — AI's role in script development.", significance:"The first major labor action explicitly targeting AI slop in professional creative work. A sign that slop has economic victims, not just aesthetic ones.", link:"https://variety.com/2023/tv/news/wga-strike-artificial-intelligence-1235624151/", slop_spill:6, date_added:1740614400000, short_label:"Writers strike against AI" },
-  { id:7, year:2023, title:"NewsGuard Identifies 49 AI 'News' Sites", date:"June 2023", source:"NewsGuard", category:"research", impact:7, description:"Media watchdog NewsGuard identified 49 websites producing near-fully AI-generated fake news content, mostly for ad revenue. By the end of 2023, that number exceeded 600.", significance:"AI slop isn't just low quality — it's an industrial disinformation infrastructure running on autopilot. The economics of ad-supported misinformation had found its perfect engine.", link:"https://www.newsguardtech.com", slop_spill:9, date_added:1740614400000, short_label:"NewsGuard: 600 AI news sites" },
-  { id:8, year:2023, title:"Sports Illustrated AI Bylines Scandal", date:"November 2023", source:"Futurism", category:"media", impact:7, description:"Sports Illustrated was found publishing articles under fake author personas with AI-generated headshots and AI-written content. The parent company denied it, then fired staff.", significance:"A trusted 70-year-old magazine brand was running AI ghost-written content under fabricated human identities. The deception wasn't incidental — it was the product.", link:"https://futurism.com/sports-illustrated-ai-generated-writers", slop_spill:3, date_added:1740614400000, short_label:"Sports Illustrated fakes bylines" },
+  { id:2, year:2023, title:"Amazon Flooded With AI-Generated Books", date:"February 2023", source:"Reuters", category:"platform", impact:7, description:"Amazon's Kindle Direct Publishing platform was overwhelmed with AI-generated books, many posing as authoritative guides on topics like identifying mushrooms — with potentially dangerous errors.", significance:"The first major consumer marketplace to buckle under AI slop. It proved that platforms optimized for volume, not quality, would become vectors of misinformation at industrial scale.", link:"https://www.theguardian.com/books/2023/sep/20/amazon-restricts-authors-from-self-publishing-more-than-three-books-a-day-after-ai-concerns", slop_spill:1, date_added:1740614400000, short_label:"Amazon KDP flooded with AI books" ,
+    image:"https://i.guim.co.uk/img/media/1fbb749af2250f16627c089441136fe1d5dc64e5/0_131_8640_5185/master/8640.jpg?width=620&dpr=2&s=none&crop=none" ,
+    image_credit:"Reuters" },
+  { id:3, year:2023, title:"CNET Quietly Publishes 77 AI-Written Articles", date:"January 2023", source:"CNET / Futurism", category:"media", impact:8, description:"CNET was discovered to have been quietly publishing dozens of financial explainer articles written by AI without disclosure. Many contained factual errors. The outlet eventually issued corrections.", significance:"Established media brands using AI secretly and poorly — then getting caught — set the template. It showed that cost-cutting, not reader service, was driving AI adoption in newsrooms.", link:"https://futurism.com/the-byte/cnet-publishing-articles-by-ai", slop_spill:3, date_added:1740614400000, short_label:"CNET's secret AI articles" ,
+    image:"https://futurism.com/wp-content/uploads/2023/01/AIWriter.jpg?quality=85&w=1128" ,
+    image_credit:"CNET / Futurism" },
+  { id:4, year:2023, title:"Google Search Surfaces AI Hallucinations as Top Results", date:"May 2023", source:"The Guardian", category:"platform", impact:9, description:"After launching AI Overviews (SGE), Google's search results began surfacing confident AI summaries containing fabricated information — including medical and legal advice.", significance:"When the world's dominant information retrieval system begins generating answers rather than retrieving facts, the epistemic stakes of AI slop become civilizational.", link:"https://www.theguardian.com/technology/2023/feb/09/google-ai-chatbot-bard-error-sends-shares-plummeting-in-battle-with-microsoft", slop_spill:5, date_added:1740614400000, short_label:"Google hallucinates facts" ,
+    image:"https://i.guim.co.uk/img/media/82e2b2e9df74543da87d8efdd6e84d74d8345ad2/206_668_5153_3092/master/5153.jpg?width=620&dpr=2&s=none&crop=none" ,
+    image_credit:"The Guardian" },
+  { id:5, year:2023, title:"Sony World Photography Award Winner Was AI", date:"April 2023", source:"BBC", category:"cultural", impact:7, description:"German artist Boris Eldagsen declined the Sony World Photography Award after revealing his winning entry was AI-generated — intending it as a provocation to test whether the judges could tell the difference. They could not.", significance:"Creative labor was reframed as a cost center. The idea that 'good enough' images could be free fundamentally devalued human visual authorship.", link:"https://www.bbc.com/news/entertainment-arts-65296763", slop_spill:4, date_added:1740614400000, short_label:"AI wins photography prize" ,
+    image:"https://ichef.bbci.co.uk/news/1024/cpsprodpb/139E6/production/_129385308_1748e041-a3f0-486f-83ad-180cb2c3ab47.jpg.webp" ,
+    image_credit:"BBC" },
+  { id:6, year:2023, title:"WGA Strike: Writers Demand AI Protections", date:"May–September 2023", source:"WGA / Variety", category:"legislation", impact:8, description:"Hollywood writers went on strike for 148 days, with AI regulation as a central demand. The resulting contract limited — but didn't eliminate — AI's role in script development.", significance:"The first major labor action explicitly targeting AI slop in professional creative work. A sign that slop has economic victims, not just aesthetic ones.", link:"https://variety.com/2023/biz/news/wga-ai-writers-strike-technology-ban-1235610076/", slop_spill:6, date_added:1740614400000, short_label:"Writers strike against AI" ,
+    image:"https://variety.com/wp-content/uploads/2023/05/GettyImages-1252816208.jpg?w=1000&h=667&crop=1&resize=1360%2C907" ,
+    image_credit:"WGA / Variety" },
+  { id:7, year:2023, title:"NewsGuard Identifies 49 AI 'News' Sites", date:"June 2023", source:"NewsGuard", category:"research", impact:7, description:"Media watchdog NewsGuard identified 49 websites producing near-fully AI-generated fake news content, mostly for ad revenue. By the end of 2023, that number exceeded 600.", significance:"AI slop isn't just low quality — it's an industrial disinformation infrastructure running on autopilot. The economics of ad-supported misinformation had found its perfect engine.", link:"https://www.newsguardtech.com/special-reports/newsbots-ai-generated-news-websites-proliferating/", slop_spill:9, date_added:1740614400000, short_label:"NewsGuard: 600 AI news sites" ,
+    image:"https://www.newsguardtech.com/wp-content/uploads/2023/04/NG-TNN-heading.png" ,
+    image_credit:"NewsGuard" },
+  { id:8, year:2023, title:"Sports Illustrated AI Bylines Scandal", date:"November 2023", source:"Futurism", category:"media", impact:7, description:"Sports Illustrated was found publishing articles under fake author personas with AI-generated headshots and AI-written content. The parent company denied it, then fired staff.", significance:"A trusted 70-year-old magazine brand was running AI ghost-written content under fabricated human identities. The deception wasn't incidental — it was the product.", link:"https://futurism.com/sports-illustrated-ai-generated-writers", slop_spill:3, date_added:1740614400000, short_label:"Sports Illustrated fakes bylines",
+    image:"https://futurism.com/wp-content/uploads/2023/11/drew.jpg?w=1024&h=360",
+    image_credit:"Futurism" },
   // ── 2024 ──
-  { id:9, year:2024, title:"Google AI Overviews: 'Eat Glue on Pizza'", date:"May 2024", source:"The Verge / Viral", category:"platform", impact:10, description:"Google's AI Overview feature went viral after telling users to put glue on pizza to help cheese stick, and to eat one rock per day. The advice was scraped from joke posts on Reddit.", significance:"The moment that crystallized public disillusionment with AI search. The emperor had no clothes — or rather, he was wearing a hat made of Reddit jokes presented as nutritional guidance.", link:"https://www.theverge.com/2024/5/23/24163388/google-ai-overview-wrong-information-eat-rocks-glue-pizza", slop_spill:4, date_added:1740614400000, short_label:"Google AI tells users to eat glue", featured:true },
-  { id:10, year:2024, title:"The New Yorker: 'The Year in AI Slop'", date:"December 2024", source:"The New Yorker", category:"media", impact:8, description:"Kyle Chayka's widely-shared essay in The New Yorker named and defined AI slop as a cultural phenomenon — arguing it represents not just bad content but a new mode of inauthenticity degrading the information environment.", significance:"When prestige media gives a phenomenon a name, it enters official cultural consciousness. 'Slop' as a term crystallized something people felt but couldn't articulate.", link:"https://www.newyorker.com/culture/infinite-scroll/the-year-in-ai-slop", slop_spill:7, date_added:1740614400000, short_label:"New Yorker coins 'AI slop'", featured:true },
+  { id:9, year:2024, title:"Google AI Overviews: 'Eat Glue on Pizza'", date:"May 2024", source:"The Verge / Viral", category:"platform", impact:10, description:"Google's AI Overview feature went viral after telling users to put glue on pizza to help cheese stick, and to eat one rock per day. The advice was scraped from joke posts on Reddit.", significance:"The moment that crystallized public disillusionment with AI search. The emperor had no clothes — or rather, he was wearing a hat made of Reddit jokes presented as nutritional guidance.", link:"https://www.theverge.com/2024/5/30/24168344/google-defends-ai-overviews-search-results", slop_spill:4, date_added:1740614400000, short_label:"Google AI tells users to eat glue", featured:true ,
+    image:"https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25487458/Screenshot_2024_06_11_at_3.12.03_PM.png?quality=90&strip=all&crop=0,0,100,100" ,
+    image_credit:"The Verge / Viral" },
+  { id:10, year:2024, title:"The New Yorker: 'The Year in AI Slop'", date:"December 2024", source:"The New Yorker", category:"media", impact:8, description:"Kyle Chayka's widely-shared essay in The New Yorker named and defined AI slop as a cultural phenomenon — arguing it represents not just bad content but a new mode of inauthenticity degrading the information environment.", significance:"When prestige media gives a phenomenon a name, it enters official cultural consciousness. 'Slop' as a term crystallized something people felt but couldn't articulate.", link:"https://www.newyorker.com/culture/infinite-scroll/the-year-in-ai-slop", slop_spill:7, date_added:1740614400000, short_label:"New Yorker coins 'AI slop'", featured:true ,
+    image:"https://media.newyorker.com/photos/6941ecf57c9dbe9bfbdb11b8/2:2/w_1920,c_limit/NewYorker_AiSlop_final3%20(1).jpg" ,
+    image_credit:"The New Yorker" },
   { id:11, year:2024, title:"Facebook Overrun With 'Shrimp Jesus' AI Images", date:"April 2024", source:"404 Media / New York Mag", category:"societal", impact:8, description:"Facebook's algorithmic feeds began aggressively promoting surreal AI-generated images — prawns built like Christ, hyper-detailed fantasy scenes — as engagement bait. Pages with millions of followers turned out to be entirely AI-automated.", significance:"Revealed that the social web's largest platform had become a breeding ground for engagement-optimized slop, with its algorithms actively rewarding it. The content farm had automated itself.", link:"https://www.404media.co", slop_spill:1, date_added:1740614400000, short_label:"Shrimp Jesus goes viral" },
   { id:12, year:2024, title:"EU AI Act Enters Into Force", date:"August 2024", source:"European Commission", category:"legislation", impact:7, description:"The world's first comprehensive AI regulation became law in the EU, requiring watermarking of AI-generated content and imposing risk-based restrictions on high-stakes AI systems.", significance:"The first major attempt to regulate the conditions that produce slop. Whether enforcement follows legislation remains the open question.", link:"https://digital-strategy.ec.europa.eu", slop_spill:9, date_added:1740614400000, short_label:"EU regulates AI content" },
   { id:13, year:2024, title:"Stack Overflow Traffic Down 50% Post-ChatGPT", date:"May 2024", source:"Stack Overflow / Various", category:"research", impact:6, description:"Stack Overflow reported dramatically falling traffic as developers shifted to asking AI assistants rather than the community platform. Meanwhile, AI systems were trained on Stack Overflow's own data.", significance:"The commons that trained the AI is being destroyed by the AI. The knowledge ecosystem that produced high-quality human answers is hollowing out.", link:"https://stackoverflow.blog/2023/07/31/stackoverflow-the-good-and-the-bad-of-genai-in-software-development/", slop_spill:7, date_added:1740614400000, short_label:"Stack Overflow traffic down 50%" },
@@ -2726,6 +2750,19 @@ function openPanel(node){
   const ssLabel = ss <= 2 ? 'Pure Slop' : ss <= 4 ? 'Mostly Slop' : ss <= 6 ? 'Both' : ss <= 8 ? 'Mostly Spill' : 'Pure Spill';
   document.getElementById('dp-ss-score').textContent = ss + '/10 — ' + ssLabel;
 
+  // Image
+  const imgWrap   = document.getElementById('dp-image-wrap');
+  const imgEl     = document.getElementById('dp-image');
+  const imgCredit = document.getElementById('dp-image-credit');
+  if (node.image) {
+    imgEl.src = node.image;
+    imgWrap.style.display = 'block';
+    if (imgCredit) imgCredit.textContent = node.image_credit ? '© ' + node.image_credit : '';
+  } else {
+    imgWrap.style.display = 'none';
+    imgEl.src = '';
+    if (imgCredit) imgCredit.textContent = '';
+  }
   const rb=document.getElementById('dp-read');
   const srcLink=document.getElementById('dp-src-link');
   if(node.link){
@@ -2874,6 +2911,7 @@ function openAddModal(nodeToEdit=null){
   document.getElementById('f-sig').value=nodeToEdit?.significance||'';
   document.getElementById('f-editor-note').value=nodeToEdit?.editor_note||'';
   document.getElementById('f-link').value=nodeToEdit?.link||'';
+  document.getElementById('f-image').value=nodeToEdit?.image||'';
   // date_added — admin only
   const addedRow = document.getElementById('f-added-row');
   addedRow.style.display = adminMode ? 'block' : 'none';
@@ -2897,7 +2935,7 @@ document.getElementById('btn-export').onclick = () => {
         nodes: nodes,
         sitetext: {},
         positions: JSON.parse(localStorage.getItem('slop_positions') || '{}'),
-        ver: '33r'
+        ver: '33s'
       };
       ['site-name','site-sub','leg-platform','leg-media','leg-cultural',
        'leg-legislation','leg-research','leg-societal'].forEach(id => {
@@ -2935,7 +2973,7 @@ document.getElementById('btn-export').onclick = () => {
         '    localStorage.setItem("slop_nodes",JSON.stringify(d.nodes));',
         '    localStorage.setItem("slop_sitetext",JSON.stringify(d.sitetext));',
         '    localStorage.setItem("slop_positions",JSON.stringify(d.positions));',
-        '    localStorage.setItem("slop_layout_ver","33r");',
+        '    localStorage.setItem("slop_layout_ver","33s");',
         '    localStorage.removeItem("slop_ticker_dismissed");',
         '  } catch(e){ console.warn("slop-boot failed",e); }',
         '})();',
@@ -3080,6 +3118,7 @@ document.getElementById('btn-save-node').onclick=()=>{
     significance:document.getElementById('f-sig').value.trim()||'—',
     editor_note:document.getElementById('f-editor-note').value.trim()||'',
     link:document.getElementById('f-link').value.trim()||'',
+    image:document.getElementById('f-image').value.trim()||null,
     date_added: (() => {
       const raw = document.getElementById('f-added').value.trim();
       if (raw) { const d = new Date(raw); if (!isNaN(d)) return d.getTime(); }
@@ -4767,9 +4806,9 @@ resize();
 // Load from localStorage or use seed
 try {
   const layoutVer = localStorage.getItem('slop_layout_ver');
-  if (layoutVer !== '33r') {
+  if (layoutVer !== '33s') {
     localStorage.removeItem('slop_positions');
-    localStorage.setItem('slop_layout_ver', '33r');
+    localStorage.setItem('slop_layout_ver', '33s');
     // v33 migration: force reload from SEED so all new nodes appear
     // (editor notes from SEED are preserved via the merge below)
     localStorage.removeItem('slop_nodes');
@@ -5139,6 +5178,8 @@ const ALL_FIELDS = [
   { key:'slop_spill',   label:'slop_spill',          locked:false },
   { key:'source',       label:'source',              locked:false },
   { key:'link',         label:'link',                locked:false },
+  { key:'image',        label:'image',               locked:false },
+  { key:'image_credit',  label:'image_credit',         locked:false },
   { key:'description',  label:'description',         locked:false },
   { key:'significance', label:'significance',        locked:false },
   { key:'date_added',   label:'date_added_readable', locked:true  },
