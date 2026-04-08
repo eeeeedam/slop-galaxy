@@ -993,6 +993,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
     </div>
     <div id="header-subnav-right" style="display:flex;gap:0;align-items:center;">
       <button id="btn-bookmarklet" class="hn-btn" style="display:none" title="Get the bookmarklet">⊕ BOOKMARKLET</button>
+      <button id="btn-submissions" class="hn-btn" style="display:none" title="Review submitted nodes">SUBMISSIONS <span id="sub-badge" style="display:none;background:#c93208;color:#fff;font-size:7px;padding:1px 5px;border-radius:2px;margin-left:4px;vertical-align:middle;">0</span></button>
     </div>
   </div>
 </div>
@@ -1156,6 +1157,10 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
         <span style="font-family:'Space Mono',monospace;font-size:8px;color:var(--sub-color);letter-spacing:.06em;">© 2026 Ellie Damashek</span>
       </div>
     </div>
+    <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--dim);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <p style="font-family:'DM Sans',sans-serif;font-size:12px;line-height:1.6;color:var(--sub-color);margin:0;max-width:380px;">Spotted something that belongs here? Submit a moment — Ellie reviews every submission and approved nodes carry your name.</p>
+      <a href="https://sloptilyoudrop.com#submit" target="_blank" style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;background:var(--accent);color:#fff;padding:9px 18px;text-decoration:none;white-space:nowrap;flex-shrink:0;">SUBMIT SOME SLOP →</a>
+    </div>
   </div>
 
   <!-- Page nav footer -->
@@ -1310,7 +1315,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
 </div>
 
 <!-- COPYRIGHT FOOTER -->
-<div id="site-footer">© 2026 Ellie Damashek &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/elenadamashek/" target="_blank">LinkedIn ↗</a> &nbsp;·&nbsp; <a id="footer-contact" href="https://open.substack.com/pin/elliedama" target="_blank">Contact ↗</a></div>
+<div id="site-footer">© 2026 Ellie Damashek &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/elenadamashek/" target="_blank">LinkedIn ↗</a> &nbsp;·&nbsp; <a href="mailto:ellie@sloptilyoudrop.com">ellie@sloptilyoudrop.com</a> &nbsp;·&nbsp; <a id="footer-contact" href="https://sloptilyoudrop.com" target="_blank">sloptilyoudrop.com ↗</a></div>
 
 <!-- LIST / GRID VIEW OVERLAY -->
 <div id="listview">
@@ -1436,6 +1441,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
   <div class="ptitle" id="dp-title"></div>
   <div class="pmeta"><span id="dp-date"></span><span id="dp-src"></span><a id="dp-src-link" href="#" target="_blank" style="display:none;margin-left:6px;color:var(--sub-color);font-size:9px;text-decoration:none;border-bottom:1px solid var(--dim);transition:color .18s" title="View source">↗</a></div>
   <div class="pmeta" style="margin-top:4px"><span id="dp-added" style="font-size:8px;color:var(--sub-color);letter-spacing:.06em"></span></div>
+  <div id="dp-contributor" style="display:none;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);margin-top:4px;margin-bottom:2px;"></div>
   <div class="plabel">WHAT HAPPENED</div>
   <div class="ptext" id="dp-desc"></div>
   <div class="plabel">WHAT IT TELLS US</div>
@@ -1484,6 +1490,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
     <p id="about-bio" style="font-family:'DM Sans',sans-serif;font-size:12px;line-height:1.75;color:var(--fg);font-style:italic">Ellie Damashek is a strategist and researcher specializing in change management and emerging technology. She has spent her career helping organizations understand and navigate disruption before it becomes a crisis. The Slop Galaxy is her attempt to apply that same instinct to the cultural moment we're all living through.</p>
     <div style="margin-top:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
       <a href="https://www.linkedin.com/in/elenadamashek/" target="_blank" style="font-family:'Space Mono',monospace;font-size:9px;color:var(--accent2);text-decoration:none;letter-spacing:.06em;border-bottom:1px solid rgba(255,209,102,0.3);padding-bottom:1px">LinkedIn ↗</a>
+      <a href="mailto:ellie@sloptilyoudrop.com" style="font-family:'Space Mono',monospace;font-size:9px;color:var(--accent2);text-decoration:none;letter-spacing:.06em;border-bottom:1px solid rgba(255,209,102,0.3);padding-bottom:1px">ellie@sloptilyoudrop.com</a>
       <span id="about-copyright" style="font-family:'Space Mono',monospace;font-size:8px;color:var(--sub-color);letter-spacing:.06em">© 2026 Ellie Damashek</span>
     </div>
   </div>
@@ -1632,6 +1639,17 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
   </div>
 </div>
 
+
+
+<!-- SUBMISSIONS REVIEW MODAL -->
+<div class="modal" id="modal-submissions" style="max-width:min(720px,95vw);max-height:88vh;overflow-y:auto;padding:32px 36px 28px;">
+  <button class="modal-close" onclick="closeModal('modal-submissions')">✕</button>
+  <h2 style="margin-bottom:4px;">SUBMISSIONS <span style="font-size:13px;font-family:'DM Sans',sans-serif;font-weight:400;color:var(--sub-color);margin-left:8px;" id="sub-modal-count"></span></h2>
+  <p style="font-family:'Space Mono',monospace;font-size:9px;color:var(--sub-color);margin-bottom:24px;line-height:1.7;">Nodes submitted by contributors. Approve to run through AI processing and add to the galaxy. Pass to decline.</p>
+  <div id="sub-list"></div>
+  <div id="sub-empty" style="display:none;font-family:'Space Mono',monospace;font-size:9px;color:var(--sub-color);padding:24px 0;">No pending submissions.</div>
+  <button onclick="loadSubmissions()" style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;background:none;border:1px solid var(--dim);color:var(--sub-color);padding:7px 14px;cursor:pointer;margin-top:16px;">↺ REFRESH</button>
+</div>
 
 <!-- BOOKMARKLET MODAL -->
 <div class="modal" id="modal-bookmarklet" style="max-width:520px;">
@@ -2336,6 +2354,17 @@ function drawNode(node) {
   ctx.fill();
   if (sel) { ctx.strokeStyle = isLight ? 'rgba(28,22,18,0.7)' : '#fff'; ctx.lineWidth=1.5; ctx.stroke(); }
 
+  // Contributor ring — solid teal outer ring for community-submitted nodes
+  if (node.contributor && node.contributor.name) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, r + (scale < 0.6 ? 3 : 4.5), 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(6,214,160,0.7)';
+    ctx.lineWidth = scale < 0.6 ? 1 : 1.5;
+    ctx.stroke();
+    ctx.restore();
+  }
+
   // Resistance ring — dashed outer ring for countermeasure nodes
   if (node.resistance) {
     ctx.save();
@@ -2788,6 +2817,15 @@ function openPanel(node){
   document.getElementById('dp-date').textContent=node.date;
   document.getElementById('dp-src').textContent=node.source;
   const addedEl = document.getElementById('dp-added');
+  const contribEl = document.getElementById('dp-contributor');
+  if (contribEl) {
+    if (node.contributor && node.contributor.name) {
+      contribEl.textContent = 'Contributed by ' + node.contributor.name;
+      contribEl.style.display = 'block';
+    } else {
+      contribEl.style.display = 'none';
+    }
+  }
   if (node.date_added) {
     const da = node.date_added;
     const d = typeof da === 'number' ? new Date(da) : new Date(da + 'T00:00:00');
@@ -2909,6 +2947,9 @@ function enableAdminMode() {
   document.getElementById('btn-data-read').style.display = 'inline-block';
   const bkBtn = document.getElementById('btn-bookmarklet');
   if (bkBtn) bkBtn.style.display = 'inline-block';
+  const subBtn = document.getElementById('btn-submissions');
+  if (subBtn) subBtn.style.display = 'inline-block';
+  checkPendingSubmissions();
   document.getElementById('btn-data-edit').style.display = 'inline-block';
   document.getElementById('crawl-info').style.display = 'block';
   document.getElementById('btn-guide-edit').style.display = 'inline-block';
@@ -2927,6 +2968,8 @@ function disableAdminMode() {
   document.getElementById('btn-data-read').style.display = 'none';
   const bkBtn2 = document.getElementById('btn-bookmarklet');
   if (bkBtn2) bkBtn2.style.display = 'none';
+  const subBtn2 = document.getElementById('btn-submissions');
+  if (subBtn2) subBtn2.style.display = 'none';
   document.getElementById('btn-data-edit').style.display = 'none';
   document.getElementById('crawl-info').style.display = 'none';
   document.getElementById('crawl-badge').style.display = 'none';
@@ -3008,7 +3051,7 @@ document.getElementById('btn-export').onclick = () => {
         nodes: nodes,
         sitetext: {},
         positions: JSON.parse(localStorage.getItem('slop_positions') || '{}'),
-        ver: '33t'
+        ver: '33v'
       };
       ['site-name','site-sub','leg-platform','leg-media','leg-cultural',
        'leg-legislation','leg-research','leg-societal'].forEach(id => {
@@ -3046,7 +3089,7 @@ document.getElementById('btn-export').onclick = () => {
         '    localStorage.setItem("slop_nodes",JSON.stringify(d.nodes));',
         '    localStorage.setItem("slop_sitetext",JSON.stringify(d.sitetext));',
         '    localStorage.setItem("slop_positions",JSON.stringify(d.positions));',
-        '    localStorage.setItem("slop_layout_ver","33t");',
+        '    localStorage.setItem("slop_layout_ver","33v");',
         '    localStorage.removeItem("slop_ticker_dismissed");',
         '  } catch(e){ console.warn("slop-boot failed",e); }',
         '})();',
@@ -4902,9 +4945,9 @@ resize();
 // Load from localStorage or use seed
 try {
   const layoutVer = localStorage.getItem('slop_layout_ver');
-  if (layoutVer !== '33t') {
+  if (layoutVer !== '33v') {
     localStorage.removeItem('slop_positions');
-    localStorage.setItem('slop_layout_ver', '33t');
+    localStorage.setItem('slop_layout_ver', '33v');
     // v33 migration: force reload from SEED so all new nodes appear
     // (editor notes from SEED are preserved via the merge below)
     localStorage.removeItem('slop_nodes');
@@ -5275,6 +5318,164 @@ function _openBulkWithUrl(url) {
       if (attempts > 30) clearInterval(check);
     }, 300);
   } catch(e) { console.warn('addurl param error', e); }
+})();
+
+
+// ── SUBMISSIONS REVIEW PANEL ──────────────────────────────────────────────────
+const SUBMISSIONS_URL = 'https://script.google.com/macros/s/AKfycbwHMmWocCZJ-p6uwDGf6SBDwzifh10LY5ZyEE3mVyoXrUV6xNfqRfxAVCKCzkBom5od/exec';
+
+document.getElementById('btn-submissions').onclick = () => {
+  loadSubmissions();
+  openModal('modal-submissions');
+};
+
+function checkPendingSubmissions() {
+  fetch(SUBMISSIONS_URL + '?action=pending')
+    .then(r => r.json())
+    .then(data => {
+      if (!data.success) return;
+      const count = data.pending.length;
+      const badge = document.getElementById('sub-badge');
+      const btn   = document.getElementById('btn-submissions');
+      if (badge) {
+        badge.textContent = count;
+        badge.style.display = count > 0 ? 'inline' : 'none';
+      }
+    })
+    .catch(() => {});
+}
+
+function loadSubmissions() {
+  const list    = document.getElementById('sub-list');
+  const empty   = document.getElementById('sub-empty');
+  const counter = document.getElementById('sub-modal-count');
+  if (!list) return;
+  list.innerHTML = '<div style="font-family:var(--mono);font-size:9px;color:var(--sub-color);padding:12px 0;">Loading…</div>';
+
+  fetch(SUBMISSIONS_URL + '?action=pending')
+    .then(r => r.json())
+    .then(data => {
+      if (!data.success) { list.innerHTML = '<div style="color:var(--accent)">Error loading submissions.</div>'; return; }
+      const items = data.pending || [];
+      if (counter) counter.textContent = '(' + items.length + ' pending)';
+      if (!items.length) {
+        list.innerHTML = '';
+        if (empty) empty.style.display = 'block';
+        return;
+      }
+      if (empty) empty.style.display = 'none';
+      list.innerHTML = '';
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.id = 'sub-card-' + item.row;
+        card.style.cssText = 'border:1px solid var(--dim);padding:16px 20px;margin-bottom:12px;';
+        const date = item.timestamp ? new Date(item.timestamp).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '';
+        var safeUrl  = (item.url  || '').replace(/&/g,'&amp;');
+        var safeName = (item.name || 'Anonymous');
+        var safeNote = (item.note || '');
+        var approveArgs = item.row + ',"' + (item.url||'').replace(/"/g,'&quot;') + '","' + (item.name||'').replace(/"/g,'&quot;') + '","' + (item.email||'').replace(/"/g,'&quot;') + '"';
+        card.innerHTML = [
+          '<div style="margin-bottom:10px">',
+          '<div style="font-size:14px;font-weight:600;color:var(--fg)">' + safeName + '</div>',
+          '<div style="font-size:8px;color:var(--sub-color);font-family:var(--mono)">' + (item.email||'') + ' · ' + date + '</div>',
+          '</div>',
+          '<div style="font-size:9px;margin-bottom:8px;font-family:var(--mono)">',
+          '<a href="' + safeUrl + '" target="_blank" style="color:var(--accent2);word-break:break-all">' + safeUrl + '</a>',
+          '</div>',
+          safeNote ? '<div style="font-size:13px;color:var(--sub-color);font-style:italic;margin-bottom:14px;border-left:2px solid var(--dim);padding-left:10px">&ldquo;' + safeNote + '&rdquo;</div>' : '',
+          '<div style="display:flex;gap:8px">',
+          '<button onclick="approveSubmission(' + approveArgs + ')" style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;font-family:var(--mono);background:var(--accent);color:#fff;border:none;padding:8px 16px;cursor:pointer">✓ APPROVE</button>',
+          '<button onclick="passSubmission(' + item.row + ')" style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;font-family:var(--mono);background:none;border:1px solid var(--dim);color:var(--sub-color);padding:8px 16px;cursor:pointer">✕ PASS</button>',
+          '</div>'
+        ].join('');
+        list.appendChild(card);
+      });
+    })
+    .catch(err => {
+      list.innerHTML = '<div style="color:var(--accent);font-family:var(--mono);font-size:9px;">Could not reach submissions endpoint.</div>';
+    });
+}
+
+function approveSubmission(row, url, contributorName, contributorEmail) {
+  const card = document.getElementById('sub-card-' + row);
+  if (card) card.style.opacity = '0.4';
+
+  // Run through bulk import processor
+  const apiKey = getSavedKey ? getSavedKey() : (localStorage.getItem('slop_apikey')||'');
+  if (!apiKey) {
+    alert('API key needed to process this URL. Open Bulk Import, enter your key, then try again.');
+    if (card) card.style.opacity = '1';
+    return;
+  }
+
+  fetchAndClassifyUrl(url, apiKey).then(node => {
+    if (!node) {
+      alert('Could not extract content from this URL. You can add it manually via Add Node.');
+      if (card) card.style.opacity = '1';
+      return;
+    }
+    // Attach contributor info
+    node.id          = Date.now() + Math.floor(Math.random() * 10000);
+    node.date_added  = Date.now();
+    node.contributor = { name: contributorName, email: contributorEmail };
+    node.short_label = node.short_label || node.title.slice(0, 40);
+
+    pushUndo('contributor node: ' + node.title.slice(0,30));
+    nodes.push(node);
+    assignPosition(node);
+    save();
+    updateCount();
+
+    // Mark approved in sheet and email contributor
+    fetch(SUBMISSIONS_URL + '?action=approve&row=' + row + '&nodeId=' + node.id)
+      .catch(() => {});
+
+    if (card) {
+      card.style.opacity   = '1';
+      card.style.background = 'rgba(6,214,160,0.06)';
+      card.style.borderColor = '#06d6a0';
+      card.innerHTML = '<div style="font-family:var(--mono);font-size:9px;color:#06d6a0;padding:8px 0;">✓ Added as node — contributor notified.</div>';
+    }
+    checkPendingSubmissions();
+  }).catch(err => {
+    alert('Error: ' + err.message);
+    if (card) card.style.opacity = '1';
+  });
+}
+
+function passSubmission(row) {
+  if (!confirm('Pass on this submission? The contributor will not be notified.')) return;
+  fetch(SUBMISSIONS_URL + '?action=pass&row=' + row).catch(() => {});
+  const card = document.getElementById('sub-card-' + row);
+  if (card) {
+    card.style.opacity = '0.3';
+    setTimeout(() => card.remove(), 400);
+  }
+  checkPendingSubmissions();
+}
+
+// Check on load if ?review=1 param present (from notification email link)
+(function() {
+  try {
+    if (new URLSearchParams(location.search).get('review') === '1') {
+      setTimeout(() => {
+        if (adminMode) {
+          loadSubmissions();
+          openModal('modal-submissions');
+        } else {
+          const pw = prompt('Enter admin password to review submissions:');
+          if (!pw) return;
+          sha1(pw).then(hash => {
+            if (hash !== ADMIN_HASH) { alert('Incorrect password.'); return; }
+            enableAdminMode();
+            loadSubmissions();
+            openModal('modal-submissions');
+          });
+        }
+        try { history.replaceState(null,'',location.pathname); } catch(e) {}
+      }, 1000);
+    }
+  } catch(e) {}
 })();
 
 // ── CONTACT LINK ──────────────────────────────────────────────────────────────
