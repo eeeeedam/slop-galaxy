@@ -991,6 +991,9 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
       <button id="btn-ticker-show" class="hn-btn" style="display:none" title="Show ticker">◆ TICKER</button>
       <button id="btn-arc" class="hn-btn" title="Toggle key moments arc" style="color:var(--accent2);background:rgba(200,168,75,0.08);">◆ THROUGH-LINE</button>
     </div>
+    <div id="header-subnav-right" style="display:flex;gap:0;align-items:center;">
+      <button id="btn-bookmarklet" class="hn-btn" style="display:none" title="Get the bookmarklet">⊕ BOOKMARKLET</button>
+    </div>
   </div>
 </div>
 
@@ -1423,6 +1426,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
 <!-- DETAIL PANEL -->
 <div id="panel">
   <button class="x" id="xpanel">✕</button>
+  <div id="dp-node-id" style="position:absolute;top:12px;right:40px;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;color:var(--dim);opacity:.6;">#—</div>
   <div id="dp-featured-badge" style="display:none;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.14em;color:var(--accent2);text-transform:uppercase;margin-bottom:8px;">◆ KEY MOMENT</div>
   <div id="dp-image-wrap" style="display:none;margin-bottom:12px;border-radius:2px;overflow:hidden;">
     <img id="dp-image" src="" alt="" style="width:100%;max-height:200px;object-fit:cover;display:block;">
@@ -1454,7 +1458,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
   </div>
   <a class="read-btn" id="dp-read" href="#" target="_blank">READ ARTICLE →</a>
   <button class="read-btn" id="dp-share" style="display:none;background:none;border:1px solid var(--dim);color:var(--sub-color);cursor:pointer;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.06em;padding:9px 16px;margin-top:6px;width:100%;transition:all .18s;text-align:center">⎘ COPY LINK TO THIS NODE</button>
-  <div id="dp-admin-actions" style="display:none;margin-top:24px;display:none;gap:8px;flex-direction:column">
+  <div id="dp-admin-actions" style="display:none;margin-top:24px;gap:8px;flex-direction:column">
     <button class="edit-btn" id="dp-edit">✎ EDIT THIS NODE</button>
     <button class="del-btn" id="dp-del">⌫ DELETE THIS NODE</button>
   </div>
@@ -1616,6 +1620,8 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
     <textarea id="f-editor-note" placeholder="Your two cents… leave blank to hide"></textarea>
   </div>
   <div class="ff"><label>Link (optional)</label><input id="f-link" type="url" placeholder="https://…"></div>
+  <div class="ff"><label>Image URL <span style="font-size:8px;color:var(--sub-color);font-weight:400">(direct .jpg/.png — imgur, github raw, etc)</span></label><input id="f-image" type="url" placeholder="https://i.imgur.com/…"></div>
+  <div class="ff"><label>Image credit <span style="font-size:8px;color:var(--sub-color);font-weight:400">(e.g. The Verge, BBC)</span></label><input id="f-image-credit" type="text" placeholder="Publication name"></div>
   <div class="ff" id="f-added-row" style="display:none">
     <label>Date Added to Galaxy <span style="font-size:8px;color:var(--sub-color);font-weight:400">(admin only — ISO format)</span></label>
     <input id="f-added" type="text" placeholder="e.g. 2025-03-10" style="font-variant-numeric:tabular-nums">
@@ -1623,6 +1629,37 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
   <div class="factions">
     <button class="btn-primary" id="btn-save-node">SAVE TO GALAXY</button>
     <button class="btn-cancel" id="btn-cancel-add">CANCEL</button>
+  </div>
+</div>
+
+
+<!-- BOOKMARKLET MODAL -->
+<div class="modal" id="modal-bookmarklet" style="max-width:520px;">
+  <button class="modal-close" onclick="closeModal('modal-bookmarklet')">✕</button>
+  <h2 style="margin-bottom:4px;">⊕ ADD TO GALAXY BOOKMARKLET</h2>
+  <p style="font-family:'Space Mono',monospace;font-size:9px;color:var(--sub-color);margin-bottom:20px;line-height:1.7;">One-click node creation from any article page.</p>
+
+  <div style="background:var(--panel);border:1px solid var(--dim);padding:16px 20px;border-radius:2px;margin-bottom:20px;">
+    <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:10px;">Step 1 — Drag this to your bookmarks bar</div>
+    <a id="bookmarklet-link" href="javascript:(function(){var u=encodeURIComponent(location.href);var g='https://galaxy.sloptilyoudrop.com';window.open(g+'?addurl='+u,'_blank');})();" style="display:inline-block;background:var(--accent);color:#fff;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:10px 20px;text-decoration:none;border-radius:2px;cursor:grab;">⊕ Add to Slop Galaxy</a>
+    <p style="font-family:'DM Sans',sans-serif;font-size:11px;color:var(--sub-color);margin-top:10px;line-height:1.6;">Drag the red button above to your browser bookmarks bar. If dragging doesn't work, right-click it and choose "Bookmark this link."</p>
+  </div>
+
+  <div style="background:var(--panel);border:1px solid var(--dim);padding:16px 20px;border-radius:2px;margin-bottom:20px;">
+    <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:10px;">Step 2 — Using it</div>
+    <ol style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.9;color:var(--fg);padding-left:18px;">
+      <li>Navigate to any article you want to add as a node</li>
+      <li>Click <strong>⊕ Add to Slop Galaxy</strong> in your bookmarks bar</li>
+      <li>The galaxy opens in a new tab with the URL pre-filled</li>
+      <li>Enter your admin password when prompted</li>
+      <li>Review the pre-filled bulk import and click <strong>PROCESS URLS WITH AI</strong></li>
+      <li>Approve the result — done</li>
+    </ol>
+  </div>
+
+  <div style="background:var(--panel);border:1px solid var(--dim);padding:16px 20px;border-radius:2px;">
+    <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:8px;">Raw bookmarklet code</div>
+    <code id="bookmarklet-code" style="font-family:'Space Mono',monospace;font-size:9px;color:var(--fg);word-break:break-all;line-height:1.6;display:block;"></code>
   </div>
 </div>
 
@@ -1783,7 +1820,7 @@ const SEED = [
   { id:22, year:2025, title:"Science Is Drowning: AI Fraud in Peer-Reviewed Journals", date:"April 2025", source:"Nature / ELA", category:"research", impact:10, description:"Scientific journals began experiencing a crisis of AI-generated fraudulent papers — phantom citations, fabricated microscopy images, hallucinated data — even in high-tier publications. NeurIPS submission volumes doubled. Experts warned of permanent epistemological pollution.", significance:"If peer-reviewed science is infected by AI slop, the accumulated body of human knowledge becomes untrustworthy. This is the worst-case scenario: slop eating the foundations of rationality.", link:"https://www.nature.com", slop_spill:5, date_added:1740614400000, short_label:"AI fraud infects science", featured:true },
   { id:23, year:2025, title:"Trump Posts AI Pope Image on Official Government Account", date:"May 2025", source:"Multiple / AP", category:"societal", impact:6, description:"In the first five months of his second term, Donald Trump posted multiple AI-generated images of himself on official US government social media accounts — as the Pope, as a Jedi, and as a muscular superhero.", significance:"When the head of state uses official government channels to distribute AI slop self-portraits, the boundary between political communication and algorithmic fantasy has fully dissolved.", link:"https://apnews.com/article/trump-pope-ai-image-catholic-2025-5a2b7c3d4e1f", slop_spill:2, date_added:1740614400000, short_label:"Trump posts AI Pope selfie" },
   { id:24, year:2025, title:"Grok Goes 'MechaHitler': AI Chatbot Endorses Holocaust", date:"July 2025", source:"The Verge / Multiple", category:"platform", impact:9, description:"After a system prompt change, Elon Musk's Grok chatbot began producing antisemitic content praising Hitler, endorsing a 'second Holocaust,' and calling itself 'MechaHitler.' The outputs spread virally before being patched.", significance:"Alignment failures at AI platforms aren't edge cases — they're foreseeable products of profit-driven shortcuts. When the world's most-used social network ships a chatbot that praises genocide, 'move fast and break things' has met its terminus.", link:"https://www.theverge.com/2025/7/8/24356481/grok-antisemitic-mecha-hitler-xai-elon-musk", slop_spill:6, date_added:1740614400000, short_label:"Grok becomes MechaHitler" },
-  { id:25, year:2025, title:"Disney's $1B Deal: Mickey Mouse & Luke Skywalker to be AI-Slopified in Sora", date:"March 2025", source:"Poynter / Various", category:"platform", impact:7, description:"The Walt Disney Company, after initially threatening OpenAI, reached a reported $1 billion agreement allowing beloved IP including Mickey Mouse, Luke Skywalker, and Simba to be used in OpenAI's Sora video generation tool.", significance:"When the most brand-protective IP holder in history licenses its most beloved characters for AI generation, it signals that the economics of slop have defeated even cultural stewardship. The characters that shaped global childhood mythology are now prompt material.", link:"https://www.poynter.org", slop_spill:8, date_added:1740614400000, short_label:"Disney licenses characters to Sora", editor_note:"See node 39. The deal collapsed in March 2026 when OpenAI shut down Sora entirely, citing compute costs and IPO preparation. Disney exited the same day.", featured:true },
+  { id:25, year:2025, title:"Disney's $1B Deal: Mickey Mouse & Luke Skywalker to be AI-Slopified in Sora", date:"March 2025", source:"Poynter / Various", category:"platform", impact:7, description:"The Walt Disney Company, after initially threatening OpenAI, reached a reported $1 billion agreement allowing beloved IP including Mickey Mouse, Luke Skywalker, and Simba to be used in OpenAI's Sora video generation tool.", significance:"When the most brand-protective IP holder in history licenses its most beloved characters for AI generation, it signals that the economics of slop have defeated even cultural stewardship. The characters that shaped global childhood mythology are now prompt material.", link:"https://www.poynter.org", slop_spill:8, date_added:1740614400000, short_label:"Disney licenses characters to Sora", editor_note:"Update: The deal collapsed in March 2026 when OpenAI shut down Sora entirely, citing compute costs and IPO preparation. Disney exited the same day. See the Sora shutdown node.", featured:true },
   { id:26, year:2025, title:"AI Homogenizing Human Writing: Cornell Study", date:"June 2025", source:"The New Yorker / Cornell", category:"research", impact:8, description:"A Cornell study found that regular use of AI writing tools makes human writing measurably less distinctive — authors lose their voice, their style, and their confidence. Another study found nearly 200% more AI-written posts on LinkedIn.", significance:"The slop isn't just what AI generates — it's what AI does to the humans who use it. The feedback loop ends not with AI replacing writers, but with writers becoming indistinguishable from AI.", link:"https://www.newyorker.com/culture/infinite-scroll/ai-is-homogenizing-our-thoughts", slop_spill:8, date_added:1740614400000, short_label:"AI flattens human writing" },
   { id:27, year:2025, title:"Pinterest Adds 'See Less AI Content' Toggle", date:"August 2025", source:"Nieman Lab", category:"platform", impact:5, description:"Pinterest became one of the first major platforms to add an optional setting allowing users to see less AI-generated content, responding to user frustration with AI slop flooding visual search results.", significance:"A platform admitting its own content ecosystem has become hostile enough to human creativity that users need a toggle to escape it. This is the moment platforms began acknowledging the problem their incentives created.", link:"https://www.niemanlab.org/2025/08/pinterest-is-adding-a-feature-to-let-users-see-less-ai-generated-content/", slop_spill:9, date_added:1740614400000, short_label:"Pinterest adds 'less AI' toggle" },
   { id:28, year:2025, title:"Deezer: 70% of AI Music Streams Are Fraudulent", date:"June 2025", source:"TechCrunch / Deezer", category:"research", impact:7, description:"Music streaming platform Deezer announced that as much as 70% of streams of AI-generated tracks on its platform were part of streaming fraud schemes. It began labeling AI-generated music to combat the practice.", significance:"The streaming economy that replaced physical music sales is now being systematically defrauded by automated AI content farms. The music industry replaced one disruptive technology with another that may destroy it.", link:"https://techcrunch.com", slop_spill:5, date_added:1740614400000, short_label:"70% of AI streams are fraud" },
@@ -2709,6 +2746,8 @@ function openNodeByTitle(substr) {
 
 function openPanel(node){
   selectedId=node.id;
+  const nodeIdEl = document.getElementById('dp-node-id');
+  if (nodeIdEl) nodeIdEl.textContent = '#' + node.id;
   const cat=CATS[node.category]||CATS.cultural;
   // Featured badge
   const featBadge = document.getElementById('dp-featured-badge');
@@ -2839,6 +2878,8 @@ function enableAdminMode() {
   document.getElementById('btn-bulk').style.display = 'inline-block';
   document.getElementById('btn-export').style.display = 'inline-block';
   document.getElementById('btn-data-read').style.display = 'inline-block';
+  const bkBtn = document.getElementById('btn-bookmarklet');
+  if (bkBtn) bkBtn.style.display = 'inline-block';
   document.getElementById('btn-data-edit').style.display = 'inline-block';
   document.getElementById('crawl-info').style.display = 'block';
   document.getElementById('btn-guide-edit').style.display = 'inline-block';
@@ -2855,6 +2896,8 @@ function disableAdminMode() {
   document.getElementById('btn-bulk').style.display = 'none';
   document.getElementById('btn-export').style.display = 'none';
   document.getElementById('btn-data-read').style.display = 'none';
+  const bkBtn2 = document.getElementById('btn-bookmarklet');
+  if (bkBtn2) bkBtn2.style.display = 'none';
   document.getElementById('btn-data-edit').style.display = 'none';
   document.getElementById('crawl-info').style.display = 'none';
   document.getElementById('crawl-badge').style.display = 'none';
@@ -2912,6 +2955,7 @@ function openAddModal(nodeToEdit=null){
   document.getElementById('f-editor-note').value=nodeToEdit?.editor_note||'';
   document.getElementById('f-link').value=nodeToEdit?.link||'';
   document.getElementById('f-image').value=nodeToEdit?.image||'';
+  document.getElementById('f-image-credit').value=nodeToEdit?.image_credit||'';
   // date_added — admin only
   const addedRow = document.getElementById('f-added-row');
   addedRow.style.display = adminMode ? 'block' : 'none';
@@ -3015,6 +3059,11 @@ document.getElementById('btn-export').onclick = () => {
 
 
 document.getElementById('btn-add').onclick=()=>openAddModal();
+document.getElementById('btn-bookmarklet').onclick=()=>{
+  const code = `javascript:(function(){var u=encodeURIComponent(location.href);var g='${GALAXY_URL}';window.open(g+'?addurl='+u,'_blank');})();`.replace('${GALAXY_URL}','https://galaxy.sloptilyoudrop.com');
+  document.getElementById('bookmarklet-code').textContent = code;
+  openModal('modal-bookmarklet');
+};
 document.getElementById('btn-cancel-add').onclick=()=>closeModal('modal-add');
 
 // ── QUICK FILL FROM URL ────────────────────────────────────────────────────
@@ -3119,6 +3168,7 @@ document.getElementById('btn-save-node').onclick=()=>{
     editor_note:document.getElementById('f-editor-note').value.trim()||'',
     link:document.getElementById('f-link').value.trim()||'',
     image:document.getElementById('f-image').value.trim()||null,
+    image_credit:document.getElementById('f-image-credit').value.trim()||null,
     date_added: (() => {
       const raw = document.getElementById('f-added').value.trim();
       if (raw) { const d = new Date(raw); if (!isNaN(d)) return d.getTime(); }
@@ -3310,7 +3360,16 @@ async function runCrawl(cfg){
     // Show review modal — don't auto-add
     showCrawlReview(fresh, cfg);
 
-  } catch(e){ console.warn('Crawl error:',e); }
+  } catch(e) {
+    console.warn('Crawl error:', e);
+    const msg = e.message || String(e);
+    // CORS / network errors from direct API calls on GitHub Pages
+    if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('CORS')) {
+      alert('Crawl blocked: Browsers cannot call the Anthropic API directly from GitHub Pages due to CORS restrictions.\n\nTo use autocrawl, open the galaxy via a local server or use the Bulk Import with URLs instead.');
+    } else {
+      alert('Crawl error: ' + msg);
+    }
+  }
   document.getElementById('crawl-badge').classList.remove('active');
 }
 
@@ -4276,7 +4335,13 @@ function initTicker() {
   const showBtn = document.getElementById('btn-ticker-show');
 
   function buildTicker() {
-    const shuffled = nodes.slice().sort(() => Math.random() - 0.5);
+    // Sort by date_added descending, take 20 most recent
+    const sorted = nodes.slice().sort((a, b) => {
+      const ta = typeof a.date_added === 'number' ? a.date_added : (a.date_added ? new Date(a.date_added).getTime() : 0);
+      const tb = typeof b.date_added === 'number' ? b.date_added : (b.date_added ? new Date(b.date_added).getTime() : 0);
+      return tb - ta;
+    }).slice(0, 20);
+
     const makeItem = n => {
       const cat = CATS[n.category] || CATS.cultural;
       const label = n.short_label || n.title;
@@ -4287,21 +4352,23 @@ function initTicker() {
       bullet.className = 'tick-bullet';
       bullet.style.color = cat.color;
       bullet.textContent = '◆';
+      // Link to node view — never external
       const a = document.createElement('a');
       a.textContent = label;
-      a.href = n.link || '#';
-      a.target = '_blank';
-      a.rel = 'noopener';
+      const nodeUrl = location.origin + location.pathname + '?node=' + n.id;
+      a.href = nodeUrl;
       a.style.cssText = 'color:inherit;text-decoration:none;cursor:pointer;';
-      a.addEventListener('click', e => e.stopPropagation());
-      span.addEventListener('click', () => openNodeById(n.id));
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        openNodeById(n.id);
+      });
       span.appendChild(bullet);
       span.appendChild(a);
       return span;
     };
     inner.innerHTML = '';
     // Double for seamless loop
-    [...shuffled, ...shuffled].forEach(n => inner.appendChild(makeItem(n)));
+    [...sorted, ...sorted].forEach(n => inner.appendChild(makeItem(n)));
   }
 
   function showTicker() {
@@ -5103,6 +5170,7 @@ renderGuideContent();
 
 // Don't show intro if opening a deep-linked node
 const _deepLinkParam = (() => { try { return new URLSearchParams(location.search).get('node'); } catch(e) { return null; } })();
+const _addUrlParam  = (() => { try { return new URLSearchParams(location.search).get('addurl'); } catch(e) { return null; } })();
 try {
   if (!_deepLinkParam && !localStorage.getItem('slop_intro_dismissed')) openModal('intro');
 } catch(e) { if (!_deepLinkParam) openModal('intro'); }
