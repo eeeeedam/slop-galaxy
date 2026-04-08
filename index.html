@@ -1641,7 +1641,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
 
   <div style="background:var(--panel);border:1px solid var(--dim);padding:16px 20px;border-radius:2px;margin-bottom:20px;">
     <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:10px;">Step 1 — Drag this to your bookmarks bar</div>
-    <a id="bookmarklet-link" href="javascript:(function(){var u=location.href;var g='https://galaxy.sloptilyoudrop.com';localStorage.setItem('slop_pending_url',u);var t=window.open(g,'slopgalaxy');if(t){t.focus();}})();" style="display:inline-block;background:var(--accent);color:#fff;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:10px 20px;text-decoration:none;border-radius:2px;cursor:grab;">⊕ Add to Slop Galaxy</a>
+    <a id="bookmarklet-link" href="javascript:(function(){var u=encodeURIComponent(location.href);var g='https://galaxy.sloptilyoudrop.com';var w=window.open('','slopgalaxy');if(w&&w.location&&w.location.hostname==='galaxy.sloptilyoudrop.com'){try{w.slopAddUrl(decodeURIComponent(u));w.focus();}catch(e){w.location.href=g+'?addurl='+u;w.focus();}}else{window.open(g+'?addurl='+u,'slopgalaxy');}})();" style="display:inline-block;background:var(--accent);color:#fff;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:10px 20px;text-decoration:none;border-radius:2px;cursor:grab;">⊕ Add to Slop Galaxy</a>
     <p style="font-family:'DM Sans',sans-serif;font-size:11px;color:var(--sub-color);margin-top:10px;line-height:1.6;">Drag the red button above to your browser bookmarks bar. If dragging doesn't work, right-click it and choose "Bookmark this link."</p>
   </div>
 
@@ -1650,8 +1650,8 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
     <ol style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.9;color:var(--fg);padding-left:18px;">
       <li>Navigate to any article you want to add as a node</li>
       <li>Click <strong>⊕ Add to Slop Galaxy</strong> in your bookmarks bar</li>
-      <li>The galaxy opens (or focuses if already open) — enter your admin password if prompted</li>
-      <li>The Bulk Import modal opens automatically with the article URL pre-filled</li>
+      <li>The galaxy opens in a tab named <em>slopgalaxy</em> — or if already open, switches to it</li>
+      <li>Enter your admin password when prompted, then the Bulk Import modal opens with the URL pre-filled</li>
       <li>Click <strong>PROCESS URLS WITH AI</strong> — review and approve</li>
     </ol>
   </div>
@@ -3089,7 +3089,7 @@ document.getElementById('btn-export').onclick = () => {
 
 document.getElementById('btn-add').onclick=()=>openAddModal();
 document.getElementById('btn-bookmarklet').onclick=()=>{
-  const code = "javascript:(function(){var u=location.href;var g='https://galaxy.sloptilyoudrop.com';localStorage.setItem('slop_pending_url',u);var t=window.open(g,'slopgalaxy');if(t){t.focus();}})();";
+  const code = "javascript:(function(){var u=encodeURIComponent(location.href);var g='https://galaxy.sloptilyoudrop.com';var w=window.open('','slopgalaxy');if(w&&w.location&&w.location.hostname==='galaxy.sloptilyoudrop.com'){try{w.slopAddUrl(decodeURIComponent(u));w.focus();}catch(e){w.location.href=g+'?addurl='+u;w.focus();}}else{window.open(g+'?addurl='+u,'slopgalaxy');}})();";
   document.getElementById('bookmarklet-code').textContent = code;
   openModal('modal-bookmarklet');
 };
@@ -5201,7 +5201,8 @@ renderGuideContent();
 const _deepLinkParam = (() => { try { return new URLSearchParams(location.search).get('node'); } catch(e) { return null; } })();
 const _addUrlParam  = (() => { try { return new URLSearchParams(location.search).get('addurl'); } catch(e) { return null; } })();
 try {
-  if (!_deepLinkParam && !_addUrlParam && !localStorage.getItem('slop_intro_dismissed')) openModal('intro');
+  var _hasAddUrl = !!(new URLSearchParams(location.search).get('addurl'));
+  if (!_deepLinkParam && !_hasAddUrl && !localStorage.getItem('slop_intro_dismissed')) openModal('intro');
 } catch(e) { if (!_deepLinkParam && !_addUrlParam) openModal('intro'); }
 
 
@@ -5216,44 +5217,65 @@ if (_deepLinkParam) {
 }
 
 
-// ── BOOKMARKLET POLL — check for URL written by bookmarklet via localStorage ──
+// ── BOOKMARKLET HANDLER ──────────────────────────────────────────────────────
+// Called either from ?addurl= param on load, or directly by the bookmarklet
+// via window.slopAddUrl() if the galaxy tab is already open
+function slopAddUrl(url) {
+  if (!url) return;
+  function proceed() {
+    if (!adminMode) {
+      var pw = prompt('Enter admin password to add this article:');
+      if (!pw) return;
+      sha1(pw).then(function(hash) {
+        if (hash !== ADMIN_HASH) { alert('Incorrect password.'); return; }
+        enableAdminMode();
+        _openBulkWithUrl(url);
+      });
+    } else {
+      _openBulkWithUrl(url);
+    }
+  }
+  // Wait for DOM to be ready
+  if (document.getElementById('modal-bulk')) {
+    proceed();
+  } else {
+    setTimeout(proceed, 800);
+  }
+}
+window.slopAddUrl = slopAddUrl;
+
+function _openBulkWithUrl(url) {
+  var saved = '';
+  try { saved = localStorage.getItem('slop_apikey') || ''; } catch(e) {}
+  var apikeyEl = document.getElementById('f-apikey');
+  var urlsEl   = document.getElementById('f-urls');
+  if (apikeyEl) apikeyEl.value = saved;
+  if (urlsEl)   urlsEl.value   = url;
+  openModal('modal-bulk');
+  // Clean URL bar
+  try { history.replaceState(null, '', location.pathname); } catch(e) {}
+}
+
+// Handle ?addurl= on page load (fresh tab from bookmarklet)
 (function() {
-  function checkPendingUrl() {
-    try {
-      var pending = localStorage.getItem('slop_pending_url');
-      if (!pending) return;
-      localStorage.removeItem('slop_pending_url');
-      // Small delay to let the page settle
-      setTimeout(function() {
-        if (!adminMode) {
-          var pw = prompt('Enter admin password to add this article to the galaxy:');
-          if (!pw) return;
-          sha1(pw).then(function(hash) {
-            if (hash !== ADMIN_HASH) { alert('Incorrect password.'); return; }
-            enableAdminMode();
-            openBulkWithUrl(pending);
-          });
-        } else {
-          openBulkWithUrl(pending);
-        }
-      }, 400);
-    } catch(e) {}
-  }
-
-  function openBulkWithUrl(url) {
-    var saved = '';
-    try { saved = localStorage.getItem('slop_apikey') || ''; } catch(e) {}
-    document.getElementById('f-apikey').value = saved;
-    document.getElementById('f-urls').value = url;
-    openModal('modal-bulk');
-  }
-
-  // Check once on load (catches fresh-tab case)
-  setTimeout(checkPendingUrl, 800);
-  // Poll every 1.5s (catches already-open-tab case)
-  setInterval(checkPendingUrl, 1500);
+  try {
+    var param = new URLSearchParams(location.search).get('addurl');
+    if (!param) return;
+    var decoded = decodeURIComponent(param);
+    // Skip intro modal
+    try { localStorage.setItem('slop_intro_dismissed','1'); } catch(e) {}
+    // Wait for full init then trigger
+    var attempts = 0;
+    var check = setInterval(function() {
+      attempts++;
+      if (document.getElementById('modal-bulk') && typeof openModal === 'function') {
+        clearInterval(check);
+        slopAddUrl(decoded);
+      }
+      if (attempts > 30) clearInterval(check);
+    }, 300);
+  } catch(e) { console.warn('addurl param error', e); }
 })();
-
 
 // ── CONTACT LINK ──────────────────────────────────────────────────────────────
 const CONTACT_STORAGE_KEY = 'slop_contact_url';
