@@ -11,11 +11,11 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="The Slop Galaxy — AI Proliferation Tracker">
 <meta name="twitter:description" content="A real-time map of how AI is evolving — and devolving — humanity's tastes and tolerances. Curated by Ellie Damashek.">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
 :root {
   /* Museum dark — warm charcoal */
-  --bg: #1e1a16; --fg: #e8e2d4; --accent: #c93208; --accent2: #c8a84b;
+  --bg: #1e1a16; --fg: #e8e2d4; --accent: #c93208; --accent2: #c8a84b; --lime: #8FE000; --lav: #A8A8E8; --forest: #1A3A2A;
   --dim: #3d3630; --panel: rgba(30,25,20,0.97); --green: #2d8c6a;
   --input-bg: rgba(255,255,255,0.05); --input-border: #3d3630;
   --select-bg: #2a2420; --select-fg: #e8e2d4;
@@ -33,7 +33,7 @@
 
 body.light {
   /* Museum parchment */
-  --bg: #f5f1e8; --fg: #1a1608; --accent: #c93208; --accent2: #7a5800;
+  --bg: #f5f1e8; --fg: #1a1608; --accent: #c93208; --accent2: #7a5800; --lime: #8FE000; --lav: #6060A8;
   --dim: #c0b8a8; --panel: #f5f1e8; --green: #1a7a56;
   --input-bg: rgba(28,22,18,0.05); --input-border: #c0b8a8;
   --select-bg: #ede8de; --select-fg: #1c1612;
@@ -62,7 +62,7 @@ body.light {
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #050508; --fg: #e8e2d4; --accent: #ff4d1c; --accent2: #ffd166;
+  --bg: #050508; --fg: #e8e2d4; --accent: #ff4d1c; --accent2: #ffd166; --lime: #8FE000; --lav: #A8A8E8; --forest: #1A3A2A;
   --dim: #3a3a4a; --panel: rgba(10,10,18,0.97); --green: #06d6a0;
   --input-bg: rgba(255,255,255,0.04); --input-border: #3a3a4a;
   --select-bg: #0e0e18; --select-fg: #e8e2d4;
@@ -79,7 +79,7 @@ body.light {
 }
 
 body.light {
-  --bg: #f5f1e8; --fg: #1a1608; --accent: #c93208; --accent2: #b07d00;
+  --bg: #f5f1e8; --fg: #1a1608; --accent: #c93208; --accent2: #b07d00; --lime: #8FE000; --lav: #6060A8;
   --dim: #c8c0b0; --panel: #f5f1e8; --green: #007a5a;
   --input-bg: rgba(0,0,0,0.05); --input-border: #c8c0b0;
   --select-bg: #ede8de; --select-fg: #1c1612;
@@ -119,15 +119,15 @@ body { background:var(--bg); color:var(--fg); font-family:'DM Sans',sans-serif; 
 .hn-btn { font-family:'Space Mono',monospace; font-size:8px; letter-spacing:.1em; text-transform:uppercase; color:var(--sub-color); background:none; border:none; border-right:1px solid rgba(128,120,100,0.2); padding:3px 14px; cursor:pointer; pointer-events:all; transition:color .15s; }
 .hn-btn:first-child { padding-left:0; }
 .hn-btn:last-child { border-right:none; }
-.hn-btn:hover { color:var(--accent); }
-.hn-btn-nav { color:var(--accent); border-right:1px solid rgba(128,120,100,0.2); background:rgba(201,50,8,0.07); }
+.hn-btn:hover { color:var(--lime); }
+.hn-btn-nav { color:var(--fg); border-right:1px solid rgba(128,120,100,0.2); background:rgba(143,224,0,0.10); }
 body.light .hn-btn-nav { background:rgba(201,50,8,0.06); }
-.hn-btn-nav:hover { color:var(--accent) !important; background:rgba(201,50,8,0.13); }
+.hn-btn-nav:hover { color:var(--fg) !important; background:rgba(143,224,0,0.16); }
 
 /* Title: Bebas Neue matching guide modal headers */
-#header h1 { font-family:'Bebas Neue',sans-serif; font-weight:400; font-size:clamp(28px,3.5vw,44px); letter-spacing:.04em; line-height:1; color:var(--fg); }
+#header h1 { font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(28px,3.5vw,44px); letter-spacing:-.01em; line-height:1; color:var(--fg); font-style:italic; }
 body.light #header h1 { color:#1c1612; }
-#header h1 #site-name { font-style:normal; display:inline; color:var(--accent); }
+#header h1 #site-name { font-style:italic; display:inline; color:var(--lime); }
 #header h1 #site-name[contenteditable="true"] { display:inline-block; outline:none; }
 #header .sub { font-family:'Space Mono',monospace; font-size:9.5px; color:var(--sub-color); letter-spacing:.09em; text-transform:uppercase; margin-top:3px; }
 #header .sub[contenteditable="true"] { outline:none; cursor:text; border-bottom:1px dashed var(--accent); }
@@ -157,7 +157,7 @@ body:not(.light) #ticker-bar { background:#0e0e14; }
   color:#c8c0b0; padding:0 30px;
   border-right:1px solid rgba(255,255,255,0.08); flex-shrink:0;
 }
-.tick-bullet { color:#c93208; margin-right:7px; }
+.tick-bullet { color:var(--lime); margin-right:7px; }
 #ticker-close {
   position:absolute; right:0; top:0; bottom:0;
   background:#1c1612; border:none; border-left:1px solid rgba(255,255,255,0.1);
@@ -209,7 +209,7 @@ body.light .btn-export-style:hover { background:rgba(122,88,0,0.1) !important; }
 body.light #panel .x { background:rgba(28,22,18,0.06); border-color:rgba(28,22,18,0.3); color:#1c1612; }
 body.light #panel .x:hover { background:#c93208; border-color:#c93208; color:#fff; }
 .pcat { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; margin-bottom:8px; }
-.ptitle { font-family:'Bebas Neue',sans-serif; font-size:30px; line-height:1.1; letter-spacing:.03em; margin-bottom:10px; }
+.ptitle { font-family:'Instrument Serif',serif; font-size:26px; line-height:1.2; letter-spacing:-.01em; margin-bottom:10px; font-style:italic; }
 .pmeta { font-family:'Space Mono',monospace; font-size:10px; color:var(--sub-color); margin-bottom:20px; display:flex; gap:14px; flex-wrap:wrap; }
 .plabel { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.11em; text-transform:uppercase; color:var(--sub-color); margin-bottom:6px; margin-top:16px; }
 .ptext { font-size:13px; line-height:1.72; color:#aaa; }
@@ -217,7 +217,7 @@ body.light #panel .x:hover { background:#c93208; border-color:#c93208; color:#ff
 .pdiv { height:1px; background:var(--dim); margin:18px 0; }
 .plink { font-family:'Space Mono',monospace; font-size:10px; color:var(--accent2); text-decoration:none; word-break:break-all; border-bottom:1px solid transparent; transition:border-color .18s; }
 .plink:hover { border-color:var(--accent2); }
-.read-btn { display:inline-block; margin-top:14px; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.1em; color:#000; background:var(--accent2); text-decoration:none; padding:10px 20px; transition:opacity .18s; }
+.read-btn { display:inline-block; margin-top:14px; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.1em; color:#F5F5F0; background:#1A3A2A; text-decoration:none; padding:10px 20px; transition:opacity .18s; }
 .read-btn:hover { opacity:.82; }
 .read-btn[style*="none"] { display:none; }
 .impact-row { display:flex; align-items:center; gap:10px; margin-top:6px; }
@@ -234,7 +234,7 @@ body.light #panel .x:hover { background:#c93208; border-color:#c93208; color:#ff
 #overlay.open { opacity:1; pointer-events:all; }
 .modal { position:fixed; left:50%; top:50%; transform:translate(-50%,-50%) scale(.92); width:min(580px,92vw); background:var(--panel); border:1px solid var(--dim); z-index:300; padding:36px; opacity:0; pointer-events:none; transition:all .28s cubic-bezier(.16,1,.3,1); max-height:90vh; overflow-y:auto; }
 .modal.open { opacity:1; pointer-events:all; transform:translate(-50%,-50%) scale(1); }
-.modal h2 { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:.06em; margin-bottom:24px; color:var(--accent); }
+.modal h2 { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:.06em; margin-bottom:24px; color:var(--fg); }
 .modal-close { position:absolute; top:14px; right:14px; background:none; border:1px solid var(--dim); color:var(--sub-color); width:28px; height:28px; border-radius:50%; cursor:pointer; font-size:11px; display:flex; align-items:center; justify-content:center; transition:all .18s; line-height:1; padding:0; }
 .modal-close:hover { border-color:var(--fg); color:var(--fg); background:rgba(255,255,255,0.05); }
 body.light .modal-close { color:#1c1612; border-color:rgba(28,22,18,0.3); background:rgba(28,22,18,0.05); }
@@ -738,8 +738,8 @@ body.light #axis-x { color:rgba(0,0,0,0.32); }
 body.light #axis-y-center { color:rgba(0,0,0,0.22); }
 
 .ay-word {
-  font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:.18em;
-  line-height:1;
+  font-family:'Instrument Serif',serif; font-size:20px; letter-spacing:.04em;
+  line-height:1; font-style:italic;
 }
 .ay-sub {
   font-family:'Space Mono',monospace; font-size:8px; letter-spacing:.08em;
@@ -972,7 +972,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
 <div id="header">
   <div id="header-main">
     <div id="header-left">
-      <h1>The <em><span id="site-name">Slop</span></em> Galaxy</h1>
+      <h1>the <em><span id="site-name">slop</span></em> galaxy</h1>
       <div class="sub" id="site-sub">Tracking AI-generated content across the world</div>
     </div>
     <div id="header-right" style="display:flex;align-items:center;gap:8px;">
@@ -1090,7 +1090,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
     <!-- PAGE 5 — READING A NODE -->
     <div class="guide-page" id="gp-5" style="padding:28px 40px 20px;">
       <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.18em;color:var(--sub-color);margin-bottom:10px;text-transform:uppercase;">Page 5 of 5</div>
-      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,4vw,46px);letter-spacing:.04em;line-height:1;margin-bottom:10px;"><span style="color:var(--fg)">EVERY BUBBLE</span> <span style="color:var(--accent)">TELLS A STORY.</span></h2>
+      <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(28px,4vw,46px);letter-spacing:-.01em;line-height:1;margin-bottom:10px;font-style:italic;"><span style="color:var(--fg)">Every bubble</span> <span style="color:var(--accent)">tells a story.</span></h2>
       <p id="gp5-intro" style="font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.6;color:var(--fg);max-width:600px;margin-bottom:4px;">Click on the bubbles to read what happened, what it tells us, the source, and in some instances an editor's note from Ellie.</p>
       <p id="gp5-transition" style="font-family:'Space Mono',monospace;font-size:9px;line-height:1.65;color:var(--sub-color);max-width:580px;margin-bottom:14px;">Throughout the site, bubbles are also called <strong style="color:var(--fg)">nodes</strong>. Same thing, more precise. You will see it in the filters, the counter, and the admin tools.</p>
       <div style="display:grid;grid-template-columns:270px 1fr;gap:20px;align-items:start;">
@@ -1195,12 +1195,12 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
 <!-- AXIS LABELS — fixed to screen, never affected by zoom/pan -->
 <div id="axis-x">← earlier &nbsp;&nbsp;&nbsp;&nbsp; time (by month) &nbsp;&nbsp;&nbsp;&nbsp; more recent →</div>
 <div id="axis-y-spill">
-  <span class="ay-word">SPILL</span>
+  <span class="ay-word" style="color:rgba(100,100,200,0.85)">spill</span>
   <span class="ay-sub">consequences · institutions · law</span>
 </div>
 <div id="axis-y-slop">
   <span class="ay-sub">generated content · artifacts · fakes</span>
-  <span class="ay-word">SLOP</span>
+  <span class="ay-word" style="color:rgba(143,224,0,0.7)">slop</span>
 </div>
 <div id="mobile-yaxis" style="display:none;position:fixed;left:0;top:0;bottom:0;z-index:150;flex-direction:column;align-items:flex-start;justify-content:space-between;padding:160px 0 110px;pointer-events:none;">
   <span class="myax-spill">SPILL ▲</span>
@@ -1220,12 +1220,12 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
   <div class="filt-section">
     <div class="filt-label">Filter by type <span id="filt-cat-reset" class="filt-reset">reset</span></div>
     <div class="filt-cats">
-      <div class="filt-cat active" data-cat="platform"   style="--cc:#e8621a"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-platform">Platform Policy</span></div>
-      <div class="filt-cat active" data-cat="media"      style="--cc:#d4a017"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-media">Media / Journalism</span></div>
-      <div class="filt-cat active" data-cat="cultural"   style="--cc:#2db882"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-cultural">Cultural Moment</span></div>
-      <div class="filt-cat active" data-cat="legislation" style="--cc:#8b6fcc"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-legislation">Legislation / Policy</span></div>
-      <div class="filt-cat active" data-cat="research"   style="--cc:#2596be"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-research">Research / Data</span></div>
-      <div class="filt-cat active" data-cat="societal"   style="--cc:#d4527a"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-societal">Societal Impact</span></div>
+      <div class="filt-cat active" data-cat="platform"   style="--cc:#E8F000"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-platform">Platform Policy</span></div>
+      <div class="filt-cat active" data-cat="media"      style="--cc:#8FE000"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-media">Media / Journalism</span></div>
+      <div class="filt-cat active" data-cat="cultural"   style="--cc:#A8A8E8"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-cultural">Cultural Moment</span></div>
+      <div class="filt-cat active" data-cat="legislation" style="--cc:#38bdf8"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-legislation">Legislation / Policy</span></div>
+      <div class="filt-cat active" data-cat="research"   style="--cc:#f472b6"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-research">Research / Data</span></div>
+      <div class="filt-cat active" data-cat="societal"   style="--cc:#FF6B35"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-societal">Societal Impact</span></div>
     </div>
   </div>
 
@@ -1315,7 +1315,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
 </div>
 
 <!-- COPYRIGHT FOOTER -->
-<div id="site-footer">© 2026 Ellie Damashek &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/elenadamashek/" target="_blank">LinkedIn ↗</a> &nbsp;·&nbsp; <a href="mailto:ellie@sloptilyoudrop.com">ellie@sloptilyoudrop.com</a> &nbsp;·&nbsp; <a id="footer-contact" href="https://sloptilyoudrop.com" target="_blank">sloptilyoudrop.com ↗</a></div>
+<div id="site-footer">© 2026 Ellie Damashek &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/elenadamashek/" target="_blank">LinkedIn ↗</a> &nbsp;·&nbsp; <a href="/cdn-cgi/l/email-protection#93f6fffffaf6d3e0fffce3e7faffeafce6f7e1fce3bdf0fcfe"><span class="__cf_email__" data-cfemail="4b2e2727222e0b3827243b3f222732243e2f39243b65282426">[email&#160;protected]</span></a> &nbsp;·&nbsp; <a id="footer-contact" href="https://sloptilyoudrop.com" target="_blank">sloptilyoudrop.com ↗</a></div>
 
 <!-- LIST / GRID VIEW OVERLAY -->
 <div id="listview">
@@ -1459,7 +1459,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
   <div class="plabel">SLOP → SPILL</div>
   <div class="ss-row" id="dp-ss-row">
     <div class="ss-track"><div class="ss-fill" id="dp-ss-fill"></div><div class="ss-marker" id="dp-ss-marker"></div></div>
-    <div class="ss-labels"><span style="color:rgba(220,80,40,0.8)">SLOP</span><span style="color:var(--sub-color);font-size:7px">spectrum</span><span style="color:rgba(255,200,80,0.9)">SPILL</span></div>
+    <div class="ss-labels"><span style="color:var(--lime)">SLOP</span><span style="color:var(--sub-color);font-size:7px">spectrum</span><span style="color:#7070C8">SPILL</span></div>
     <div class="ss-score" id="dp-ss-score"></div>
   </div>
   <a class="read-btn" id="dp-read" href="#" target="_blank">READ ARTICLE →</a>
@@ -1490,7 +1490,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
     <p id="about-bio" style="font-family:'DM Sans',sans-serif;font-size:12px;line-height:1.75;color:var(--fg);font-style:italic">Ellie Damashek is a strategist and researcher specializing in change management and emerging technology. She has spent her career helping organizations understand and navigate disruption before it becomes a crisis. The Slop Galaxy is her attempt to apply that same instinct to the cultural moment we're all living through.</p>
     <div style="margin-top:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
       <a href="https://www.linkedin.com/in/elenadamashek/" target="_blank" style="font-family:'Space Mono',monospace;font-size:9px;color:var(--accent2);text-decoration:none;letter-spacing:.06em;border-bottom:1px solid rgba(255,209,102,0.3);padding-bottom:1px">LinkedIn ↗</a>
-      <a href="mailto:ellie@sloptilyoudrop.com" style="font-family:'Space Mono',monospace;font-size:9px;color:var(--accent2);text-decoration:none;letter-spacing:.06em;border-bottom:1px solid rgba(255,209,102,0.3);padding-bottom:1px">ellie@sloptilyoudrop.com</a>
+      <a href="/cdn-cgi/l/email-protection#b5d0d9d9dcd0f5c6d9dac5c1dcd9ccdac0d1c7dac59bd6dad8" style="font-family:'Space Mono',monospace;font-size:9px;color:var(--accent2);text-decoration:none;letter-spacing:.06em;border-bottom:1px solid rgba(255,209,102,0.3);padding-bottom:1px"><span class="__cf_email__" data-cfemail="2d48414144486d5e41425d594441544258495f425d034e4240">[email&#160;protected]</span></a>
       <span id="about-copyright" style="font-family:'Space Mono',monospace;font-size:8px;color:var(--sub-color);letter-spacing:.06em">© 2026 Ellie Damashek</span>
     </div>
   </div>
@@ -1743,15 +1743,15 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ═══════════════════════════════════════════════════════════ CONSTANTS
 const CATS = {
-  platform:    { color:'#e06010', label:'Platform Policy' },
-  media:       { color:'#c08000', label:'Media / Journalism' },
-  cultural:    { color:'#06d6a0', label:'Cultural Moment' },
-  legislation: { color:'#a78bfa', label:'Legislation / Policy' },
-  research:    { color:'#38bdf8', label:'Research / Data' },
-  societal:    { color:'#f472b6', label:'Societal Impact' },
+  platform:    { color:'#E8F000', label:'Platform Policy' },
+  media:       { color:'#8FE000', label:'Media / Journalism' },
+  cultural:    { color:'#A8A8E8', label:'Cultural Moment' },
+  legislation: { color:'#38bdf8', label:'Legislation / Policy' },
+  research:    { color:'#f472b6', label:'Research / Data' },
+  societal:    { color:'#FF6B35', label:'Societal Impact' },
 };
 
 // ═══════════════════════════════════════════════════════════ LOCKED IMPACT RUBRIC
@@ -2239,7 +2239,7 @@ function drawTimeline(vis) {
 
   // Spill zone: amber tint from center to top of canvas
   const spillGrad = ctx.createLinearGradient(0, 0, 0, midScreen);
-  spillGrad.addColorStop(0, isLight ? 'rgba(180,130,0,0.1)' : 'rgba(255,200,80,0.08)');
+  spillGrad.addColorStop(0, isLight ? 'rgba(168,168,232,0.18)' : 'rgba(168,168,232,0.10)');
   spillGrad.addColorStop(1, 'rgba(0,0,0,0)');
   ctx.fillStyle = spillGrad;
   ctx.fillRect(0, 0, W, midScreen);
@@ -2247,7 +2247,7 @@ function drawTimeline(vis) {
   // Slop zone: red tint from center to bottom of canvas
   const slopGrad = ctx.createLinearGradient(0, midScreen, 0, H);
   slopGrad.addColorStop(0, 'rgba(0,0,0,0)');
-  slopGrad.addColorStop(1, isLight ? 'rgba(200,50,20,0.1)' : 'rgba(220,60,20,0.08)');
+  slopGrad.addColorStop(1, isLight ? 'rgba(143,224,0,0.14)' : 'rgba(143,224,0,0.08)');
   ctx.fillStyle = slopGrad;
   ctx.fillRect(0, midScreen, W, H - midScreen);
 
@@ -2359,7 +2359,7 @@ function drawNode(node) {
     ctx.save();
     ctx.beginPath();
     ctx.arc(s.x, s.y, r + (scale < 0.6 ? 3 : 4.5), 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(6,214,160,0.7)';
+    ctx.strokeStyle = 'rgba(143,224,0,0.75)';
     ctx.lineWidth = scale < 0.6 ? 1 : 1.5;
     ctx.stroke();
     ctx.restore();
@@ -2370,7 +2370,7 @@ function drawNode(node) {
     ctx.save();
     ctx.beginPath();
     ctx.arc(s.x, s.y, r + (scale < 0.6 ? 3 : 4.5), 0, Math.PI * 2);
-    ctx.strokeStyle = isLight ? 'rgba(200,168,75,0.75)' : 'rgba(200,168,75,0.65)';
+    ctx.strokeStyle = isLight ? 'rgba(100,100,200,0.75)' : 'rgba(168,168,232,0.65)';
     ctx.lineWidth = scale < 0.6 ? 1 : 1.5;
     ctx.setLineDash([3, 3]);
     ctx.stroke();
@@ -3051,7 +3051,7 @@ document.getElementById('btn-export').onclick = () => {
         nodes: nodes,
         sitetext: {},
         positions: JSON.parse(localStorage.getItem('slop_positions') || '{}'),
-        ver: '33v'
+        ver: '34a'
       };
       ['site-name','site-sub','leg-platform','leg-media','leg-cultural',
        'leg-legislation','leg-research','leg-societal'].forEach(id => {
@@ -3089,7 +3089,7 @@ document.getElementById('btn-export').onclick = () => {
         '    localStorage.setItem("slop_nodes",JSON.stringify(d.nodes));',
         '    localStorage.setItem("slop_sitetext",JSON.stringify(d.sitetext));',
         '    localStorage.setItem("slop_positions",JSON.stringify(d.positions));',
-        '    localStorage.setItem("slop_layout_ver","33v");',
+        '    localStorage.setItem("slop_layout_ver","34a");',
         '    localStorage.removeItem("slop_ticker_dismissed");',
         '  } catch(e){ console.warn("slop-boot failed",e); }',
         '})();',
@@ -3562,6 +3562,11 @@ function loadSiteText() {
     // Fix misspelled legislation label from old sessions
     if (data['leg-legislation'] && data['leg-legislation'].includes('Legislat') && !data['leg-legislation'].startsWith('Legislation')) {
       data['leg-legislation'] = 'Legislation / Policy';
+      localStorage.setItem('slop_sitetext', JSON.stringify(data));
+    }
+    // Always enforce lowercase 'slop' in site-name
+    if (data['site-name'] && data['site-name'] !== 'slop') {
+      data['site-name'] = 'slop';
       localStorage.setItem('slop_sitetext', JSON.stringify(data));
     }
     EDITABLE_IDS.forEach(id => {
@@ -4945,9 +4950,9 @@ resize();
 // Load from localStorage or use seed
 try {
   const layoutVer = localStorage.getItem('slop_layout_ver');
-  if (layoutVer !== '33v') {
+  if (layoutVer !== '34a') {
     localStorage.removeItem('slop_positions');
-    localStorage.setItem('slop_layout_ver', '33v');
+    localStorage.setItem('slop_layout_ver', '34a');
     // v33 migration: force reload from SEED so all new nodes appear
     // (editor notes from SEED are preserved via the merge below)
     localStorage.removeItem('slop_nodes');
@@ -5850,7 +5855,7 @@ document.getElementById('btn-arc').onclick = () => {
   const btn = document.getElementById('btn-arc');
   btn.style.color = _arcVisible ? 'var(--accent2)' : '';
   btn.style.borderColor = _arcVisible ? 'var(--accent2)' : '';
-  btn.style.background = _arcVisible ? 'rgba(200,168,75,0.08)' : '';
+  btn.style.background = _arcVisible ? 'rgba(232,240,0,0.1)' : '';
 };
 
 function drawFeaturedArc() {
@@ -5896,8 +5901,8 @@ function drawFeaturedArc() {
 
   // Main arc line
   ctx.strokeStyle = isLight
-    ? 'rgba(200,168,75,0.35)'
-    : 'rgba(200,168,75,0.28)';
+    ? 'rgba(232,240,0,0.45)'
+    : 'rgba(232,240,0,0.32)';
   ctx.lineWidth = Math.max(1.5, scale * 4);
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
@@ -5911,7 +5916,7 @@ function drawFeaturedArc() {
     ctx.save();
     ctx.translate(s.x, s.y - nodeR(n.impact) - dmSize * 1.6);
     ctx.rotate(Math.PI / 4);
-    ctx.fillStyle = isLight ? 'rgba(200,168,75,0.9)' : 'rgba(200,168,75,0.85)';
+    ctx.fillStyle = isLight ? 'rgba(200,168,75,0.9)' : 'rgba(232,240,0,0.85)';
     ctx.fillRect(-dmSize / 2, -dmSize / 2, dmSize, dmSize);
     ctx.restore();
   });
@@ -6109,12 +6114,4 @@ if (_isFirstVisit) {
   const btn = document.createElement('button');
   btn.id = 'btn-take-tour';
   btn.textContent = '◆ TAKE THE TOUR';
-  btn.style.cssText = 'background:none;border:1px solid var(--accent);color:var(--accent);font-family:"Space Mono",monospace;font-size:8px;letter-spacing:.1em;padding:6px 14px;cursor:pointer;text-transform:uppercase;transition:all .18s;border-radius:2px;';
-  btn.onmouseover = () => btn.style.background = 'rgba(201,50,8,0.08)';
-  btn.onmouseout  = () => btn.style.background = 'none';
-  btn.onclick = startTour;
-  nav.insertBefore(btn, nav.firstChild);
-})();
-</script>
-</body>
-</html>
+  btn.style.cssText = 'background:none;border:1px solid var(--accent);color:var(--accent
