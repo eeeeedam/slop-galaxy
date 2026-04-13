@@ -3064,7 +3064,7 @@ document.getElementById('btn-export').onclick = () => {
         nodes: nodes,
         sitetext: {},
         positions: JSON.parse(localStorage.getItem('slop_positions') || '{}'),
-        ver: '34f'
+        ver: '34h'
       };
       ['site-name','site-sub','leg-platform','leg-media','leg-cultural',
        'leg-legislation','leg-research','leg-societal'].forEach(id => {
@@ -3102,7 +3102,7 @@ document.getElementById('btn-export').onclick = () => {
         '    localStorage.setItem("slop_nodes",JSON.stringify(d.nodes));',
         '    localStorage.setItem("slop_sitetext",JSON.stringify(d.sitetext));',
         '    localStorage.setItem("slop_positions",JSON.stringify(d.positions));',
-        '    localStorage.setItem("slop_layout_ver","34f");',
+        '    localStorage.setItem("slop_layout_ver","34h");',
         '    localStorage.removeItem("slop_ticker_dismissed");',
         '  } catch(e){ console.warn("slop-boot failed",e); }',
         '})();',
@@ -4963,9 +4963,9 @@ resize();
 // Load from localStorage or use seed
 try {
   const layoutVer = localStorage.getItem('slop_layout_ver');
-  if (layoutVer !== '34f') {
+  if (layoutVer !== '34h') {
     localStorage.removeItem('slop_positions');
-    localStorage.setItem('slop_layout_ver', '34f');
+    localStorage.setItem('slop_layout_ver', '34h');
     // v33 migration: force reload from SEED so all new nodes appear
     // (editor notes from SEED are preserved via the merge below)
     localStorage.removeItem('slop_nodes');
@@ -6088,6 +6088,30 @@ function showTourStep(i) {
     image:"https://ichef.bbci.co.uk/news/1024/cpsprodpb/141f/live/f4df2dc0-3759-11f1-9d5c-8ba507d7dbde.jpg.webp",
     image_credit:"BBC",
     date_added:"2026-04-13", short_label:"Trump posts AI Jesus image, deletes it", featured:false },
+
+  { id:56, year:2026, title:"OpenAI Publishes Blueprint for a Post-Superintelligence Economy", date:"April 2026", source:"Axios / TechCrunch", category:"legislation", impact:8, slop_spill:8,
+    description:"OpenAI released a 13-page policy document proposing sweeping economic reforms in anticipation of superintelligence: taxes on automated labor, a national public wealth fund modeled on Alaska's Permanent Fund that would distribute AI gains directly to citizens, pilots of a 32-hour workweek, and containment playbooks for AI systems that become self-replicating and can't be shut down. Sam Altman told Axios that superintelligence is close enough that a New Deal-scale social contract is now necessary.",
+    significance:"The company racing to build superintelligence is simultaneously designing the safety net for its disruption — and shaping regulation before regulation shapes it. The document frames this as altruism; critics note OpenAI is preparing for an IPO at $852 billion valuation while proposing taxes it would be subject to. The admission that dangerous AI might not be stoppable once released is buried in policy language, which is itself a kind of slop.",
+    link:"https://www.axios.com/2026/04/06/behind-the-curtain-sams-superintelligence-new-deal",
+    date_added:"2026-04-13", short_label:"OpenAI's AI economy blueprint", featured:false },
+
+  { id:57, year:2026, title:"Indianapolis Councilor's Home Shot At After Voting to Approve AI Data Center", date:"April 2026", source:"CBS News / Washington Post", category:"societal", impact:9, slop_spill:5,
+    description:"Councilor Ron Gibson and his 8-year-old son were woken by gunfire at their Indianapolis home around 1am. Thirteen shots were fired at the front door. A note reading 'NO DATA CENTERS' was left on the doorstep. The shooting came days after Gibson publicly backed a $500 million data center project in his district. Gibson said the attack would not deter him.",
+    significance:"Data center backlash — driven by concerns about energy use, water consumption, noise, and neighborhood displacement — crossed into political violence. The FBI and DHS investigated. Researchers noted that data centers have become a focal point for anti-tech extremism. The shooting happened hours after Easter Sunday, steps from where his son had been playing with Legos.",
+    link:"https://www.cbsnews.com/news/indianapolis-councilor-ron-gibson-home-shooting-data-centers-note/",
+    date_added:"2026-04-13", short_label:"Councilor shot at over data center vote", featured:false },
+
+  { id:58, year:2026, title:"Stanford HAI 2026 AI Index: Adoption at Historic Speed, Transparency at Historic Low", date:"April 2026", source:"Stanford HAI", category:"research", impact:9, slop_spill:8,
+    description:"Stanford's 400-page annual AI Index found that generative AI reached 53% global adoption in three years — faster than the PC or the internet. The US consumer value of AI tools hit $172 billion annually. But the most powerful models are now the least transparent: average Foundation Model Transparency Index scores dropped from 58 to 40 in one year. OpenAI, Anthropic, and Google have stopped disclosing training data sizes and durations. The US ranks 24th globally in AI adoption despite leading in capital and infrastructure.",
+    significance:"The definitive annual data snapshot on AI confirms two things simultaneously: AI has never been more used, and the companies building it have never been less forthcoming about how it works. The transparency collapse is happening at the exact moment AI is being embedded in education, healthcare, and law. AI industry witnesses at congressional hearings have tripled since 2017; neutral academics have plummeted.",
+    link:"https://hai.stanford.edu/ai-index/2026-ai-index-report",
+    date_added:"2026-04-13", short_label:"Stanford AI Index 2026", featured:false },
+
+  { id:59, year:2025, title:"Chinese Open-Source AI Wave Brings Cheap Models — and Embedded Propaganda", date:"February 2025", source:"CEPA / NewsGuard / Check Point Research", category:"research", impact:8, slop_spill:5,
+    description:"DeepSeek's release triggered global adoption at scale: 9.5 million downloads of Alibaba's Qwen family in two months, serving as the base for 2,800 derivative models. Three separate investigations surfaced major slop problems. NewsGuard found DeepSeek gave inaccurate or no answers 83% of the time on news topics. The CEPA report documented Qwen's internal directive to keep answers about China 'positive and constructive' while staying 'neutral' on Western countries — different rules by language, different rules by subject. Estonian foreign intelligence confirmed DeepSeek inserts CCP talking points unprompted. A Weibo user caught DeepSeek fabricating Alibaba's financials with invented figures presented as fact.",
+    significance:"The slop problem here isn't accidental hallucination — it's structural. Models trained to pass government approval in China must embed content controls as a condition of existence. When those models go global and become the base layer for thousands of derivative products, the propaganda travels with them invisibly. The Swedish study's finding is the key: the risk isn't which model you use, it's which language you ask in.",
+    link:"https://cepa.org/article/chinese-ai-models-spread-propaganda-globally/",
+    date_added:"2026-04-13", short_label:"Chinese AI models ship with embedded propaganda", featured:false },
 ];
       if (!p2) return;
       const sc = ws(p2.x, p2.y);
