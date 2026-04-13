@@ -1754,6 +1754,17 @@ const CATS = {
   societal:    { color:'#FF6B35', label:'Societal Impact' },
 };
 
+// Map canvas bubble color to readable text color for light backgrounds
+function catTextColor(color) {
+  // Yellow and lime are too bright for text — use dark variant
+  const lightColors = {
+    '#E8F000': '#8A8B00',
+    '#8FE000': '#4A7800',
+  };
+  return lightColors[color] || color;
+}
+
+
 // ═══════════════════════════════════════════════════════════ LOCKED IMPACT RUBRIC
 // This rubric is the canonical scoring standard for every node — seed, bulk, or crawled.
 // Framing: impact measures epistemic/cultural damage, not just media coverage.
@@ -2336,6 +2347,7 @@ function drawNode(node) {
 
   // Glow ring on hover/select
   if (hover || sel) {
+    if (!isFinite(s.x)||!isFinite(s.y)||!isFinite(r)||r<=0) return;
     const g = ctx.createRadialGradient(s.x,s.y,r,s.x,s.y,r*2.8);
     g.addColorStop(0, cat.color+'44'); g.addColorStop(1,'transparent');
     ctx.beginPath(); ctx.arc(s.x,s.y,r*2.8,0,Math.PI*2); ctx.fillStyle=g; ctx.fill();
@@ -2343,6 +2355,7 @@ function drawNode(node) {
 
   // Pulse glow
   const pr = r*(1.4+.28*Math.sin(tick*.05+pos.drift));
+  if (!isFinite(s.x)||!isFinite(s.y)||!isFinite(r)||!isFinite(pr)||r<=0||pr<=0) return;
   const pg = ctx.createRadialGradient(s.x,s.y,r*.4,s.x,s.y,pr);
   pg.addColorStop(0,cat.color+'38'); pg.addColorStop(1,'transparent');
   ctx.beginPath(); ctx.arc(s.x,s.y,pr,0,Math.PI*2); ctx.fillStyle=pg; ctx.fill();
@@ -2716,7 +2729,7 @@ canvas.addEventListener('mousemove', e => {
   const t = document.getElementById('tip');
   if (n && !draggingNode && !document.getElementById('panel').classList.contains('open')) {
     t.style.left = (e.clientX+15)+'px'; t.style.top = (e.clientY-8)+'px';
-    t.innerHTML = `<div style="font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:${CATS[n.category]?.color||'var(--fg)'};line-height:1.3;margin-bottom:4px">${n.title}</div><div style="font-family:'DM Sans',sans-serif;font-size:11px;color:var(--sub-color);margin-bottom:3px">${n.date} · ${n.source}</div><div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--sub-color)">Impact ${n.impact}/10</div>`;
+    t.innerHTML = `<div style="font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:${catTextColor(CATS[n.category]?.color||'#121210')};line-height:1.3;margin-bottom:4px">${n.title}</div><div style="font-family:'DM Sans',sans-serif;font-size:11px;color:var(--sub-color);margin-bottom:3px">${n.date} · ${n.source}</div><div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--sub-color)">Impact ${n.impact}/10</div>`;
     t.classList.add('show');
   } else {
     t.classList.remove('show');
@@ -2812,7 +2825,7 @@ function openPanel(node){
   if (featBadge) featBadge.style.display = node.featured ? 'block' : 'none';
 
   document.getElementById('dp-cat').textContent=cat.label;
-  document.getElementById('dp-cat').style.color=cat.color;
+  document.getElementById('dp-cat').style.color=catTextColor(cat.color);
   document.getElementById('dp-title').textContent=node.title;
   document.getElementById('dp-date').textContent=node.date;
   document.getElementById('dp-src').textContent=node.source;
@@ -3051,7 +3064,7 @@ document.getElementById('btn-export').onclick = () => {
         nodes: nodes,
         sitetext: {},
         positions: JSON.parse(localStorage.getItem('slop_positions') || '{}'),
-        ver: '34a'
+        ver: '34f'
       };
       ['site-name','site-sub','leg-platform','leg-media','leg-cultural',
        'leg-legislation','leg-research','leg-societal'].forEach(id => {
@@ -3089,7 +3102,7 @@ document.getElementById('btn-export').onclick = () => {
         '    localStorage.setItem("slop_nodes",JSON.stringify(d.nodes));',
         '    localStorage.setItem("slop_sitetext",JSON.stringify(d.sitetext));',
         '    localStorage.setItem("slop_positions",JSON.stringify(d.positions));',
-        '    localStorage.setItem("slop_layout_ver","34a");',
+        '    localStorage.setItem("slop_layout_ver","34f");',
         '    localStorage.removeItem("slop_ticker_dismissed");',
         '  } catch(e){ console.warn("slop-boot failed",e); }',
         '})();',
@@ -3459,7 +3472,7 @@ function showCrawlReview(items, cfg) {
       <label for="cr-${i}" style="cursor:pointer;flex:1">
         <div style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:.06em;color:var(--fg);line-height:1.2;margin-bottom:4px">${item.title}</div>
         <div style="font-family:'Space Mono',monospace;font-size:8px;color:var(--sub-color);display:flex;gap:10px;flex-wrap:wrap">
-          <span style="color:${cat.color}">${cat.label}</span>
+          <span style="color:${catTextColor(cat.color)}">${cat.label}</span>
           <span>${item.date}</span>
           <span>${item.source||''}</span>
           <span>Impact: ${item.impact}/10</span>
@@ -4197,7 +4210,7 @@ function renderTrends(el, filtered) {
         const count = filtered.filter(n => n.category === c).length;
         const pct = filtered.length ? (count / filtered.length * 100) : 0;
         return `<div class="cat-row-t">
-          <span class="cat-lbl-t" style="color:${CATS[c].color}">${CATS[c].label}</span>
+          <span class="cat-lbl-t" style="color:${catTextColor(CATS[c].color)}">${CATS[c].label}</span>
           <div class="cat-track-t"><div class="cat-fill-t" style="width:${pct}%;background:${CATS[c].color}"></div></div>
           <span class="cat-cnt-t">${count}</span>
         </div>`;
@@ -4249,7 +4262,7 @@ function renderTrends(el, filtered) {
             <div class="tn-dot" style="background:${ic}22;color:${ic};border:1px solid ${ic}44">${n.impact}</div>
             <div class="tn-info">
               <div class="tn-title">${n.title}</div>
-              <div class="tn-meta">${n.date||'—'} &nbsp;·&nbsp; <span style="color:${cat.color}">${cat.label}</span></div>
+              <div class="tn-meta">${n.date||'—'} &nbsp;·&nbsp; <span style="color:${catTextColor(cat.color)}">${cat.label}</span></div>
             </div>
           </div>`;
         }).join('')
@@ -4778,7 +4791,7 @@ function renderListView() {
       <div class="lv-num">${i+1}</div>
       <div class="lv-title">
         <strong>${n.title}${newTag}${n.editor_note ? '<span style="font-size:9px;margin-left:5px;opacity:0.7" title="Editor\'s note">💬</span>' : ''}</strong>
-        <span style="color:${cat.color}">${cat.label}</span>
+        <span style="color:${catTextColor(cat.color)}">${cat.label}</span>
       </div>
       <div class="lv-date">${n.date||'—'}</div>
       <div class="lv-impact" style="background:${ic}22;color:${ic};border:1px solid ${ic}44">${n.impact}</div>
@@ -4810,7 +4823,7 @@ function renderGridView() {
     return `<div class="lv-card${isNew(n)?' is-new':''}" data-id="${n.id}">
       <div class="lv-card-top">
         <div style="width:8px;height:8px;border-radius:50%;background:${cat.color};flex-shrink:0"></div>
-        <span class="lv-card-cat" style="color:${cat.color}">${cat.label}</span>
+        <span class="lv-card-cat" style="color:${catTextColor(cat.color)}">${cat.label}</span>
         <span class="lv-card-date">${n.date||'—'}</span>
         ${n.editor_note ? '<span style="margin-left:4px;font-size:10px;opacity:0.7" title="Editor\'s note">💬</span>' : ''}
       </div>
@@ -4950,9 +4963,9 @@ resize();
 // Load from localStorage or use seed
 try {
   const layoutVer = localStorage.getItem('slop_layout_ver');
-  if (layoutVer !== '34a') {
+  if (layoutVer !== '34f') {
     localStorage.removeItem('slop_positions');
-    localStorage.setItem('slop_layout_ver', '34a');
+    localStorage.setItem('slop_layout_ver', '34f');
     // v33 migration: force reload from SEED so all new nodes appear
     // (editor notes from SEED are preserved via the merge below)
     localStorage.removeItem('slop_nodes');
@@ -5145,6 +5158,7 @@ document.getElementById('btn-guide-edit').onclick = () => openGuideAdminEdit();
 
       // Pulse glow — matches real drawNode
       const pr = r * (1.4 + .28 * Math.sin(tick * .05 + drift));
+      if (!isFinite(cx)||!isFinite(cy)||!isFinite(r)||!isFinite(pr)||r<=0||pr<=0) return;
       const pg = ctx.createRadialGradient(cx, cy, r * .4, cx, cy, pr);
       pg.addColorStop(0, n.color + '38'); pg.addColorStop(1, 'transparent');
       ctx.beginPath(); ctx.arc(cx, cy, pr, 0, Math.PI * 2);
@@ -6054,7 +6068,27 @@ function showTourStep(i) {
       offsetY = -(pos.y * (scale * 1.5)) + 55;
     }
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      const p2 = positions[node.id];
+      const p2 = positions[node.id
+  { id:53, year:2026, title:"The New Yorker Profiles 'Explosive News' — The Team Behind Iran's AI LEGO Propaganda", date:"April 2026", source:"The New Yorker", category:"societal", impact:8, slop_spill:3,
+    description:"Kyle Chayka investigates Explosive News, the anonymous Iranian group behind millions of AI-generated Lego-style propaganda videos during the US-Iran war. The piece coins the term 'slopaganda' — mass-produced, AI-enabled propaganda personalized for viral spread. The group claims to be student-led and independent; other outlets link it to the Iranian regime.",
+    significance:"The New Yorker legitimizing the term 'slopaganda' signals that AI propaganda has crossed into prestige media consciousness. The piece shows how cheap AI tools collapsed the cost of professional-grade influence operations — making state-level propaganda accessible to small anonymous teams.",
+    link:"https://www.newyorker.com/culture/infinite-scroll/the-team-behind-a-pro-iran-lego-themed-viral-video-campaign",
+    date_added:"2026-04-13", short_label:"NYer coins 'slopaganda'", featured:false },
+
+  { id:54, year:2026, title:"NYT Book Critic Used AI to Write Review, Plagiarizing Another Critic in the Process", date:"January 2026", source:"New York Times / The Guardian", category:"media", impact:8, slop_spill:6,
+    description:"Alex Preston's review in the New York Times was found to contain phrases and full paragraphs lifted from a Guardian review by another critic. Preston admitted to using an AI tool on his draft — the AI hallucinated the other critic's phrasing into his text. The Times dropped him and added an editor's note. The question of whether the failure was AI's or Preston's remains unresolved.",
+    significance:"First high-profile case of AI-assisted plagiarism hitting a prestige newspaper's book criticism. It exposed a new failure mode: AI doesn't just generate slop, it can launder other people's writing through a human author. The line of responsibility between tool and user becomes actively obscured.",
+    link:"https://www.newyorker.com/culture/open-questions/is-it-wrong-to-write-a-book-with-ai",
+    date_added:"2026-04-13", short_label:"NYT critic's AI review plagiarized", featured:false },
+
+  { id:55, year:2026, title:"Trump Posts AI Image Depicting Himself as Jesus, Then Deletes It", date:"April 2026", source:"CNBC / BBC / NYT", category:"societal", impact:8, slop_spill:4,
+    description:"Trump posted an AI-generated image to Truth Social showing himself as a Jesus-like figure, surrounded by angels and an American flag. After backlash — including from conservative Christians — he deleted it. When asked, Trump said he thought it depicted him as a doctor. The image had been circulating in MAGA circles for weeks before he reposted it.",
+    significance:"A sitting US president posted AI-generated religious imagery of himself, then claimed not to know what it was. The incident crystallizes how AI slop has migrated fully into political identity-making — and how plausible deniability ('I thought it was me as a doctor') has become its own genre of response.",
+    link:"https://www.cnbc.com/2026/04/13/trump-jesus-truth-social-pope-leo.html",
+    image:"https://ichef.bbci.co.uk/news/1024/cpsprodpb/141f/live/f4df2dc0-3759-11f1-9d5c-8ba507d7dbde.jpg.webp",
+    image_credit:"BBC",
+    date_added:"2026-04-13", short_label:"Trump posts AI Jesus image, deletes it", featured:false },
+];
       if (!p2) return;
       const sc = ws(p2.x, p2.y);
       const r = nodeR(node.impact) + 14;
