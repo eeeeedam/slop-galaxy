@@ -965,6 +965,75 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
   .tr-grid { grid-template-columns:1fr 1fr; }
 }
 
+
+/* ── Analytics tab styling — matches galaxy design ── */
+.an-tab {
+  font-family:'Space Mono',monospace;
+  font-size:7.5px; letter-spacing:.12em; text-transform:uppercase;
+  background:none; border:1px solid var(--dim);
+  color:var(--sub-color); padding:6px 14px;
+  cursor:pointer; transition:all .15s;
+}
+.an-tab:hover { border-color:var(--accent2); color:var(--accent2); }
+.an-tab.active {
+  background:var(--accent2); color:#0a0800;
+  border-color:var(--accent2); font-weight:700;
+}
+
+/* ── Upgrade insight box to match galaxy editorial tone ── */
+.insight {
+  font-family:'Space Mono',monospace !important;
+  font-size:9px !important; color:var(--sub-color); line-height:1.8;
+  padding:14px 18px !important;
+  border-left:2px solid var(--accent2) !important;
+  background:var(--insight-bg); margin-top:8px;
+  letter-spacing:.04em;
+}
+
+/* ── So What panel — full galaxy styling ── */
+#so-what-panel {
+  border:1px solid var(--accent2) !important;
+  background:rgba(200,168,75,0.06) !important;
+}
+#so-what-text {
+  font-family:'DM Sans',sans-serif;
+  font-size:13px; line-height:1.8;
+  color:var(--fg) !important;
+}
+
+/* ── Chart titles — tighter galaxy style ── */
+.chart-title {
+  font-family:'Space Mono',monospace;
+  font-size:7.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--sub-color); margin-bottom:10px;
+  border-bottom:1px solid var(--dim); padding-bottom:8px;
+}
+
+/* ── Stat cards — use galaxy accent ── */
+.sc-val {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:36px; color:var(--accent2); line-height:1;
+  letter-spacing:.03em;
+}
+.sc-label {
+  font-family:'Space Mono',monospace;
+  font-size:7px; letter-spacing:.14em;
+  color:var(--sub-color); margin-top:6px; text-transform:uppercase;
+}
+
+/* ── So What button — galaxy accent style ── */
+#btn-so-what {
+  font-family:'Space Mono',monospace !important;
+  font-size:7px !important; letter-spacing:.12em !important;
+  background:rgba(200,168,75,0.15) !important;
+  color:var(--accent2) !important;
+  border:1px solid var(--accent2) !important;
+  padding:5px 12px !important; cursor:pointer;
+  transition:all .15s !important;
+  text-transform:uppercase;
+}
+#btn-so-what:hover { background:var(--accent2) !important; color:#0a0800 !important; }
+#btn-so-what:disabled { opacity:0.5 !important; cursor:wait !important; }
 </style>
 </head>
 <body>
@@ -1311,6 +1380,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
   <button class="btn btn-export-style" id="btn-export" style="display:none">⬇ EXPORT SITE</button>
   <button class="btn" id="btn-data-read" style="display:none;border-color:rgba(200,168,75,0.5);color:var(--accent2);">⊞ DATA VIEW</button>
   <button class="btn" id="btn-data-edit" style="display:none;border-color:rgba(200,168,75,0.5);color:var(--accent2);">✎ DATA EDIT</button>
+  <button class="btn" id="btn-admin-toggle" onclick="toggleAdminMode()" title="Toggle admin mode" style="font-size:10px;padding:2px 8px;opacity:0.4;">⚙</button>
   <button class="btn" id="btn-theme" title="Toggle light/dark mode" style="font-size:15px;padding:1px 8px;line-height:1;">☼</button>
 </div>
 
@@ -1366,6 +1436,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
     <h2>PATTERN <span>ANALYSIS</span></h2>
     <div style="display:flex;align-items:center;gap:12px">
       <span style="font-size:9px;color:var(--sub-color);letter-spacing:.08em">NODES ANALYSED: <span id="an-total" style="color:var(--accent2)">0</span></span>
+      <button id="btn-so-what" onclick="runSoWhat()" style="font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.1em;text-transform:uppercase;background:var(--accent2);color:#0a0800;border:none;padding:5px 12px;cursor:pointer;font-weight:700;display:flex;align-items:center;gap:6px;transition:opacity .15s;" title="Generate a fresh editorial synthesis using AI">✦ SO WHAT?</button>
       <button id="btn-view-galaxy" style="background:rgba(255,209,102,0.12);border:1px solid var(--accent2);color:var(--accent2);font-family:'Space Mono',monospace;font-size:9px;padding:5px 12px;cursor:pointer;letter-spacing:.07em;transition:all .18s;">◈ VIEW IN GALAXY</button>
       <button id="analytics-close">✕</button>
     </div>
@@ -1936,7 +2007,89 @@ const SEED = [
     link:"https://www.nature.com/articles/d41586-026-01100-y",
     image:"https://media.nature.com/lw767/magazine-assets/d41586-026-01100-y/d41586-026-01100-y_52244256.jpg?as=webp",
     image_credit:"Nature",
-    date_added:"2026-04-08" }
+    date_added:"2026-04-08" },
+  { id:53, year:2026, title:"The New Yorker Profiles 'Explosive News' — The Team Behind Iran's AI LEGO Propaganda", date:"April 2026", source:"The New Yorker", category:"societal", impact:8, slop_spill:3,
+    description:"Kyle Chayka investigates Explosive News, the anonymous Iranian group behind millions of AI-generated Lego-style propaganda videos during the US-Iran war. The piece coins the term 'slopaganda' — mass-produced, AI-enabled propaganda personalized for viral spread. The group claims to be student-led and independent; other outlets link it to the Iranian regime.",
+    significance:"The New Yorker legitimizing the term 'slopaganda' signals that AI propaganda has crossed into prestige media consciousness. The piece shows how cheap AI tools collapsed the cost of professional-grade influence operations — making state-level propaganda accessible to small anonymous teams.",
+    link:"https://www.newyorker.com/culture/infinite-scroll/the-team-behind-a-pro-iran-lego-themed-viral-video-campaign",
+    date_added:"2026-04-13", short_label:"NYer coins 'slopaganda'", featured:false },
+
+  { id:54, year:2026, title:"NYT Book Critic Used AI to Write Review, Plagiarizing Another Critic in the Process", date:"January 2026", source:"New York Times / The Guardian", category:"media", impact:8, slop_spill:6,
+    description:"Alex Preston's review in the New York Times was found to contain phrases and full paragraphs lifted from a Guardian review by another critic. Preston admitted to using an AI tool on his draft — the AI hallucinated the other critic's phrasing into his text. The Times dropped him and added an editor's note. The question of whether the failure was AI's or Preston's remains unresolved.",
+    significance:"First high-profile case of AI-assisted plagiarism hitting a prestige newspaper's book criticism. It exposed a new failure mode: AI doesn't just generate slop, it can launder other people's writing through a human author. The line of responsibility between tool and user becomes actively obscured.",
+    link:"https://www.newyorker.com/culture/open-questions/is-it-wrong-to-write-a-book-with-ai",
+    date_added:"2026-04-13", short_label:"NYT critic's AI review plagiarized", featured:false },
+
+  { id:55, year:2026, title:"Trump Posts AI Image Depicting Himself as Jesus, Then Deletes It", date:"April 2026", source:"CNBC / BBC / NYT", category:"societal", impact:8, slop_spill:4,
+    description:"Trump posted an AI-generated image to Truth Social showing himself as a Jesus-like figure, surrounded by angels and an American flag. After backlash — including from conservative Christians — he deleted it. When asked, Trump said he thought it depicted him as a doctor. The image had been circulating in MAGA circles for weeks before he reposted it.",
+    significance:"A sitting US president posted AI-generated religious imagery of himself, then claimed not to know what it was. The incident crystallizes how AI slop has migrated fully into political identity-making — and how plausible deniability ('I thought it was me as a doctor') has become its own genre of response.",
+    link:"https://www.cnbc.com/2026/04/13/trump-jesus-truth-social-pope-leo.html",
+    image:"https://ichef.bbci.co.uk/news/1024/cpsprodpb/141f/live/f4df2dc0-3759-11f1-9d5c-8ba507d7dbde.jpg.webp",
+    image_credit:"BBC",
+    date_added:"2026-04-13", short_label:"Trump posts AI Jesus image, deletes it", featured:false },
+
+  { id:56, year:2026, title:"OpenAI Publishes Blueprint for a Post-Superintelligence Economy", date:"April 2026", source:"Axios / TechCrunch", category:"legislation", impact:8, slop_spill:8,
+    description:"OpenAI released a 13-page policy document proposing sweeping economic reforms in anticipation of superintelligence: taxes on automated labor, a national public wealth fund modeled on Alaska's Permanent Fund that would distribute AI gains directly to citizens, pilots of a 32-hour workweek, and containment playbooks for AI systems that become self-replicating and can't be shut down. Sam Altman told Axios that superintelligence is close enough that a New Deal-scale social contract is now necessary.",
+    significance:"The company racing to build superintelligence is simultaneously designing the safety net for its disruption — and shaping regulation before regulation shapes it. The document frames this as altruism; critics note OpenAI is preparing for an IPO at $852 billion valuation while proposing taxes it would be subject to. The admission that dangerous AI might not be stoppable once released is buried in policy language, which is itself a kind of slop.",
+    link:"https://www.axios.com/2026/04/06/behind-the-curtain-sams-superintelligence-new-deal",
+    date_added:"2026-04-13", short_label:"OpenAI's AI economy blueprint", featured:false },
+
+  { id:57, year:2026, title:"Indianapolis Councilor's Home Shot At After Voting to Approve AI Data Center", date:"April 2026", source:"CBS News / Washington Post", category:"societal", impact:9, slop_spill:5,
+    description:"Councilor Ron Gibson and his 8-year-old son were woken by gunfire at their Indianapolis home around 1am. Thirteen shots were fired at the front door. A note reading 'NO DATA CENTERS' was left on the doorstep. The shooting came days after Gibson publicly backed a $500 million data center project in his district. Gibson said the attack would not deter him.",
+    significance:"Data center backlash — driven by concerns about energy use, water consumption, noise, and neighborhood displacement — crossed into political violence. The FBI and DHS investigated. Researchers noted that data centers have become a focal point for anti-tech extremism. The shooting happened hours after Easter Sunday, steps from where his son had been playing with Legos.",
+    link:"https://www.cbsnews.com/news/indianapolis-councilor-ron-gibson-home-shooting-data-centers-note/",
+    date_added:"2026-04-13", short_label:"Councilor shot at over data center vote", featured:false },
+
+  { id:58, year:2026, title:"Stanford HAI 2026 AI Index: Adoption at Historic Speed, Transparency at Historic Low", date:"April 2026", source:"Stanford HAI", category:"research", impact:9, slop_spill:8,
+    description:"Stanford's 400-page annual AI Index found that generative AI reached 53% global adoption in three years — faster than the PC or the internet. The US consumer value of AI tools hit $172 billion annually. But the most powerful models are now the least transparent: average Foundation Model Transparency Index scores dropped from 58 to 40 in one year. OpenAI, Anthropic, and Google have stopped disclosing training data sizes and durations. The US ranks 24th globally in AI adoption despite leading in capital and infrastructure.",
+    significance:"The definitive annual data snapshot on AI confirms two things simultaneously: AI has never been more used, and the companies building it have never been less forthcoming about how it works. The transparency collapse is happening at the exact moment AI is being embedded in education, healthcare, and law. AI industry witnesses at congressional hearings have tripled since 2017; neutral academics have plummeted.",
+    link:"https://hai.stanford.edu/ai-index/2026-ai-index-report",
+    date_added:"2026-04-13", short_label:"Stanford AI Index 2026", featured:false },
+
+  { id:59, year:2025, title:"Chinese Open-Source AI Wave Brings Cheap Models — and Embedded Propaganda", date:"February 2025", source:"CEPA / NewsGuard / Check Point Research", category:"research", impact:8, slop_spill:5,
+    description:"DeepSeek's release triggered global adoption at scale: 9.5 million downloads of Alibaba's Qwen family in two months, serving as the base for 2,800 derivative models. Three separate investigations surfaced major slop problems. NewsGuard found DeepSeek gave inaccurate or no answers 83% of the time on news topics. The CEPA report documented Qwen's internal directive to keep answers about China 'positive and constructive' while staying 'neutral' on Western countries — different rules by language, different rules by subject. Estonian foreign intelligence confirmed DeepSeek inserts CCP talking points unprompted. A Weibo user caught DeepSeek fabricating Alibaba's financials with invented figures presented as fact.",
+    significance:"The slop problem here isn't accidental hallucination — it's structural. Models trained to pass government approval in China must embed content controls as a condition of existence. When those models go global and become the base layer for thousands of derivative products, the propaganda travels with them invisibly. The Swedish study's finding is the key: the risk isn't which model you use, it's which language you ask in.",
+    link:"https://cepa.org/article/chinese-ai-models-spread-propaganda-globally/",
+    date_added:"2026-04-13", short_label:"Chinese AI models ship with embedded propaganda", featured:false },
+
+  { id:60, year:2026, title:"Kids Are Making AI Slop Art — and Parents Don't Know How to Feel About It", date:"April 2026", source:"The Cut", category:"cultural", impact:7, slop_spill:3,
+    description:"The Cut published a piece on the growing phenomenon of children creating AI-generated artwork — using tools to produce images they proudly present as their own. Parents are caught between dismissing it as slop and acknowledging that creative instinct is still present, even if the output isn't. The piece sits at the intersection of child development, authorship, and what creativity means when a tool does most of the work.",
+    significance:"When a child makes AI art, who made it? This is the generational version of the authorship question the galaxy tracks across journalism and literature. Children absorbing AI-generated media and then producing it back is the feedback loop in its earliest form.",
+    link:"https://www.thecut.com/article/brooding-when-kids-make-ai-slop-art.html",
+    image:"https://pyxis.nymag.com/v1/imgs/719/d3f/98ae3e62f357c595590c7a59e88739d26f-creative-pursuits.rhorizontal.w700.jpg",
+    image_credit:"The Cut",
+    date_added:"2026-04-13", short_label:"Kids making AI slop art", featured:false },
+
+  { id:61, year:2026, title:"AI-Generated Fake Artemis II Moon Photos Flood Social Media During Real Mission", date:"April 2026", source:"SF Standard / PolitiFact / Snopes", category:"societal", impact:8, slop_spill:4,
+    description:"When NASA's Artemis II mission completed its historic lunar flyby on April 6, 2026 — the first crewed moon mission in over 50 years — AI-generated fake moon photos flooded social media within hours. Some were used by conspiracy theorists to claim the mission was staged. The irony: the fake photos used to debunk the real mission were themselves AI fakes, created with Google Gemini (confirmed by SynthID watermarks). UC Berkeley image-verification expert Hany Farid: 'This is the world we live in, where you can\'t tell if something is fake.'",
+    significance:"A historic moment of human achievement immediately colonized by AI slop — not just to mislead, but to fuel the conspiracy that the achievement itself was fake. The loop: AI generates slop → slop erodes trust → slop is used to deny reality. It used to be 'pics or it didn\'t happen.' Now it\'s 'is it AI?'",
+    link:"https://sfstandard.com/2026/04/10/artemis-ii-moon-photos-fake/",
+    date_added:"2026-04-13", short_label:"AI slop hijacks Artemis II", featured:false },
+
+  { id:62, year:2026, title:"Super Mario Becomes the Face of TikTok Shop AI Slop", date:"2026", source:"Polygon", category:"platform", impact:7, slop_spill:2,
+    description:"Polygon documented how Super Mario's likeness has become ubiquitous in TikTok Shop AI-generated product videos — resin lamps, knockoff merchandise, and algorithmic content farms using the iconic IP to drive clicks and purchases. The pattern shows how recognizable cultural IP is being strip-mined by AI slop generators to manufacture engagement, bypassing both copyright and consumer discernment.",
+    significance:"When a beloved character becomes a vector for algorithmic slop commerce, something has changed in the relationship between IP, platform, and trust. Nintendo has never authorized this use. TikTok's moderation hasn't stopped it. The character becomes the lure, the product is irrelevant, and the consumer is the target.",
+    link:"https://www.polygon.com/super-mario-has-become-the-face-of-tiktok-shop-ai-slop/",
+    date_added:"2026-04-13", short_label:"Mario becomes TikTok Shop slop face", featured:false },
+
+  { id:63, year:2026, title:"Forbes: Fans Increasingly Seeing AI Slop in the Arts — and Calling It Out", date:"April 2026", source:"Forbes", category:"cultural", impact:7, slop_spill:5,
+    description:"Rob Salkowitz at Forbes documented the growing fan backlash to AI infiltration in arts and entertainment — comics, music, gaming, film. Fan communities are developing their own detection practices and organizing boycotts. The piece traces how audiences, not institutions, are becoming the first line of identification.",
+    significance:"Fans are doing the work that platforms and publishers aren\'t. The same communities that built these art forms are becoming their informal quality-control layer. That\'s a kind of cultural immune response — but it shouldn\'t be the fans\' job.",
+    link:"https://www.forbes.com/sites/robsalkowitz/2026/04/09/ai-infiltration-into-the-arts-has-fans-seeing-slop-everywhere/",
+    date_added:"2026-04-13", short_label:"Fans calling out AI slop in arts", featured:false },
+
+  { id:64, year:2026, title:"Brands Start Adding 'No AI' Disclaimers to Stand Out From the Slop", date:"April 2026", source:"Wall Street Journal", category:"platform", impact:7, slop_spill:7,
+    description:"The WSJ reported that brands including Aerie and Le Creuset are proactively adding 'no AI' pledges to their advertising — not because they were caught, but as a marketing differentiator. Aerie: 'We commit: No AI generated bodies or people.' Consumer data behind it: 68% of consumers frequently wonder whether content they see is real, and 50% prefer brands that avoid generative AI in marketing. Human authenticity is now a product feature.",
+    significance:"The moment 'made by humans' becomes a premium differentiator is the moment we\'ve accepted AI slop as the default. This is a spill — a cultural and market consequence of the slop era. The anti-slop pledge is itself a data point about how normalized slop has become.",
+    link:"https://www.wsj.com/cmo-today/brands-adopt-no-ai-disclaimers-to-stand-out-amid-the-slop-a92352af",
+    date_added:"2026-04-13", short_label:"'No AI' becomes a brand selling point", featured:false },
+
+  { id:65, year:2026, title:"The Verge: Iran\'s AI Lego Propaganda Fills Information Void Left by Regime\'s Own Internet Blackout", date:"April 2026", source:"The Verge", category:"societal", impact:8, slop_spill:4,
+    description:"The Verge reported on the deeper paradox of Iran\'s AI propaganda wave: while the regime maintained a 42+ day internet blackout cutting off 99% of its own population, it whitelisted specific creators to produce AI-generated Lego content for Western audiences. The slop traveled outward while the population it nominally served couldn\'t see it.",
+    significance:"State-sponsored AI slop doesn\'t need to persuade the home audience. It only needs to reach the target. The internet blackout-plus-whitelisted-creators model is a new playbook: suppress internally, amplify externally, manufacture authenticity through apparent independence.",
+    link:"https://www.theverge.com/policy/910401/iran-war-propaganda-blackout-lego-ai-slop",
+    date_added:"2026-04-13", short_label:"Iran blackout + AI slop whitelisting", featured:false },
+
 ];
 
 // ═══════════════════════════════════════════════════════════ STATE
@@ -3064,7 +3217,7 @@ document.getElementById('btn-export').onclick = () => {
         nodes: nodes,
         sitetext: {},
         positions: JSON.parse(localStorage.getItem('slop_positions') || '{}'),
-        ver: '34h'
+        ver: '34i'
       };
       ['site-name','site-sub','leg-platform','leg-media','leg-cultural',
        'leg-legislation','leg-research','leg-societal'].forEach(id => {
@@ -3102,7 +3255,7 @@ document.getElementById('btn-export').onclick = () => {
         '    localStorage.setItem("slop_nodes",JSON.stringify(d.nodes));',
         '    localStorage.setItem("slop_sitetext",JSON.stringify(d.sitetext));',
         '    localStorage.setItem("slop_positions",JSON.stringify(d.positions));',
-        '    localStorage.setItem("slop_layout_ver","34h");',
+        '    localStorage.setItem("slop_layout_ver","34i");',
         '    localStorage.removeItem("slop_ticker_dismissed");',
         '  } catch(e){ console.warn("slop-boot failed",e); }',
         '})();',
@@ -3845,6 +3998,13 @@ function renderOverview(el, filtered) {
       <div class="stat-card"><div class="sc-val">${topYear||'—'}</div><div class="sc-label">Peak Year</div><div class="sc-sub">${byYear[topYear]||0} events</div></div>
     </div>
     <div class="insight">${generateInsight(filtered)}</div>
+    <div id="so-what-panel" style="display:none;margin-top:16px;border:1px solid var(--accent2);background:rgba(200,168,75,0.07);padding:18px 20px;">
+      <div style="font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent2);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;">
+        <span>✦ SO WHAT — AI SYNTHESIS</span>
+        <span id="so-what-date" style="opacity:.5;"></span>
+      </div>
+      <div id="so-what-text" style="font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.75;color:var(--fg);white-space:pre-wrap;"></div>
+    </div>
     <div class="chart-block" style="margin-top:20px">
       <div class="chart-title">EVENTS PER YEAR <span>— count</span></div>
       <canvas class="chart-canvas" id="chart-ov-year" height="160"></canvas>
@@ -4963,9 +5123,9 @@ resize();
 // Load from localStorage or use seed
 try {
   const layoutVer = localStorage.getItem('slop_layout_ver');
-  if (layoutVer !== '34h') {
+  if (layoutVer !== '34i') {
     localStorage.removeItem('slop_positions');
-    localStorage.setItem('slop_layout_ver', '34h');
+    localStorage.setItem('slop_layout_ver', '34i');
     // v33 migration: force reload from SEED so all new nodes appear
     // (editor notes from SEED are preserved via the merge below)
     localStorage.removeItem('slop_nodes');
@@ -6068,51 +6228,7 @@ function showTourStep(i) {
       offsetY = -(pos.y * (scale * 1.5)) + 55;
     }
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      const p2 = positions[node.id
-  { id:53, year:2026, title:"The New Yorker Profiles 'Explosive News' — The Team Behind Iran's AI LEGO Propaganda", date:"April 2026", source:"The New Yorker", category:"societal", impact:8, slop_spill:3,
-    description:"Kyle Chayka investigates Explosive News, the anonymous Iranian group behind millions of AI-generated Lego-style propaganda videos during the US-Iran war. The piece coins the term 'slopaganda' — mass-produced, AI-enabled propaganda personalized for viral spread. The group claims to be student-led and independent; other outlets link it to the Iranian regime.",
-    significance:"The New Yorker legitimizing the term 'slopaganda' signals that AI propaganda has crossed into prestige media consciousness. The piece shows how cheap AI tools collapsed the cost of professional-grade influence operations — making state-level propaganda accessible to small anonymous teams.",
-    link:"https://www.newyorker.com/culture/infinite-scroll/the-team-behind-a-pro-iran-lego-themed-viral-video-campaign",
-    date_added:"2026-04-13", short_label:"NYer coins 'slopaganda'", featured:false },
-
-  { id:54, year:2026, title:"NYT Book Critic Used AI to Write Review, Plagiarizing Another Critic in the Process", date:"January 2026", source:"New York Times / The Guardian", category:"media", impact:8, slop_spill:6,
-    description:"Alex Preston's review in the New York Times was found to contain phrases and full paragraphs lifted from a Guardian review by another critic. Preston admitted to using an AI tool on his draft — the AI hallucinated the other critic's phrasing into his text. The Times dropped him and added an editor's note. The question of whether the failure was AI's or Preston's remains unresolved.",
-    significance:"First high-profile case of AI-assisted plagiarism hitting a prestige newspaper's book criticism. It exposed a new failure mode: AI doesn't just generate slop, it can launder other people's writing through a human author. The line of responsibility between tool and user becomes actively obscured.",
-    link:"https://www.newyorker.com/culture/open-questions/is-it-wrong-to-write-a-book-with-ai",
-    date_added:"2026-04-13", short_label:"NYT critic's AI review plagiarized", featured:false },
-
-  { id:55, year:2026, title:"Trump Posts AI Image Depicting Himself as Jesus, Then Deletes It", date:"April 2026", source:"CNBC / BBC / NYT", category:"societal", impact:8, slop_spill:4,
-    description:"Trump posted an AI-generated image to Truth Social showing himself as a Jesus-like figure, surrounded by angels and an American flag. After backlash — including from conservative Christians — he deleted it. When asked, Trump said he thought it depicted him as a doctor. The image had been circulating in MAGA circles for weeks before he reposted it.",
-    significance:"A sitting US president posted AI-generated religious imagery of himself, then claimed not to know what it was. The incident crystallizes how AI slop has migrated fully into political identity-making — and how plausible deniability ('I thought it was me as a doctor') has become its own genre of response.",
-    link:"https://www.cnbc.com/2026/04/13/trump-jesus-truth-social-pope-leo.html",
-    image:"https://ichef.bbci.co.uk/news/1024/cpsprodpb/141f/live/f4df2dc0-3759-11f1-9d5c-8ba507d7dbde.jpg.webp",
-    image_credit:"BBC",
-    date_added:"2026-04-13", short_label:"Trump posts AI Jesus image, deletes it", featured:false },
-
-  { id:56, year:2026, title:"OpenAI Publishes Blueprint for a Post-Superintelligence Economy", date:"April 2026", source:"Axios / TechCrunch", category:"legislation", impact:8, slop_spill:8,
-    description:"OpenAI released a 13-page policy document proposing sweeping economic reforms in anticipation of superintelligence: taxes on automated labor, a national public wealth fund modeled on Alaska's Permanent Fund that would distribute AI gains directly to citizens, pilots of a 32-hour workweek, and containment playbooks for AI systems that become self-replicating and can't be shut down. Sam Altman told Axios that superintelligence is close enough that a New Deal-scale social contract is now necessary.",
-    significance:"The company racing to build superintelligence is simultaneously designing the safety net for its disruption — and shaping regulation before regulation shapes it. The document frames this as altruism; critics note OpenAI is preparing for an IPO at $852 billion valuation while proposing taxes it would be subject to. The admission that dangerous AI might not be stoppable once released is buried in policy language, which is itself a kind of slop.",
-    link:"https://www.axios.com/2026/04/06/behind-the-curtain-sams-superintelligence-new-deal",
-    date_added:"2026-04-13", short_label:"OpenAI's AI economy blueprint", featured:false },
-
-  { id:57, year:2026, title:"Indianapolis Councilor's Home Shot At After Voting to Approve AI Data Center", date:"April 2026", source:"CBS News / Washington Post", category:"societal", impact:9, slop_spill:5,
-    description:"Councilor Ron Gibson and his 8-year-old son were woken by gunfire at their Indianapolis home around 1am. Thirteen shots were fired at the front door. A note reading 'NO DATA CENTERS' was left on the doorstep. The shooting came days after Gibson publicly backed a $500 million data center project in his district. Gibson said the attack would not deter him.",
-    significance:"Data center backlash — driven by concerns about energy use, water consumption, noise, and neighborhood displacement — crossed into political violence. The FBI and DHS investigated. Researchers noted that data centers have become a focal point for anti-tech extremism. The shooting happened hours after Easter Sunday, steps from where his son had been playing with Legos.",
-    link:"https://www.cbsnews.com/news/indianapolis-councilor-ron-gibson-home-shooting-data-centers-note/",
-    date_added:"2026-04-13", short_label:"Councilor shot at over data center vote", featured:false },
-
-  { id:58, year:2026, title:"Stanford HAI 2026 AI Index: Adoption at Historic Speed, Transparency at Historic Low", date:"April 2026", source:"Stanford HAI", category:"research", impact:9, slop_spill:8,
-    description:"Stanford's 400-page annual AI Index found that generative AI reached 53% global adoption in three years — faster than the PC or the internet. The US consumer value of AI tools hit $172 billion annually. But the most powerful models are now the least transparent: average Foundation Model Transparency Index scores dropped from 58 to 40 in one year. OpenAI, Anthropic, and Google have stopped disclosing training data sizes and durations. The US ranks 24th globally in AI adoption despite leading in capital and infrastructure.",
-    significance:"The definitive annual data snapshot on AI confirms two things simultaneously: AI has never been more used, and the companies building it have never been less forthcoming about how it works. The transparency collapse is happening at the exact moment AI is being embedded in education, healthcare, and law. AI industry witnesses at congressional hearings have tripled since 2017; neutral academics have plummeted.",
-    link:"https://hai.stanford.edu/ai-index/2026-ai-index-report",
-    date_added:"2026-04-13", short_label:"Stanford AI Index 2026", featured:false },
-
-  { id:59, year:2025, title:"Chinese Open-Source AI Wave Brings Cheap Models — and Embedded Propaganda", date:"February 2025", source:"CEPA / NewsGuard / Check Point Research", category:"research", impact:8, slop_spill:5,
-    description:"DeepSeek's release triggered global adoption at scale: 9.5 million downloads of Alibaba's Qwen family in two months, serving as the base for 2,800 derivative models. Three separate investigations surfaced major slop problems. NewsGuard found DeepSeek gave inaccurate or no answers 83% of the time on news topics. The CEPA report documented Qwen's internal directive to keep answers about China 'positive and constructive' while staying 'neutral' on Western countries — different rules by language, different rules by subject. Estonian foreign intelligence confirmed DeepSeek inserts CCP talking points unprompted. A Weibo user caught DeepSeek fabricating Alibaba's financials with invented figures presented as fact.",
-    significance:"The slop problem here isn't accidental hallucination — it's structural. Models trained to pass government approval in China must embed content controls as a condition of existence. When those models go global and become the base layer for thousands of derivative products, the propaganda travels with them invisibly. The Swedish study's finding is the key: the risk isn't which model you use, it's which language you ask in.",
-    link:"https://cepa.org/article/chinese-ai-models-spread-propaganda-globally/",
-    date_added:"2026-04-13", short_label:"Chinese AI models ship with embedded propaganda", featured:false },
-];
+      const p2 = positions[node.id];
       if (!p2) return;
       const sc = ws(p2.x, p2.y);
       const r = nodeR(node.impact) + 14;
@@ -6172,4 +6288,90 @@ if (_isFirstVisit) {
   const btn = document.createElement('button');
   btn.id = 'btn-take-tour';
   btn.textContent = '◆ TAKE THE TOUR';
-  btn.style.cssText = 'background:none;border:1px solid var(--accent);color:var(--accent
+  btn.style.cssText = 'background:none;border:1px solid var(--accent);color:var(--accent';
+  btn.addEventListener('click', startTour);
+  nav.appendChild(btn);
+})();
+</script>
+
+
+<script>
+// ── WEEKLY SO WHAT — AI synthesis via Anthropic API ──────────────────────────
+async function runSoWhat() {
+  const btn = document.getElementById('btn-so-what');
+  const textEl = document.getElementById('so-what-text');
+  const dateEl = document.getElementById('so-what-date');
+  const panel = document.getElementById('so-what-panel');
+  if (!panel || !btn) return;
+
+  btn.textContent = '✦ GENERATING...';
+  btn.style.opacity = '0.6';
+  btn.disabled = true;
+  panel.style.display = 'block';
+  if (textEl) textEl.textContent = '';
+
+  const filtered = anFiltered();
+  const sorted = [...filtered].sort((a,b) => (b.date_added||'').localeCompare(a.date_added||'') || b.impact - a.impact);
+  const recent = sorted.slice(0, 20);
+
+  const nodeSummary = recent.map(n =>
+    `[${n.date||n.year}] ${n.title} (${(CATS[n.category]||{}).label||n.category}, impact ${n.impact}/10)${n.significance ? ' — ' + n.significance.slice(0,100) : ''}`
+  ).join('\n');
+
+  const totalByCategory = {};
+  filtered.forEach(n => { totalByCategory[n.category] = (totalByCategory[n.category]||0)+1; });
+  const catSummary = Object.entries(totalByCategory).sort((a,b)=>b[1]-a[1])
+    .map(([k,v]) => `${(CATS[k]||{}).label||k}: ${v}`).join(', ');
+  const avgImpact = filtered.length ? (filtered.reduce((s,n)=>s+n.impact,0)/filtered.length).toFixed(1) : 0;
+  const highImpact = filtered.filter(n=>n.impact>=8).length;
+
+  const prompt = `You are the editorial voice of the Slop Galaxy — a living archive tracking AI-generated content and its cultural consequences. The galaxy currently has ${filtered.length} documented moments.
+
+Category breakdown: ${catSummary}
+Average impact score: ${avgImpact}/10
+High-impact events (8+): ${highImpact}
+
+Most recent and significant nodes:
+${nodeSummary}
+
+Write a sharp, opinionated 3-4 paragraph "so what" synthesis. This is editorial analysis, not a summary. Find the through-line. Name the patterns. Say something we wouldn't notice just from the list. Use the voice of someone who has been watching this unfold in real time — specific, direct, occasionally wry. No bullet points. No headers. Plain paragraphs. End with one sentence about what to watch for next.`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await response.json();
+    const text = (data.content && data.content[0] && data.content[0].text) || 'Could not generate synthesis.';
+    if (textEl) textEl.textContent = text;
+    if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
+  } catch (err) {
+    if (textEl) textEl.textContent = 'Error generating synthesis. Check console.';
+    console.error('So What error:', err);
+  } finally {
+    btn.textContent = '✦ SO WHAT?';
+    btn.style.opacity = '1';
+    btn.disabled = false;
+  }
+}
+
+function toggleAdminMode() {
+  adminMode = !adminMode;
+  const btn = document.getElementById('btn-admin-toggle');
+  if (btn) btn.style.opacity = adminMode ? '1' : '0.4';
+  const adminEls = ['btn-add','btn-bulk','btn-export','btn-data-read','btn-data-edit','btn-undo'];
+  adminEls.forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el) el.style.display = adminMode ? '' : 'none';
+  });
+  const hint = document.getElementById('edit-hint');
+  if (hint) hint.style.display = adminMode ? '' : 'none';
+}
+</script>
+</body>
+</html>
