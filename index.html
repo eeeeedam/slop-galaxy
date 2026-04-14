@@ -1432,7 +1432,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
   <button class="btn btn-export-style" id="btn-export" style="display:none">⬇ EXPORT SITE</button>
   <button class="btn" id="btn-data-read" style="display:none;border-color:rgba(200,168,75,0.5);color:var(--lime);">⊞ DATA VIEW</button>
   <button class="btn" id="btn-data-edit" style="display:none;border-color:rgba(200,168,75,0.5);color:var(--lime);">✎ DATA EDIT</button>
-  <button class="btn" id="btn-admin-toggle" onclick="toggleAdminMode()" title="Toggle admin mode" style="font-size:10px;padding:2px 8px;opacity:0.4;">⚙</button>
+  <button class="btn" id="btn-admin-toggle" onclick="promptAdminToggle()" title="" style="font-size:10px;padding:2px 8px;opacity:0.15;font-size:0;width:16px;height:16px;border-radius:50%;padding:0;min-width:0;border-color:rgba(255,255,255,0.08);">⚙</button>
   <button class="btn" id="btn-theme" title="Toggle light/dark mode" style="display:none;">☼</button>
   <button class="btn active-style" id="btn-patterns" style="display:none;">◈ PATTERNS</button>
   <button class="btn active-style" id="btn-listview" style="display:none;">≡ LIST</button>
@@ -1490,7 +1490,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
     <h2 style="font-family:'Instrument Serif',serif;font-size:22px;letter-spacing:-.02em;font-style:italic;font-weight:normal;">slop patterns <span style="color:var(--lime)">+ trends</span></h2>
     <div style="display:flex;align-items:center;gap:12px">
       <span style="font-size:9px;color:var(--sub-color);letter-spacing:.08em">NODES ANALYSED: <span id="an-total" style="color:var(--lime)">0</span></span>
-      <button id="btn-so-what" onclick="runSoWhat()" style="font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.1em;text-transform:uppercase;background:var(--accent2);color:#0a0800;border:none;padding:5px 12px;cursor:pointer;font-weight:700;display:flex;align-items:center;gap:6px;transition:opacity .15s;" title="Generate a fresh editorial synthesis using AI">✦ SO WHAT?</button>
+      
       <button id="btn-view-galaxy" style="background:rgba(255,209,102,0.12);border:1px solid var(--accent2);color:var(--lime);font-family:'Space Mono',monospace;font-size:9px;padding:5px 12px;cursor:pointer;letter-spacing:.07em;transition:all .18s;">◈ VIEW IN GALAXY</button>
       <button id="analytics-close">✕</button>
     </div>
@@ -4054,10 +4054,10 @@ function renderOverview(el, filtered) {
     <div class="insight">${generateInsight(filtered)}</div>
     <div id="so-what-panel" style="display:block;margin-top:16px;border:1px solid var(--accent2);background:rgba(200,168,75,0.07);padding:18px 20px;">
       <div style="font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent2);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;">
-        <span>✦ SO WHAT — AI SYNTHESIS</span>
-        <span id="so-what-date" style="opacity:.5;">Apr 14, 2026</span>
+        <span>✦ SO WHAT — SYNTHESIS</span>
+        <span id="so-what-date" contenteditable="true" style="opacity:.7;cursor:text;border-bottom:1px dashed rgba(200,168,75,0.4);padding:0 2px;outline:none;min-width:60px;display:inline-block;" title="Click to edit date">Apr 14, 2026</span>
       </div>
-      <div id="so-what-text" style="font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.75;color:var(--fg);white-space:pre-wrap;">The galaxy now documents 64 moments — and the pattern they form is not random.
+      <div id="so-what-text" contenteditable="true" style="font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.75;color:var(--fg);white-space:pre-wrap;outline:none;cursor:text;">The galaxy now documents 64 moments — and the pattern they form is not random.
 
 First, the volume is accelerating. 2026 already has more documented moments than any previous year, and we’re only four months in. The pace at which AI slop becomes newsworthy, politically consequential, or legally actionable is compressing. What used to take a year now takes weeks.
 
@@ -6340,21 +6340,21 @@ document.getElementById('guide-next').onclick = function() {
 };
 if (_isFirstVisit) {
   setTimeout(() => {
-    if (guidePage === 1) document.getElementById('guide-next').textContent = 'TAKE THE TOUR →';
+    const gn = document.getElementById('guide-next');
+    if (guidePage === 1) {
+      gn.textContent = '✦ take the tour';
+      gn.style.background = 'var(--forest)';
+      gn.style.color = 'var(--lime)';
+      gn.style.border = '1.5px solid rgba(143,224,0,0.4)';
+    } else {
+      gn.textContent = 'next →';
+      gn.style.background = 'var(--fg)';
+      gn.style.color = 'var(--bg)';
+      gn.style.border = 'none';
+    }
   }, 150);
 }
 
-// ── Add "Take the Tour" button to guide nav footer ────────────────────────────
-(function() {
-  const nav = document.getElementById('guide-nav');
-  if (!nav) return;
-  const btn = document.createElement('button');
-  btn.id = 'btn-take-tour';
-  btn.textContent = '✦ take the tour';
-  btn.style.cssText = 'background:var(--forest);color:var(--lime);border:1.5px solid var(--lime);font-family:\'Space Mono\',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:9px 18px;cursor:pointer;';
-  btn.addEventListener('click', startTour);
-  nav.appendChild(btn);
-})();
 </script>
 
 
@@ -6446,16 +6446,16 @@ Write a sharp, opinionated 3-4 paragraph "so what" synthesis. This is editorial 
   }
 }
 
+function promptAdminToggle() {
+  if (adminMode) { toggleAdminMode(); return; }
+  const pw = prompt('');
+  if (pw === 'remiagua22') toggleAdminMode();
+}
 function toggleAdminMode() {
   adminMode = !adminMode;
   const btn = document.getElementById('btn-admin-toggle');
   if (btn) btn.style.opacity = adminMode ? '1' : '0.4';
-  // Make So What text editable in admin mode
-  const swText = document.getElementById('so-what-text');
-  if (swText) {
-    swText.contentEditable = adminMode ? 'true' : 'false';
-    swText.style.outline = adminMode ? '1px dashed rgba(143,224,0,0.3)' : 'none';
-  }
+
   const adminEls = ['btn-add','btn-bulk','btn-export','btn-data-read','btn-data-edit','btn-undo'];
   adminEls.forEach(function(id) {
     const el = document.getElementById(id);
