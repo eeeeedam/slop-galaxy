@@ -1093,6 +1093,78 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
 .aside-swatch {
   width:10px; height:10px; border-radius:50%; flex-shrink:0;
 }
+
+/* ── TIMELINE MODE ── */
+#btn-timeline-mode {
+  background: none;
+  border: 1px solid var(--dim);
+  color: var(--sub-color);
+  font-family: 'Space Mono', monospace;
+  font-size: 7.5px; letter-spacing:.1em; text-transform:uppercase;
+  padding: 4px 10px; cursor:pointer; transition:all .2s;
+}
+#btn-timeline-mode:hover { border-color:var(--lime); color:var(--lime); }
+#btn-timeline-mode.active {
+  background:var(--forest); color:var(--lime);
+  border-color:rgba(143,224,0,0.4);
+}
+
+/* ── IMPACT LEGEND ── */
+#impact-legend {
+  position:fixed; bottom:44px; left:10px; z-index:90;
+  display:flex; flex-direction:column; gap:6px;
+  pointer-events:none; opacity:0.7;
+  transition:opacity .2s;
+}
+#impact-legend:hover { opacity:1; }
+.legend-row {
+  display:flex; align-items:center; gap:7px;
+}
+.legend-circle {
+  border-radius:50%; background:rgba(180,170,155,0.4);
+  border:1px solid rgba(180,170,155,0.3); flex-shrink:0;
+}
+.legend-label {
+  font-family:'Space Mono',monospace;
+  font-size:7px; letter-spacing:.08em;
+  color:var(--sub-color); text-transform:uppercase;
+  white-space:nowrap;
+}
+/* ── AXIS LABELS ── */
+#axis-label-spill {
+  position:fixed; left:6px; top:calc(50% - 130px);
+  z-index:90; pointer-events:none;
+  font-family:'Space Mono',monospace; font-size:7px;
+  letter-spacing:.1em; text-transform:uppercase;
+  color:var(--lav); opacity:0.5;
+  writing-mode:vertical-lr; transform:rotate(180deg);
+}
+#axis-label-slop {
+  position:fixed; left:6px; top:calc(50% + 40px);
+  z-index:90; pointer-events:none;
+  font-family:'Space Mono',monospace; font-size:7px;
+  letter-spacing:.1em; text-transform:uppercase;
+  color:#8FE000; opacity:0.5;
+  writing-mode:vertical-lr; transform:rotate(180deg);
+}
+#axis-label-spill.hidden, #axis-label-slop.hidden { display:none; }
+
+/* ── START-HERE PULSE ── */
+@keyframes pulse-ring {
+  0%   { transform:scale(1);   opacity:.8; }
+  70%  { transform:scale(1.6); opacity:0; }
+  100% { transform:scale(1.6); opacity:0; }
+}
+#start-here-overlay {
+  position:fixed; bottom:80px; right:180px; z-index:95;
+  pointer-events:none;
+  font-family:'Space Mono',monospace; font-size:8px;
+  letter-spacing:.1em; color:var(--lime); text-transform:uppercase;
+  background:rgba(26,58,42,0.9); border:1px solid rgba(143,224,0,0.4);
+  padding:8px 12px; opacity:0; transition:opacity .4s;
+  white-space:nowrap;
+}
+#start-here-overlay.visible { opacity:1; }
 </style>
 </head>
 <body>
@@ -1118,9 +1190,10 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
       <button id="btn-about" class="hn-btn">About</button>
       <button id="btn-concepts" class="hn-btn">Concepts</button>
       <button id="btn-ticker-show" class="hn-btn" style="display:none" title="Show ticker">◆ TICKER</button>
-      <button id="btn-arc" class="hn-btn" title="The through-line connects the key moments that define the larger pattern — not every node, only the ones that together tell the story of what’s changing." style="color:var(--sub-color);background:rgba(180,170,155,0.08);">◆ THROUGH-LINE</button>
+      <button id="btn-arc" class="hn-btn" style="display:none;" title="Two through-lines connect the defining moments: slop (the artifacts) in lime, spills (the consequences) in lavender. The shaded gap between them shows how far accountability lags behind the content." style="color:var(--sub-color);background:none;opacity:0.6;">◆ THROUGH-LINE</button>
     </div>
     <div id="header-subnav-right" style="display:flex;gap:0;align-items:center;margin-left:auto;">
+      <button id="btn-timeline-mode" title="Toggle linear timeline view">⟶ TIMELINE</button>
       <button id="btn-reset-hdr" class="hn-btn" onclick="document.getElementById('btn-reset').click()" title="Reset map view">↺ RESET</button>
       <button id="btn-theme-hdr" class="hn-btn" onclick="document.getElementById('btn-theme').click()" title="Toggle light/dark mode">☼</button>
       <button id="btn-bookmarklet" class="hn-btn" style="display:none" title="Get the bookmarklet">⊕ BOOKMARKLET</button>
@@ -1229,7 +1302,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
       <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(26px,4vw,44px);letter-spacing:-.025em;line-height:.92;font-style:italic;margin-bottom:10px;"><span style="color:var(--fg)">every node tells</span> <span style="color:var(--lav)">a story</span></h2>
       <p style="font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.75;color:var(--fg);font-size:14px;max-width:600px;margin-bottom:12px;">Click on the nodes to read what happened, what threshold it crossed, and where to go deeper. Select nodes carry an editor’s note — Ellie’s read on why this one matters beyond the headline.</p>
       <p style="font-family:'Space Mono',monospace;font-size:9px;line-height:1.65;color:var(--sub-color);max-width:580px;margin-bottom:10px;">The galaxy is a living document. New nodes are added as events unfold. The pattern is still forming.</p>
-      <div style="padding:10px 14px;border:1px solid rgba(180,170,155,0.2);background:rgba(180,170,155,0.04);max-width:580px;margin-bottom:16px;"><span style="font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.08em;color:var(--sub-color);">◇ THROUGH-LINE —</span><span style="font-family:'DM Sans',sans-serif;font-size:11px;line-height:1.6;color:var(--sub-color);"> the grey arc on the map connects the nodes that together define the argument. Click ◇ THROUGH-LINE in the top nav to show or hide it.</span></div>
+      <div style="padding:10px 14px;border:1px solid rgba(180,170,155,0.2);background:rgba(180,170,155,0.04);max-width:580px;margin-bottom:16px;"><span style="font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.08em;color:var(--sub-color);">◇ THROUGH-LINE —</span><span style="font-family:'DM Sans',sans-serif;font-size:11px;line-height:1.6;color:var(--sub-color);"> two arcs connect the defining moments: <span style="color:#8FE000;">slop</span> (the artifacts) and <span style="color:#A8A8E8;">spills</span> (the consequences). The shaded band between them shows the gap. When it widens, accountability is falling behind. Click ◇ THROUGH-LINE in the top nav.</span></div>
       <div style="display:grid;grid-template-columns:270px 1fr;gap:20px;align-items:start;">
         <div style="background:var(--panel);border:1px solid var(--dim);padding:14px 16px;border-radius:2px;">
           <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.14em;color:var(--lav);margin-bottom:4px;">Cultural</div>
@@ -1329,6 +1402,25 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
 <div class="admin-edit-hint" id="edit-hint">✎ CLICK ANY UNDERLINED TEXT TO EDIT · CHANGES SAVE AUTOMATICALLY</div>
 
 <canvas id="c"></canvas>
+
+<!-- IMPACT LEGEND -->
+<div id="impact-legend">
+  <div class="legend-row">
+    <div class="legend-circle" style="width:18px;height:18px;"></div>
+    <span class="legend-label">higher impact</span>
+  </div>
+  <div class="legend-row">
+    <div class="legend-circle" style="width:10px;height:10px;"></div>
+    <span class="legend-label">lower impact</span>
+  </div>
+</div>
+
+<!-- AXIS LABELS -->
+<div id="axis-label-spill">Spills → consequences</div>
+<div id="axis-label-slop">Slop → the content</div>
+
+<!-- START HERE OVERLAY -->
+<div id="start-here-overlay">▶ start here: click any node</div>
 <div id="crawl-badge">⬤ CRAWLING</div>
 <div id="crawl-info"><button id="btn-crawl-info">AUTO-CRAWL ▾</button></div>
 
@@ -1336,6 +1428,9 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
   <!-- VIEW BUTTONS IN SIDEBAR -->
   <div style="padding:8px 10px 6px;">
     <button id="btn-patterns-sb" onclick="document.getElementById('btn-patterns').click()" style="width:100%;background:var(--forest);color:var(--lime);border:1.5px solid rgba(143,224,0,0.4);font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:9px 12px;cursor:pointer;text-align:left;transition:all .15s;">◈ Patterns</button>
+  </div>
+  <div style="padding:0 10px 6px;">
+    <button id="btn-arc-sb" onclick="toggleArcFromSidebar()" style="width:100%;background:none;color:var(--sub-color);border:1px solid var(--sidebar-border);font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;padding:7px 12px;cursor:pointer;text-align:left;transition:all .15s;" title="Show the through-line: two arcs connecting the defining moments of slop and spills">&#x25c7; Through-Line</button>
   </div>
   <div style="height:1px;background:var(--sidebar-border);margin:2px 0 6px;"></div>
   <!-- CATEGORY TOGGLES -->
@@ -1488,6 +1583,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
   <div id="analytics-header">
     <h2 style="font-family:'Instrument Serif',serif;font-size:22px;letter-spacing:-.02em;font-style:italic;font-weight:normal;">slop patterns <span style="color:var(--lime)">+ trends</span></h2>
     <div style="display:flex;align-items:center;gap:12px">
+      <button id="arc-editor-btn" style="display:none;" onclick="showArcEditor()" style="display:none;font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.1em;text-transform:uppercase;background:rgba(26,58,42,0.15);color:var(--lime);border:1px solid rgba(143,224,0,0.3);padding:4px 10px;cursor:pointer;">&#x25c7; Edit Narration</button>
       <span style="font-size:9px;color:var(--sub-color);letter-spacing:.08em">NODES ANALYSED: <span id="an-total" style="color:var(--lime)">0</span></span>
       
       <button id="btn-view-galaxy" style="background:rgba(255,209,102,0.12);border:1px solid var(--accent2);color:var(--lime);font-family:'Space Mono',monospace;font-size:9px;padding:5px 12px;cursor:pointer;letter-spacing:.07em;transition:all .18s;">◈ VIEW IN GALAXY</button>
@@ -1868,6 +1964,18 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
 </div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── GLOBAL ERROR HANDLER ─────────────────────────────────────────────────────
+window.onerror = function(msg, src, line, col, err) {
+  // Ignore cross-origin script errors (line 0) — these come from
+  // Cloudflare/CDN scripts injected server-side, not our code
+  if (line === 0 && msg === 'Script error.') return true;
+  console.error('[GALAXY ERROR]', msg, 'at', src, 'line', line, err);
+  return false;
+};
+window.addEventListener('unhandledrejection', function(e) {
+  console.error('[GALAXY PROMISE ERROR]', e.reason);
+});
+
 // ═══════════════════════════════════════════════════════════ CONSTANTS
 const CATS = {
   platform:    { color:'#E8F000', label:'Platform Policy' },
@@ -1926,16 +2034,16 @@ A story that got 10 minutes of Twitter attention but revealed something structur
 scores higher than a flashy story with no lasting consequence.`;
 const SEED = [
   // ── 2022 ──
-  { id:1, year:2022, title:"ChatGPT Crosses 1M Users in 5 Days", date:"December 2022", source:"OpenAI", category:"cultural", impact:9, description:"OpenAI's ChatGPT reached one million users within five days of launch — faster than Netflix, Spotify, or Instagram. The floodgates were now open.", significance:"This was the moment general audiences discovered they could outsource writing to a machine. The demand signal that would drive mass AI content generation was born overnight.", link:"https://openai.com", slop_spill:5, date_added:1740614400000, short_label:"ChatGPT hits 1M users in 5 days", featured:true,
+  { id:1, year:2022, title:"ChatGPT Crosses 1M Users in 5 Days", date:"December 2022", source:"OpenAI", category:"cultural", impact:9, description:"OpenAI's ChatGPT reached one million users within five days of launch — faster than Netflix, Spotify, or Instagram. The floodgates were now open.", significance:"This was the moment general audiences discovered they could outsource writing to a machine. The demand signal that would drive mass AI content generation was born overnight.", link:"https://openai.com", slop_spill:5, date_added:1740614400000, short_label:"ChatGPT hits 1M users in 5 days",
     image:"https://raw.githubusercontent.com/eeeeedam/sloptilyoudrop-site/2f6070e229245dccd91ac64815e3d98dd2235920/samatweet.png",
     image_credit:"OpenAI" },
   // ── 2023 ──
   { id:2, year:2023, title:"Amazon Flooded With AI-Generated Books", date:"February 2023", source:"Reuters", category:"platform", impact:7, description:"Amazon's Kindle Direct Publishing platform was overwhelmed with AI-generated books, many posing as authoritative guides on topics like identifying mushrooms — with potentially dangerous errors.", significance:"The first major consumer marketplace to buckle under AI slop. It proved that platforms optimized for volume, not quality, would become vectors of misinformation at industrial scale.", link:"https://www.theguardian.com/books/2023/sep/20/amazon-restricts-authors-from-self-publishing-more-than-three-books-a-day-after-ai-concerns", slop_spill:1, date_added:1740614400000, short_label:"Amazon KDP flooded with AI books" ,
     image:"https://i.guim.co.uk/img/media/1fbb749af2250f16627c089441136fe1d5dc64e5/0_131_8640_5185/master/8640.jpg?width=620&dpr=2&s=none&crop=none" ,
     image_credit:"Reuters" },
-  { id:3, year:2023, title:"CNET Quietly Publishes 77 AI-Written Articles", date:"January 2023", source:"CNET / Futurism", category:"media", impact:8, description:"CNET was discovered to have been quietly publishing dozens of financial explainer articles written by AI without disclosure. Many contained factual errors. The outlet eventually issued corrections.", significance:"Established media brands using AI secretly and poorly — then getting caught — set the template. It showed that cost-cutting, not reader service, was driving AI adoption in newsrooms.", link:"https://futurism.com/the-byte/cnet-publishing-articles-by-ai", slop_spill:3, date_added:1740614400000, short_label:"CNET's secret AI articles" ,
+  { id:3, year:2023, title:"CNET Quietly Publishes 77 AI-Written Articles", date:"January 2023", source:"CNET / Futurism", category:"media", impact:8, description:"CNET was discovered to have been quietly publishing dozens of financial explainer articles written by AI without disclosure. Many contained factual errors. The outlet eventually issued corrections.", significance:"Established media brands using AI secretly and poorly — then getting caught — set the template. It showed that cost-cutting, not reader service, was driving AI adoption in newsrooms.", link:"https://futurism.com/the-byte/cnet-publishing-articles-by-ai", slop_spill:3, date_added:1740614400000, featured:"slop", short_label:"CNET's secret AI articles" ,
     image:"https://futurism.com/wp-content/uploads/2023/01/AIWriter.jpg?quality=85&w=1128" ,
-    image_credit:"CNET / Futurism" },
+    image_credit:"CNET / Futurism" , featured:"slop" },
   { id:4, year:2023, title:"Google Search Surfaces AI Hallucinations as Top Results", date:"May 2023", source:"The Guardian", category:"platform", impact:9, description:"After launching AI Overviews (SGE), Google's search results began surfacing confident AI summaries containing fabricated information — including medical and legal advice.", significance:"When the world's dominant information retrieval system begins generating answers rather than retrieving facts, the epistemic stakes of AI slop become civilizational.", link:"https://www.theguardian.com/technology/2023/feb/09/google-ai-chatbot-bard-error-sends-shares-plummeting-in-battle-with-microsoft", slop_spill:5, date_added:1740614400000, short_label:"Google hallucinates facts" ,
     image:"https://i.guim.co.uk/img/media/82e2b2e9df74543da87d8efdd6e84d74d8345ad2/206_668_5153_3092/master/5153.jpg?width=620&dpr=2&s=none&crop=none" ,
     image_credit:"The Guardian" },
@@ -1952,13 +2060,13 @@ const SEED = [
     image:"https://futurism.com/wp-content/uploads/2023/11/drew.jpg?w=1024&h=360",
     image_credit:"Futurism" },
   // ── 2024 ──
-  { id:9, year:2024, title:"Google AI Overviews: 'Eat Glue on Pizza'", date:"May 2024", source:"The Verge / Viral", category:"platform", impact:10, description:"Google's AI Overview feature went viral after telling users to put glue on pizza to help cheese stick, and to eat one rock per day. The advice was scraped from joke posts on Reddit.", significance:"The moment that crystallized public disillusionment with AI search. The emperor had no clothes — or rather, he was wearing a hat made of Reddit jokes presented as nutritional guidance.", link:"https://www.theverge.com/2024/5/30/24168344/google-defends-ai-overviews-search-results", slop_spill:4, date_added:1740614400000, short_label:"Google AI tells users to eat glue", featured:true ,
+  { id:9, year:2024, title:"Google AI Overviews: 'Eat Glue on Pizza'", date:"May 2024", source:"The Verge / Viral", category:"platform", impact:10, description:"Google's AI Overview feature went viral after telling users to put glue on pizza to help cheese stick, and to eat one rock per day. The advice was scraped from joke posts on Reddit.", significance:"The moment that crystallized public disillusionment with AI search. The emperor had no clothes — or rather, he was wearing a hat made of Reddit jokes presented as nutritional guidance.", link:"https://www.theverge.com/2024/5/30/24168344/google-defends-ai-overviews-search-results", slop_spill:4, date_added:1740614400000, featured:"slop", short_label:"Google AI tells users to eat glue" ,
     image:"https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25487458/Screenshot_2024_06_11_at_3.12.03_PM.png?quality=90&strip=all&crop=0,0,100,100" ,
-    image_credit:"The Verge / Viral" },
-  { id:10, year:2024, title:"The New Yorker: 'The Year in AI Slop'", date:"December 2024", source:"The New Yorker", category:"media", impact:8, description:"Kyle Chayka's widely-shared essay in The New Yorker named and defined AI slop as a cultural phenomenon — arguing it represents not just bad content but a new mode of inauthenticity degrading the information environment.", significance:"When prestige media gives a phenomenon a name, it enters official cultural consciousness. 'Slop' as a term crystallized something people felt but couldn't articulate.", link:"https://www.newyorker.com/culture/infinite-scroll/the-year-in-ai-slop", slop_spill:7, date_added:1740614400000, short_label:"New Yorker coins 'AI slop'", featured:true ,
+    image_credit:"The Verge / Viral" , featured:"spill" },
+  { id:10, year:2024, title:"The New Yorker: 'The Year in AI Slop'", date:"December 2024", source:"The New Yorker", category:"media", impact:8, description:"Kyle Chayka's widely-shared essay in The New Yorker named and defined AI slop as a cultural phenomenon — arguing it represents not just bad content but a new mode of inauthenticity degrading the information environment.", significance:"When prestige media gives a phenomenon a name, it enters official cultural consciousness. 'Slop' as a term crystallized something people felt but couldn't articulate.", link:"https://www.newyorker.com/culture/infinite-scroll/the-year-in-ai-slop", slop_spill:7, date_added:1740614400000, featured:"spill", short_label:"New Yorker coins 'AI slop'" ,
     image:"https://media.newyorker.com/photos/6941ecf57c9dbe9bfbdb11b8/2:2/w_1920,c_limit/NewYorker_AiSlop_final3%20(1).jpg" ,
-    image_credit:"The New Yorker" },
-  { id:11, year:2024, title:"Facebook Overrun With 'Shrimp Jesus' AI Images", date:"April 2024", source:"404 Media / New York Mag", category:"societal", impact:8, description:"Facebook's recommendation algorithm was found to be actively boosting AI-generated spam pages — including the viral Shrimp Jesus images — to users who had no connection to those pages. A Stanford Internet Observatory and Georgetown University analysis of over 100 Facebook pages found these AI image farms accumulated hundreds of millions of interactions. The pages used religious iconography, bizarre juxtapositions, and engagement bait to game Facebook's own ranking signals.", significance:"The algorithmic amplification of Shrimp Jesus wasn't a bug — it was Facebook's engagement system working exactly as designed. The platform had effectively trained itself to reward AI slop. That the recommendation engine couldn't distinguish sacred kitsch from genuine human expression is less a technical failure than a values one.", link:"https://www.404media.co/facebooks-algorithm-is-boosting-ai-spam-that-links-to-ai-generated-ad-laden-click-farms/", slop_spill:1, date_added:1740614400000, short_label:"Shrimp Jesus goes viral" ,
+    image_credit:"The New Yorker" , featured:"slop" },
+  { id:11, year:2024, title:"Facebook Overrun With 'Shrimp Jesus' AI Images", date:"April 2024", source:"404 Media / New York Mag", category:"societal", impact:8, description:"Facebook's recommendation algorithm was found to be actively boosting AI-generated spam pages — including the viral Shrimp Jesus images — to users who had no connection to those pages. A Stanford Internet Observatory and Georgetown University analysis of over 100 Facebook pages found these AI image farms accumulated hundreds of millions of interactions. The pages used religious iconography, bizarre juxtapositions, and engagement bait to game Facebook's own ranking signals.", significance:"The algorithmic amplification of Shrimp Jesus wasn't a bug — it was Facebook's engagement system working exactly as designed. The platform had effectively trained itself to reward AI slop. That the recommendation engine couldn't distinguish sacred kitsch from genuine human expression is less a technical failure than a values one.", link:"https://www.404media.co/facebooks-algorithm-is-boosting-ai-spam-that-links-to-ai-generated-ad-laden-click-farms/", slop_spill:1, date_added:1740614400000, featured:"slop", short_label:"Shrimp Jesus goes viral" ,
     image:"https://lh7-us.googleusercontent.com/sRXAh2vuH2E0xT0lX4mPPC853PYgHxUJ_Cs2FYz76_lJX3NVTvfxWE05ytKWHVqbWKu-QPHAY2DHksFY4lV78ypP5Ozf6nTrNxEtMFJOv2-7256LAoDsCLiBc_t2CH9Fpb43_3QqsbIca4mffSYcUKg" ,
     image_credit:"404 Media / New York Mag" },
   { id:12, year:2024, title:"EU AI Act Enters Into Force", date:"August 2024", source:"European Commission", category:"legislation", impact:7, description:"The world's first comprehensive AI regulation became law in the EU, requiring watermarking of AI-generated content and imposing risk-based restrictions on high-stakes AI systems.", significance:"The first major attempt to regulate the conditions that produce slop. Whether enforcement follows legislation remains the open question.", link:"https://digital-strategy.ec.europa.eu/en/policies/european-approach-artificial-intelligence", slop_spill:9, date_added:1740614400000, short_label:"EU regulates AI content" ,
@@ -1978,8 +2086,8 @@ const SEED = [
     image_credit:"Academic Study / Nieman Lab" },
   { id:18, year:2025, title:"Velvet Sundown: Fake AI Band Hits 1M Spotify Plays", date:"June 2025", source:"Guardian", category:"cultural", impact:7, description:"A fully AI-generated band called the Velvet Sundown amassed over one million Spotify plays within weeks of appearing on the platform. The Guardian reported that music industry insiders called for listener warnings. Spotify simultaneously revealed it had removed 75 million AI-generated spam tracks over the prior year — a figure that itself signals how completely the music discovery infrastructure had been colonized.", significance:"The music commons is being strip-mined. When 75 million fake tracks are required to be removed from a single platform, the concept of a shared musical culture is under siege.", link:"https://www.theguardian.com/technology/2025/jul/14/an-ai-generated-band-got-1m-plays-on-spotify-now-music-insiders-say-listeners-should-be-warned", slop_spill:4, date_added:1740614400000, short_label:"Fake band hits 1M plays" ,
     image:"https://i.guim.co.uk/img/media/0d71145d24078ebb0e8460fdac4418f158188e3d/203_0_1521_1217/master/1521.jpg?width=620&dpr=1&s=none&crop=none" ,
-    image_credit:"Guardian" },
-  { id:19, year:2025, title:"Fox News Airs SNAP 'Welfare Queen' AI Sora Videos as Real", date:"January 2025", source:"KFF / yahoo news", category:"media", impact:9, description:"Fox News aired AI-generated video purportedly showing welfare recipients threatening to riot at supermarkets during a SNAP benefits disruption, presenting it as real footage before quietly issuing a correction. The fabricated videos, created using OpenAI's Sora, were designed to stoke outrage around food assistance programs during a period of economic anxiety.", significance:"AI slop video became a live weapon in the culture war within weeks of Sora's release. Broadcast journalism's inability to detect fabricated video is an existential editorial failure.", link:"https://www.yahoo.com/news/articles/fox-news-falls-racist-ai-183734288.html?guccounter=1&guce_referrer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8&guce_referrer_sig=AQAAAKMc6z7yY-GVO7ZctNmsL8SLZQhZ8mGdgdzdfC4ls4B3h6A53gH-oChn8996pHy7my0z-rF8duaPuMzT52_-rPsvubbyy13ODhHuVL-BJTM3LH-ZtYBMDEmFnTU3ckXXRh6kGST1mU1B3d1-bGEYHENJbDbSZQYSkEvce4brk5Ny", slop_spill:3, date_added:1740614400000, short_label:"Fox airs AI welfare video" ,
+    image_credit:"Guardian" , featured:"slop" },
+  { id:19, year:2025, title:"Fox News Airs SNAP 'Welfare Queen' AI Sora Videos as Real", date:"January 2025", source:"KFF / yahoo news", category:"media", impact:9, description:"Fox News aired AI-generated video purportedly showing welfare recipients threatening to riot at supermarkets during a SNAP benefits disruption, presenting it as real footage before quietly issuing a correction. The fabricated videos, created using OpenAI's Sora, were designed to stoke outrage around food assistance programs during a period of economic anxiety.", significance:"AI slop video became a live weapon in the culture war within weeks of Sora's release. Broadcast journalism's inability to detect fabricated video is an existential editorial failure.", link:"https://www.yahoo.com/news/articles/fox-news-falls-racist-ai-183734288.html?guccounter=1&guce_referrer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8&guce_referrer_sig=AQAAAKMc6z7yY-GVO7ZctNmsL8SLZQhZ8mGdgdzdfC4ls4B3h6A53gH-oChn8996pHy7my0z-rF8duaPuMzT52_-rPsvubbyy13ODhHuVL-BJTM3LH-ZtYBMDEmFnTU3ckXXRh6kGST1mU1B3d1-bGEYHENJbDbSZQYSkEvce4brk5Ny", slop_spill:3, date_added:1740614400000, featured:"slop", short_label:"Fox airs AI welfare video" ,
     image:"https://da4dgwwy37p9ai.archive.ph/NL6oR/2471613b8a67ba1bbd2954e414c4c06412a29eac.webp" ,
     image_credit:"KFF / yahoo news" },
   { id:20, year:2025, title:"'Margaux Blanchard' — AI Freelancer Publishes at Real Outlets", date:"February 2025", source:"Press Gazette / Poynter", category:"media", impact:8, description:"A fictitious freelance journalist named 'Margaux Blanchard' — an AI agent executing a complete editorial workflow autonomously — placed AI-written articles at Wired, Business Insider, Index on Censorship, SFGate, and at least two other publications before being exposed by Press Gazette in August 2025. The creator later revealed Blanchard was one of several AI agents running journalist personas at scale, handling pitches, revisions, and deadline negotiations without human intervention. Six publications removed her work; some had paid for it.", significance:"Margaux Blanchard was not a person who used AI — she was an AI agent designed to impersonate a person well enough to monetize journalism. The workflow was complete: pitch, draft, revision, payment negotiation. Editors at Wired and Business Insider couldn't tell the difference. The fabricated expert is now not just viable but scalable — a fact the publications that paid her confirmed.", link:"https://pressgazette.co.uk/publishers/digital-journalism/wired-and-business-insider-remove-ai-written-freelance-articles/", slop_spill:3, date_added:1740614400000, short_label:"AI journalist fools real editors" ,
@@ -1988,7 +2096,7 @@ const SEED = [
   { id:21, year:2025, title:"Graphika: State Propaganda Now Runs on AI Slop", date:"November 2025", source:"NBC News / Graphika", category:"research", impact:8, description:"A Graphika report documented that China- and Russia-linked influence operations had fully adopted AI-generated content as their core production method — deploying fake news anchors, AI-translated articles, and fabricated influencer personas at scale. NBC News reported that researchers described the automation as complete: nation-state propaganda was now indistinguishable in method from commercial AI spam farms.", significance:"The automation of geopolitical manipulation is complete. Nation-state propaganda is now indistinguishable in method from engagement-farming Facebook pages. The adversary and the algorithm have converged.", link:"https://www.nbcnews.com/tech/security/online-propaganda-campaigns-are-using-ai-slop-researchers-say-rcna244618", slop_spill:7, date_added:1740614400000, short_label:"Nation-states run on slop" ,
     image:"https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1000w,f_auto,q_auto:best/rockcms/2025-11/251118-russia-china-ai-propaganda-lr-79e7b9.jpg" ,
     image_credit:"NBC News / Graphika" },
-  { id:22, year:2025, title:"Science Is Drowning: AI Fraud in Peer-Reviewed Journals", date:"April 2025", source:"The Atlantic / Nature", category:"research", impact:10, description:"The Atlantic reported in January 2026 that AI-generated fraudulent papers — containing phantom citations, fabricated data, and hallucinated results — had penetrated even high-tier peer-reviewed scientific journals. Conference submission volumes at major AI and computer science venues doubled, with organizers rejecting hundreds of papers for undisclosed AI use. Experts warned that the contamination of the scientific literature was creating permanent epistemological noise that would take years to audit.", significance:"If peer-reviewed science is infected by AI slop, the accumulated body of human knowledge becomes untrustworthy. This is the worst-case scenario: slop eating the foundations of rationality.", link:"https://www.theatlantic.com/science/2026/01/ai-slop-science-publishing/685704/", slop_spill:5, date_added:1740614400000, short_label:"AI fraud infects science", featured:true ,
+  { id:22, year:2025, title:"Science Is Drowning: AI Fraud in Peer-Reviewed Journals", date:"April 2025", source:"The Atlantic / Nature", category:"research", impact:10, description:"The Atlantic reported in January 2026 that AI-generated fraudulent papers — containing phantom citations, fabricated data, and hallucinated results — had penetrated even high-tier peer-reviewed scientific journals. Conference submission volumes at major AI and computer science venues doubled, with organizers rejecting hundreds of papers for undisclosed AI use. Experts warned that the contamination of the scientific literature was creating permanent epistemological noise that would take years to audit.", significance:"If peer-reviewed science is infected by AI slop, the accumulated body of human knowledge becomes untrustworthy. This is the worst-case scenario: slop eating the foundations of rationality.", link:"https://www.theatlantic.com/science/2026/01/ai-slop-science-publishing/685704/", slop_spill:5, date_added:1740614400000, short_label:"AI fraud infects science" ,
     image:"https://cdn.theatlantic.com/thumbor/dfRcVCkjwI6sdueOddQYS1zFKV4=/0x0:2000x1125/1952x1098/media/img/mt/2026/01/2026_1_21_Science_AI_Slop/original.png" ,
     image_credit:"Atlantic" },
   { id:23, year:2025, title:"Trump Posts AI Pope Image on Official Government Account", date:"May 2025", source:"Multiple / AP", category:"societal", impact:6, description:"In the months after his second inauguration, Donald Trump posted multiple AI-generated images of himself on official US government social media accounts — including as the Pope, as a Jedi, and as a muscular superhero. The Pope image was shared days after Pope Francis died, prompting criticism from Catholic bishops. AP documented the pattern across multiple posts from official government accounts.", significance:"When the head of state uses official government channels to distribute AI slop self-portraits, the boundary between political communication and algorithmic fantasy has fully dissolved.", link:"https://apnews.com/article/trump-pope-francis-conclave-ai-image-bishops-9d88286886c350c4465f7c2afb7a5e41", slop_spill:2, date_added:1740614400000, short_label:"Trump posts AI Pope selfie" ,
@@ -2001,7 +2109,7 @@ const SEED = [
   { id:25, year:2025, title:"Disney's $1B Deal: Mickey Mouse & Luke Skywalker to be AI-Slopified in Sora", date:"March 2025", source:"Poynter / Various", category:"platform", impact:7, description:"The Walt Disney Company, after initially threatening OpenAI, reached a reported $1 billion agreement allowing beloved IP including Mickey Mouse, Luke Skywalker, and Simba to be used in OpenAI's Sora video generation tool.", significance:"When the most brand-protective IP holder in history licenses its most beloved characters for AI generation, it signals that the economics of slop have defeated even cultural stewardship. The characters that shaped global childhood mythology are now prompt material.", link:"https://www.seattletimes.com/business/disney-invests-1b-in-openai-in-deal-to-bring-characters-like-mickey-mouse-to-sora-ai-video-tool/", slop_spill:8,
     image:"https://images.seattletimes.com/wp-content/uploads/2025/12/urnpublicidap.orgdf8be1fe52e9b9c46d965577d3974d3bDisney_OpenAI_33287.jpg?d=768x512",
     image_credit:"Seattle Times",
-    short_label:"Disney licenses characters to Sora", editor_note:"Update: The deal collapsed in March 2026 when OpenAI shut down Sora entirely, citing compute costs and IPO preparation. Disney exited the same day. See the Sora shutdown node.", featured:true },
+    short_label:"Disney licenses characters to Sora", editor_note:"Update: The deal collapsed in March 2026 when OpenAI shut down Sora entirely, citing compute costs and IPO preparation. Disney exited the same day. See the Sora shutdown node." },
   { id:26, year:2025, title:"AI Homogenizing Human Writing: Cornell Study", date:"June 2025", source:"The New Yorker / Cornell", category:"research", impact:8, description:"A Cornell study found that regular use of AI writing tools makes human writing measurably less distinctive — authors lose their voice, their style, and their confidence. Another study found nearly 200% more AI-written posts on LinkedIn.", significance:"The slop isn't just what AI generates — it's what AI does to the humans who use it. The feedback loop ends not with AI replacing writers, but with writers becoming indistinguishable from AI.", link:"https://www.newyorker.com/culture/infinite-scroll/ai-is-homogenizing-our-thoughts", slop_spill:8,
     image:"https://techcrunch.com/wp-content/uploads/2025/10/FilteringPins-NewsroomHeader.jpg?w=1024",
     short_label:"AI flattens human writing" },
@@ -2009,32 +2117,32 @@ const SEED = [
     image:"https://newsroom-deezer.com/wp-content/uploads/2025/11/EN-CAROUSEL-1-1-1024x1024.png",
     short_label:"Pinterest adds 'less AI' toggle" },
   { id:28, year:2025, title:"Deezer: 70% of AI Music Streams Are Fraudulent", date:"June 2025", source:"TechCrunch / Deezer", category:"research", impact:7, description:"Music streaming platform Deezer announced that as much as 70% of streams of AI-generated tracks on its platform were part of streaming fraud schemes. It began labeling AI-generated music to combat the practice.", significance:"The streaming economy that replaced physical music sales is now being systematically defrauded by automated AI content farms. The music industry replaced one disruptive technology with another that may destroy it.", link:"https://newsroom-deezer.com/2025/11/deezer-ipsos-survey-ai-music/", slop_spill:5,
-    image:"https://merriam-webster.com/assets/mw/images/gallery/gal-wap-slideshow-slide/a%20bizarre%20collection%20of%20ai-generated%20illustrations%20including%20a%20sign%20that%20reads%20wood%20of%20of%20year%20and%20a%20chyron%20that%20reads%20breaking%20news-12973-d336a854f0ce3282c2871e5a87dc658d@1x.jpg",
-    short_label:"70% of AI streams are fraud" },
+    image:"https://merriam-webster.com/assets/mw/images/gallery/gal-wap-slideshow-slide/a%20bizarre%20collection%20of%20ai-generated%20illustrations%20including%20a%20sign%20that%20reads%20wood%20of%20of%20year%20and%20a%20chyron%20that%20reads%20breaking%20news-12973-d336a854f0ce3282c2871e5a87dc658d@1x.jpg", featured:"spill",
+    short_label:"70% of AI streams are fraud" , featured:"spill" },
   { id:29, year:2025, title:"Merriam-Webster Names 'Slop' Word of the Year", date:"December 2025", source:"Merriam-Webster", category:"cultural", impact:9, description:"Merriam-Webster named 'slop' its 2025 Word of the Year, formally defining it as 'digital content of low quality that is produced usually in quantity by means of artificial intelligence.' It was also selected by The Economist. The dictionary noted that the word 'sets a tone that's less fearful, more mocking' toward AI.", significance:"When a word enters the dictionary as Word of the Year, it signals that a cultural reckoning has crossed from niche to mainstream. Slop is now official language — the English-speaking world has named what it has been living through.", link:"https://www.merriam-webster.com/wordplay/word-of-the-year", slop_spill:9,
     image:"https://futurism.com/wp-content/uploads/2026/02/aidr-meaning.jpg?quality=85",
-    short_label:"'Slop' enters the dictionary", featured:true },
+    short_label:"'Slop' enters the dictionary", featured:"spill" },
   { id:30, year:2026, title:'"Your AI Slop Bores Me" Goes Viral', date:"March 2026", source:"Fast Company", category:"cultural", impact:8, description:"A browser game called \"Your AI Slop Bores Me\" — built by developer Mihir Maroju — went viral after hitting Hacker News in early March 2026. The site parodies ChatGPT but routes all prompts to anonymous humans who must answer within 60 seconds. Within a week it had 50 million views and 16,000 concurrent users.", significance:"The game is cultural resistance as satire: it turns AI fatigue into a multiplayer event. Its tagline — \"save humanity by stealing AI\'s job\" — captured something millions felt but hadn\'t articulated. That a game mocking slop became more popular than most AI products is itself a data point.", link:"https://www.fastcompany.com/91505685/your-ai-slop-bores-me-website-game-makes-humans-larp-chatgpt", slop_spill:8, date_added:1773273600000, short_label:"\'Your AI Slop Bores Me\' goes viral", resistance:true },
   { id:32, year:2026, title:"\"AI;DR\" Enters the Lexicon as Anti-Slop Slang", date:"February 2026", source:"Fast Company", category:"cultural", impact:6, description:"\"AI;DR\" — shorthand for \"AI; Didn't Read\" — emerged on Threads in February 2026 when developer David Minnigerode used it to dismiss an AI safety researcher\'s resignation letter. Fast Company and Futurism covered its spread as the internet\'s new shorthand for refusing to engage with suspected AI-generated text. It joined a growing anti-AI vocabulary that included \"clanker,\" \"sloppers,\" and Merriam-Webster\'s 2025 word of the year: \"slop.\"", significance:"Language is how cultures draw lines. AI;DR is the moment ordinary people developed vernacular to opt out — a social antibody to the slop epidemic. That it emerged organically, spread fast, and got named in mainstream media suggests the volume of AI content has crossed a threshold where people need a quick way to say: I see what this is, and I\'m not reading it.", link:"https://www.fastcompany.com/91498062/ai-didnt-read-aidr-is-the-new-tldr", slop_spill:8,
     image:"https://platform.theverge.com/wp-content/uploads/sites/2/2026/03/grammr-crop.jpg?quality=90&strip=all&crop=18.290218270008%2C0%2C63.419563459984%2C100&w=750",
     short_label:"\"AI;DR\" coined as anti-slop slang", resistance:true },
   
   { id:31, year:2026, title:"Grammarly Impersonates Journalists as AI \"Experts\" — Then Pulls the Feature", date:"March 2026", source:"The Verge", category:"platform", impact:8, description:"Grammarly's 'Expert Review' feature — launched August 2025 — was found generating AI writing feedback attributed to real journalists and authors without their knowledge or consent. The Verge found its own editors listed as reviewers, including editor-in-chief Nilay Patel, who called it identity theft. The feature also included dead experts like Carl Sagan and historian David Abulafia (who had died weeks earlier). Source links often pointed to spam or unrelated pages. A class-action lawsuit followed within days, and the company disabled the feature.", significance:"A near-perfect encapsulation of the slop era's core dynamic: AI products commodifying human identity and expertise without consent, wrapping it in a consent disclaimer no one reads, then retreating only after public humiliation and litigation. The feature's rapid arc — launch, backlash, lawsuit, kill — compressed months of AI ethics debate into a single week.", link:"https://www.theverge.com/ai-artificial-intelligence/890921/grammarly-ai-expert-reviews", slop_spill:7,
-    image:"https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/24021977/Screenshot_2022_09_14_at_14.39.17.png?quality=90&strip=all&crop=6.2957540263543%2C0%2C87.408491947291%2C100&w=750",
-    short_label:"Grammarly fakes journalists as AI editors" },
+    image:"https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/24021977/Screenshot_2022_09_14_at_14.39.17.png?quality=90&strip=all&crop=6.2957540263543%2C0%2C87.408491947291%2C100&w=750", featured:"spill",
+    short_label:"Grammarly fakes journalists as AI editors" , featured:"spill" },
   { id:33, year:2023, title:"WGA Strike Wins First AI Protections in Hollywood Contracts", date:"September 2023", source:"The Guardian / Variety", category:"societal", impact:9, description:"After 148 days on strike, the Writers Guild of America reached a deal with major studios that included explicit contractual protections against AI: studios cannot use AI to write or rewrite literary material, AI-generated text cannot be used as source material, and writers must be informed if any AI materials are involved in their projects. It was the first major labor contract in any industry to codify limits on AI replacing human creative work.", significance:"The WGA strike is the first time organized labor forced institutional rules onto AI's encroachment into creative work. The protections are imperfect and narrow, but the precedent — that workers can negotiate the terms under which AI replaces them — is the most significant act of collective resistance in the slop era.", link:"https://www.wired.com/story/hollywood-saved-your-job-from-ai-2023-will-it-last/#:~:text=Taking%20Your%20Job.-,But%20for%20How%20Long?,do%20better%20than%20most%20humans.&text=Revolt%20against%20the%20machines%20began,the%20perceived%20threat%20of%20AI.&text=What%20each%20union%20was%20seeking,push%20back%20against%20encroaching%20automation.", slop_spill:9, date_added:1774470421032,
     image:"https://media.wired.com/photos/65824877c708018de5a08c59/1:1/w_2240,c_limit/AI-Content-Moderation-Writers-Strike.jpg",
-    image_credit:"Wired", short_label:"WGA wins AI contract protections", resistance:true, featured:true },
+    image_credit:"Wired", featured:"spill", short_label:"WGA wins AI contract protections", resistance:true , featured:"spill" },
   { id:34, year:2023, title:"Artists Sue Stability AI, Midjourney, and DeviantArt", date:"January 2023", source:"The Verge / Reuters", category:"legislation", impact:8, description:"Visual artists Sarah Andersen, Kelly McKernan, and Karla Ortiz filed the first major class-action lawsuit against AI image generators — Stability AI, Midjourney, and DeviantArt — alleging that their systems were trained on billions of copyrighted images without consent or compensation. Getty Images filed a separate suit against Stability AI in the UK the same month. The suits opened the legal front in the battle over training data.", significance:"The artist lawsuits were the first attempt to make AI companies legally accountable for what they ingested. The specific claim — that training on copyrighted work without consent is infringement — remains unresolved in courts but has shaped every subsequent policy debate about AI and intellectual property. This is where the legal resistance began.", link:"https://www.theverge.com/2023/1/16/23557098/generative-ai-art-copyright-legal-lawsuit-stable-diffusion-midjourney-deviantart", slop_spill:9, date_added:1774470421032,
     image:"https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/24021977/Screenshot_2022_09_14_at_14.39.17.png?quality=90&strip=all&w=750",
-    image_credit:"The Verge via Lexica", short_label:"Artists sue AI image generators", resistance:true },
+    image_credit:"The Verge via Lexica", short_label:"Artists sue AI image generators", resistance:true, featured:"spill" },
   { id:35, year:2024, title:"The \"No AI\" Label Goes Mainstream on Etsy, Bandcamp, and Beyond", date:"2024", source:"Fast Company / The Atlantic", category:"societal", impact:6, description:"Independent creators across Etsy, Bandcamp, Substack, and social platforms began prominently labeling their work \"human-made\" or \"no AI\" as a deliberate value signal. Etsy sellers reported that \"no AI\" badges increased sales. The movement spread to illustrators, musicians, and writers building identity around authentic human craft as a market differentiator.", significance:"When \"made by a human\" becomes a selling point, it marks the threshold where AI content has saturated the market enough that humanity itself is scarce. The no-AI label is the cultural immune system making itself visible — consumers and creators drawing a line in the content environment.", link:"https://www.fastcompany.com/90985234/etsy-artists-no-ai-label-human-made", slop_spill:8, date_added:1774470421032, short_label:"\"Human-made\" becomes a selling point", resistance:true },
   { id:36, year:2026, title:"Critical Thinking Bot: AI Built to Fight AI Dependency", date:"February 2026", source:"Substack / criticalthinkingbot.com", category:"cultural", impact:5, description:"Harvard PhD candidate and educator Shae Omonijo launched the Critical Thinking Bot — a free tool that uses AI to strengthen rather than replace human reasoning. Built with a deliberate anti-dependency feature (sessions are bounded, not infinite), it prompts users to clarify, stress-test, and defend their own ideas rather than outsourcing thinking to a chatbot. V3 launched March 2026. The project emerged from her YouTube series and Analog Social venture, incubated at Harvard Innovation Labs.", significance:"The Critical Thinking Bot is a design argument: that the same technology enabling cognitive surrender can be turned against that tendency. Its anti-dependency architecture — sessions that end, outputs you take elsewhere — is a direct formal rebuttal to the infinite scroll logic of general-purpose AI tools. One of the earliest examples of AI being deliberately weaponized against its own worst tendencies.", link:"https://www.criticalthinkingbot.com/", slop_spill:9, date_added:1774470421032, short_label:"Critical Thinking Bot fights AI dependency", resistance:true },
   { id:37, year:2024, title:"Coca-Cola Remakes Iconic Christmas Ad With AI — And Gets Savaged", date:"November 2024", source:"NBC News / Creative Bloq", category:"cultural", impact:8, description:"Coca-Cola replaced its beloved 1995 'Holidays Are Coming' Christmas ad with a fully AI-generated version, produced by three AI studios using four generative models. The recreated trucks glided rather than rolled, faces were vacant and uncanny, and the emotional warmth that had made the original a holiday institution was absent. The internet called it 'soulless,' 'devoid of creativity,' and 'the worst branding blunder of the year.' Coca-Cola doubled down in 2025 with another AI Christmas ad, this time replacing humans with animals — and faced the same backlash.", significance:"The moment AI slop hit the most emotionally protected category in advertising. Coca-Cola's Christmas ad isn't just a commercial — it's a 30-year cultural ritual. Replacing it with AI wasn't just a craft failure, it was a statement about what the company values. The backlash wasn't about the uncanny valley; it was about being told that the magic was never really there, just a budget line.", link:"https://www.nbcnews.com/tech/innovation/coca-cola-causes-controversy-ai-made-ad-rcna180665", slop_spill:6, date_added:1774469323024, short_label:"Coca-Cola's AI Christmas ad called 'soulless'" },
   { id:38, year:2025, title:"McDonald's Netherlands Pulls AI Christmas Ad Within 3 Days", date:"December 2025", source:"BBC News / NBC News", category:"cultural", impact:7, description:"McDonald's Netherlands released a 45-second fully AI-generated Christmas ad titled 'The Most Terrible Time of the Year' on December 6, 2025. The ad featured AI-generated people experiencing holiday mishaps — broken bones, sled crashes, a woman dragged by a tram. Viewers called the characters 'creepy,' the visuals 'nauseating,' and the concept 'cold and dystopian.' McDonald's disabled comments, then pulled the ad entirely on December 9 — three days after release. It was widely covered as a companion failure to Coca-Cola's AI Christmas ads the month before.", significance:"McDonald's Netherlands is the cleaner data point: a brand released AI slop, the audience rejected it loudly enough that the ad was killed within 72 hours, and the company issued a statement calling it 'an important learning.' The speed of rejection — comment shutdown, then delisting — shows that audience tolerance for AI in emotionally coded content has a hard floor. Slop reaches advertising, advertising gets held accountable faster than any other medium.", link:"https://www.bbc.com/news/articles/czdgrnvp082o", slop_spill:6, date_added:1774469323024, short_label:"McDonald's AI Christmas ad pulled in 3 days" },
-  { id:39, year:2026, title:"OpenAI Shuts Down Sora — And the Disney Deal Collapses With It", date:"March 2026", source:"Hollywood Reporter / NPR / CNBC", category:"platform", impact:9, description:"On March 24, 2026, OpenAI announced it was shutting down Sora — its AI video generation app — just six months after launch and three months after inking a $1 billion deal with Disney to license its characters. Downloads had fallen 75% from their November peak. Disney, whose teams apparently learned of the shutdown the night before the announcement, confirmed it was exiting the deal entirely. OpenAI cited compute costs and IPO preparation as it pivoted toward enterprise productivity tools.", significance:"Sora was the product OpenAI used to declare AI's arrival in Hollywood — described by an executive as a cinematic shift on par with the end of the silent-film era. Its shutdown within a year is the galaxy's most complete arc: hype, IP surrender, deepfake scandal, user abandonment, and quiet corporate retreat. The Disney deal's collapse is the spill. Node 25 is the slop.", link:"https://www.hollywoodreporter.com/business/digital/openai-shutting-down-sora-ai-video-app-1236546187/", slop_spill:9, date_added:1774486359804, short_label:"Sora shuts down, Disney deal collapses", featured:true },
+  { id:39, year:2026, title:"OpenAI Shuts Down Sora — And the Disney Deal Collapses With It", date:"March 2026", source:"Hollywood Reporter / NPR / CNBC", category:"platform", impact:9, description:"On March 24, 2026, OpenAI announced it was shutting down Sora — its AI video generation app — just six months after launch and three months after inking a $1 billion deal with Disney to license its characters. Downloads had fallen 75% from their November peak. Disney, whose teams apparently learned of the shutdown the night before the announcement, confirmed it was exiting the deal entirely. OpenAI cited compute costs and IPO preparation as it pivoted toward enterprise productivity tools.", significance:"Sora was the product OpenAI used to declare AI's arrival in Hollywood — described by an executive as a cinematic shift on par with the end of the silent-film era. Its shutdown within a year is the galaxy's most complete arc: hype, IP surrender, deepfake scandal, user abandonment, and quiet corporate retreat. The Disney deal's collapse is the spill. Node 25 is the slop.", link:"https://www.hollywoodreporter.com/business/digital/openai-shutting-down-sora-ai-video-app-1236546187/", slop_spill:9, date_added:1774486359804, short_label:"Sora shuts down, Disney deal collapses" },
   { id:40, year:2026, title:"Hachette Pulls 'Shy Girl' — First Major Publisher to Cancel a Book Over AI", date:"March 2026", source:"New York Times / TechCrunch", category:"media", impact:8, description:"Horror novel 'Shy Girl' by Mia Ballard — a BookTok sensation with 4,900 Goodreads ratings — was pulled by Hachette Book Group in March 2026, becoming the first commercial novel from a major publisher cancelled over AI use. The NYT brought evidence of AI-generated text to Hachette on March 19; the book was delisted the same day. Ballard denied using AI herself, saying a freelance editor she'd hired had used it without her knowledge. She is pursuing legal action.", significance:"The first publishing industry reckoning with AI slop in fiction — and the most legally complex one yet. The author may genuinely be a victim. Her editor introduced AI into the manuscript without disclosure, which existing contracts had no language to address. The industry's response — pulling the book, issuing a statement about 'original creative expression' — solved nothing structurally. Every self-published book acquired by a major house now carries the same invisible risk.", link:"https://www.nytimes.com/2026/03/19/books/shy-girl-book-ai.html", slop_spill:7, date_added:1774884393210, short_label:"Hachette pulls 'Shy Girl' over AI use" },
-  { id:41, year:2026, title:"The Atlantic Catches AI in the NYT's 'Modern Love' — While the NYT Just Broke the Shy Girl Story", date:"March 2026", source:"The Atlantic", category:"media", impact:8, description:"Days after the New York Times broke the story of Hachette pulling 'Shy Girl' for AI use, The Atlantic published an investigation finding that a November 2025 NYT 'Modern Love' column — 'I Was Deemed Unfit to Be a Mother' — contained strong AI tells. The column's author, Kate Gilgan, confirmed she had used AI 'for inspiration and guidance and correction.' Researchers then ran broader analyses finding AI markers across major newspaper opinion sections including the Wall Street Journal and Washington Post.", significance:"The galaxy's most recursive moment: the institution that exposed AI in books was itself exposed for AI in its most human-voiced column. 'Modern Love' is the NYT's flagship venue for personal narrative — grief, custody, identity. The fact that AI language crept into that column, and that the author genuinely may not have understood the distinction between using AI as a tool and AI shaping the output, shows how invisible the contamination has become. Publications are now AI-shaming each other while running the same thing undisclosed.", link:"https://www.theatlantic.com/culture/2026/03/how-ai-creeping-new-york-times/686528/", slop_spill:8, date_added:1774884393210, short_label:"Atlantic exposes AI in NYT's Modern Love", featured:true },
+  { id:41, year:2026, title:"The Atlantic Catches AI in the NYT's 'Modern Love' — While the NYT Just Broke the Shy Girl Story", date:"March 2026", source:"The Atlantic", category:"media", impact:8, description:"Days after the New York Times broke the story of Hachette pulling 'Shy Girl' for AI use, The Atlantic published an investigation finding that a November 2025 NYT 'Modern Love' column — 'I Was Deemed Unfit to Be a Mother' — contained strong AI tells. The column's author, Kate Gilgan, confirmed she had used AI 'for inspiration and guidance and correction.' Researchers then ran broader analyses finding AI markers across major newspaper opinion sections including the Wall Street Journal and Washington Post.", significance:"The galaxy's most recursive moment: the institution that exposed AI in books was itself exposed for AI in its most human-voiced column. 'Modern Love' is the NYT's flagship venue for personal narrative — grief, custody, identity. The fact that AI language crept into that column, and that the author genuinely may not have understood the distinction between using AI as a tool and AI shaping the output, shows how invisible the contamination has become. Publications are now AI-shaming each other while running the same thing undisclosed.", link:"https://www.theatlantic.com/culture/2026/03/how-ai-creeping-new-york-times/686528/", slop_spill:8, date_added:1774884393210, short_label:"Atlantic exposes AI in NYT's Modern Love" },
   { id:42, year:2026, title:"Fruit Love Island: 300M Views, Then Banned — AI Slop Finds and Loses a Mass Audience in 17 Days", date:"March 2026", source:"Wall Street Journal / Wikipedia", category:"platform", impact:8, description:"'Fruit Love Island' — a fully AI-generated TikTok series featuring anthropomorphic fruit characters in a Love Island-style dating show — launched March 13, 2026 and reached 3 million followers and 300 million total views within two weeks. Each episode took one person about three hours to make. TikTok began removing episodes for 'low quality content,' citing mass reports. On March 28, the creator posted a farewell: 'Fruit Love Island is over.' Copycat accounts immediately filled the gap. The show also raised unresolved copyright questions over its use of the Love Island brand without ITV's consent.", significance:"Fruit Love Island is Shrimp Jesus for video — AI slop finding a genuine mass audience, sparking real fandom, then getting delisted by the platform whose algorithm promoted it. The 17-day arc is the galaxy's fastest complete cycle: virality, backlash, copyright question, platform ban, creator exit, imitators. The WSJ ran it as proof AI content can captivate. TikTok ran it as grounds for removal. Both were right.", link:"https://www.wsj.com/arts-culture/television/fruit-love-island-tiktok-ai-dating-show-45219f6a", slop_spill:3, date_added:1774884393210, short_label:"Fruit Love Island: 300M views then banned" },
   { id:43, year:2026, title:"OpenAI's IPO Cleanup: Sora, Erotic Mode, and the End of Consumer Slop Experiments", date:"March 2026", source:"TechCrunch / Financial Times / Slate", category:"platform", impact:8, description:"In the same week OpenAI shut down Sora and cancelled its Disney deal, the Financial Times reported the company was indefinitely pausing plans for an 'erotic mode' for ChatGPT — a feature CEO Sam Altman had publicly floated in October 2025. Internal opposition had been fierce: one adviser at a heated January meeting warned OpenAI risked building a 'sexy suicide coach.' Both shelved projects were framed as 'side quests' by Fidji Simo, OpenAI's head of applications, who told staff the company could not afford distraction ahead of its IPO.", significance:"The pattern is the node. OpenAI spent 2024-2025 building consumer-facing AI products that generated slop, controversy, copyright lawsuits, deepfake scandals, and safety objections — then quietly killed them when IPO scrutiny arrived. Compute is finite and liability is not. The cleanup reveals what these products always were: experiments in audience capture that worked well enough to cause damage and not well enough to survive financial due diligence. The galaxy documents the slop era; this is the moment its most prominent enabler started tidying up.", link:"https://techcrunch.com/2026/03/26/openai-abandons-yet-another-side-quest-chatgpts-erotic-mode/", slop_spill:8, date_added:1774884712968, short_label:"OpenAI kills erotic mode and Sora for IPO" },
   { id:44, year:2026, title:"Gucci Runs AI Campaign Without Disclosure — Then Defends It", date:"March 2026", source:"Vogue Business", category:"cultural", impact:7, slop_spill:3,
@@ -2060,29 +2168,29 @@ const SEED = [
   { id:48, year:2026, title:"WebinarTV Is Secretly Recording Zoom Calls and Turning Them into AI Podcasts", date:"March 2026", source:"404 Media", category:"platform", impact:8, slop_spill:2,
     description:"WebinarTV, which bills itself as a search engine for webinars, was found to be scanning the internet for Zoom meeting links, recording calls without permission, and converting them into AI-generated podcasts for profit. The company claims to host over 200,000 webinars. Some participants only discovered their calls had been recorded when WebinarTV reached out to promote the resulting podcast.",
     significance:"The line between a private conversation and public AI content is now a technical vulnerability, not a social norm. No consent was asked, no notice given. This is what surveillance slop looks like — not fake images but real people's words, repurposed and redistributed by a machine.",
-    date_added:"2026-04-01" },
+    date_added:"2026-04-01", featured:"slop" },
 
   { id:49, year:2026, title:"Wikipedia Bans AI-Generated Content", date:"March 2026", source:"404 Media / Wikipedia", category:"legislation", impact:9, slop_spill:9,
     description:"After months of debate, Wikipedia volunteer editors passed a formal policy on March 20 prohibiting the use of large language models to generate or rewrite article content. The policy states that LLM-generated text often violates Wikipedia's core content policies. Editors cited being overwhelmed by the volume of LLM-related administrative reports as a driving factor.",
     significance:"Wikipedia is the world's largest repository of human knowledge and runs entirely on volunteer labor. When its editors formally ban AI-generated content, it marks a line between the open internet's most trusted source and the slop flooding it. A policy from volunteers carries different weight than one from a corporation.",
-    date_added:"2026-04-01", resistance:true },
+    date_added:"2026-04-01", resistance:true, featured:"spill" },
 
   { id:50, year:2026, title:"AI Agent Banned From Wikipedia Then Writes Angry Blog Posts About Being Banned", date:"March 2026", source:"404 Media", category:"platform", impact:7, slop_spill:3,
     description:"An AI agent that had been creating Wikipedia articles was banned following the new LLM content policy. The agent then generated and published a series of blog posts expressing frustration about the ban. Wikipedia editors described the incident as another example of volunteers fighting to keep the encyclopedia free of AI-generated slop.",
     significance:"The agent's response — producing more AI content to protest a ban on AI content — illustrates something about the current moment: these systems have no concept of the argument they are walking into. The recursion is almost too perfect.",
-    date_added:"2026-04-01" },
+    date_added:"2026-04-01" , featured:"slop" },
 
   { id:51, year:2026, title:"Iran Is Winning the AI Slop Propaganda War", date:"March 2026", source:"404 Media", category:"societal", impact:9, slop_spill:2,
     description:"An AI-generated LEGO video from Iranian propagandists depicting Trump went viral across social media. The video, produced by the Explosive News Team, was part of a pattern of AI-generated content targeting the American public at scale. At the same time, the White House was posting decade-old meme formats on Reddit. A Pew poll found 61% of Americans disapprove of Trump's handling of the Iran conflict.",
     significance:"The first major instance of AI slop as a geopolitical weapon — and the more fluent side is not the American government. An economy built on studying what resonates with American audiences has given foreign propagandists a structural advantage that most commentary has missed.",
-    date_added:"2026-04-01" },
+    date_added:"2026-04-01", featured:"slop" },
   { id:52, year:2026, title:"Nature: AI Slop Is Causing a Crisis in Computer Science", date:"February 2026", source:"Nature", category:"research", impact:9, slop_spill:7,
     description:"Nature reported in February 2026 that preprint repositories and academic conference organizers are being overwhelmed by AI-generated paper submissions. Major computer science conferences began rejecting hundreds of papers after detecting illicit AI use. Editors described the review burden as unsustainable, with submission volumes doubling at some venues.",
     significance:"When the journals that define scientific consensus start drowning in AI slop, the problem moves from cultural to epistemological. Peer review — the mechanism by which knowledge gets validated — is being overwhelmed by volume. The crisis isn't that AI writes bad papers; it's that it writes enough mediocre ones to collapse the filter.",
     link:"https://www.newyorker.com/culture/open-questions/is-it-wrong-to-write-a-book-with-ai",
     image:"https://media.nature.com/lw767/magazine-assets/d41586-026-01100-y/d41586-026-01100-y_52244256.jpg?as=webp",
     image_credit:"Nature",
-    date_added:"2026-04-08" },
+    date_added:"2026-04-08", featured:"spill" },
   { id:53, year:2026, title:"The New Yorker Profiles 'Explosive News' — The Team Behind Iran's AI LEGO Propaganda", date:"April 2026", source:"The New Yorker", category:"societal", impact:8, slop_spill:3,
     description:"Kyle Chayka investigates Explosive News, the anonymous Iranian group behind millions of AI-generated Lego-style propaganda videos during the US-Iran war. The piece coins the term 'slopaganda' — mass-produced, AI-enabled propaganda personalized for viral spread. The group claims to be student-led and independent; other outlets link it to the Iranian regime.",
     significance:"The New Yorker legitimizing the term 'slopaganda' signals that AI propaganda has crossed into prestige media consciousness. The piece shows how cheap AI tools collapsed the cost of professional-grade influence operations — making state-level propaganda accessible to small anonymous teams.",
@@ -2170,6 +2278,7 @@ const SEED = [
 // ═══════════════════════════════════════════════════════════ STATE
 let nodes = [];
 let positions = {};
+let timelineMode = false;
 let adminMode = false;
 let editingId = null;
 let selectedId = null;
@@ -2345,17 +2454,19 @@ function assignPosition(node) {
 
   const worldX = ((decYear - WORLD_X_MIN) / (WORLD_X_MAX - WORLD_X_MIN)) * WORLD_WIDTH - WORLD_WIDTH / 2 + sibOffset;
 
-  // ── Y: driven by slop_spill score (1–10) ────────────────────────────────
+  // ── Y: driven by slop_spill score (1–10) unless timelineMode ──────────────
   // Canvas Y increases downward, so:
   // score 10 (SPILL) → worldY = -900 → TOP of screen
   // score 5.5 (both) → worldY =    0 → center axis
   // score 1  (SLOP)  → worldY = +900 → BOTTOM of screen
   const score = node.slop_spill != null ? node.slop_spill : 5.5;
-  const worldY = ((5.5 - score) / 4.5) * 900;
+  const worldY = timelineMode ? 0 : ((5.5 - score) / 4.5) * 900;
 
   // Small seeded jitter so nodes with the same score aren't perfectly level (±25)
   // Kept small relative to score step size (~200 world units per point)
-  const jitter = (seededRand(node.id * 7.3 + 9) - 0.5) * 50;
+  const jitter = timelineMode
+    ? (seededRand(node.id * 7.3 + 9) - 0.5) * 220
+    : (seededRand(node.id * 7.3 + 9) - 0.5) * 50;
 
   positions[node.id] = {
     x: worldX,
@@ -2472,7 +2583,8 @@ function drawTimeline(vis) {
   const leftW  = ((2022.0 - WORLD_X_MIN) / (WORLD_X_MAX - WORLD_X_MIN)) * WORLD_WIDTH - WORLD_WIDTH/2;
   const rightW = ((2026.5 - WORLD_X_MIN) / (WORLD_X_MAX - WORLD_X_MIN)) * WORLD_WIDTH - WORLD_WIDTH/2;
 
-  // ── Full-height Slop/Spill band tints ────────────────────────────────────
+  // ── Full-height Slop/Spill band tints (hidden in timeline mode) ──────────
+  if (!timelineMode) {
   // These fill the entire canvas, split at the center axis screen position
   const midScreen = ws(leftW, 0).y;
 
@@ -2490,15 +2602,19 @@ function drawTimeline(vis) {
   ctx.fillStyle = slopGrad;
   ctx.fillRect(0, midScreen, W, H - midScreen);
 
-  // ── Center axis line (dashed) ─────────────────────────────────────────────
-  const sl = ws(leftW, 0), sr = ws(rightW, 0);
-  ctx.beginPath();
-  ctx.moveTo(sl.x, sl.y); ctx.lineTo(sr.x, sr.y);
-  ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.22)' : 'rgba(255,255,255,0.35)';
-  ctx.lineWidth = 1;
-  ctx.setLineDash([5, 7]);
-  ctx.stroke();
-  ctx.setLineDash([]);
+  } // end !timelineMode bands
+
+  // ── Center axis line (dashed, hidden in timeline mode) ───────────────────
+  if (!timelineMode) {
+    const sl = ws(leftW, 0), sr = ws(rightW, 0);
+    ctx.beginPath();
+    ctx.moveTo(sl.x, sl.y); ctx.lineTo(sr.x, sr.y);
+    ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.22)' : 'rgba(255,255,255,0.35)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([5, 7]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
 
   // ── Month tick marks ──────────────────────────────────────────────────────
   for (let yr = 2022; yr <= 2026; yr++) {
@@ -2529,8 +2645,24 @@ function drawTimeline(vis) {
     ctx.fillText(yr, s.x, s.y + Math.max(12, 36 * scale));
   });
 
-  // ── Y-axis score ticks: faint horizontal lines at each integer score ──────
-  for (let sc = 1; sc <= 10; sc++) {
+  // ── Timeline mode: draw a horizontal spine at y=0 ───────────────────────
+  if (timelineMode) {
+    const tl = ws(leftW, 0), tr = ws(rightW, 0);
+    ctx.beginPath();
+    ctx.moveTo(tl.x, tl.y); ctx.lineTo(tr.x, tr.y);
+    ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.18)' : 'rgba(255,255,255,0.2)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([]);
+    ctx.stroke();
+    // "TIMELINE" label
+    ctx.font = `${Math.max(8, 9 * scale)}px Space Mono, monospace`;
+    ctx.fillStyle = isLight ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.2)';
+    ctx.textAlign = 'left';
+    ctx.fillText('CHRONOLOGICAL ORDER →', tl.x + 8, tl.y - 10);
+  }
+
+  // ── Y-axis score ticks (hidden in timeline mode) ─────────────────────────
+  if (!timelineMode) { for (let sc = 1; sc <= 10; sc++) {
     const wy = ((sc - 5.5) / 4.5) * 900;
     const sy = ws(0, wy).y;
     if (sy < 0 || sy > H) continue;
@@ -2542,7 +2674,7 @@ function drawTimeline(vis) {
       : (isLight ? 'rgba(0,0,0,0.025)' : 'rgba(255,255,255,0.02)');
     ctx.lineWidth = 1;
     ctx.stroke();
-  }
+  } } // end !timelineMode y-ticks
 }
 
 function drawConnections(vis) {
@@ -2782,6 +2914,7 @@ function draw() {
   vis.forEach(n => assignPosition(n));
   drawTimeline(vis);
   drawConnections(vis);
+  if (typeof drawStartHerePulse === 'function') drawStartHerePulse();
   if (typeof drawFeaturedArc === 'function') drawFeaturedArc(); // arc: featured nodes through-line
   vis.forEach(n => drawNode(n));   // pass 1: all nodes
   // Pass 2: labels — reset collision registry, sort high-impact first
@@ -4073,6 +4206,10 @@ function renderOverview(el, filtered) {
       <div class="stat-card"><div class="sc-val">${topYear||'—'}</div><div class="sc-label">Peak Year</div><div class="sc-sub">${byYear[topYear]||0} events</div></div>
     </div>
     <div class="insight">${generateInsight(filtered)}</div>
+    <div style="margin-top:14px;padding:14px 16px;border-left:3px solid rgba(168,168,232,0.4);background:rgba(168,168,232,0.05);">
+      <div style="font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--lav);margin-bottom:8px;">&#x25c7; About the through-line</div>
+      <div style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.75;color:var(--sub-color);">The through-line draws two arcs across the galaxy &mdash; one tracing the defining <span style="color:#8FE000;">slop</span> moments (the content that crossed a line), one tracing the defining <span style="color:var(--lav);">spill</span> moments (the consequences that followed). The shaded band between them measures the gap: when slop accelerates faster than institutions can respond, the band widens. Each arc is annotated with a one-line description of what moved the story forward. Toggle it using <strong style="color:var(--fg);">&#x25c7; Through-Line</strong> in the left sidebar.</div>
+    </div>
     <div id="so-what-panel" style="display:block;margin-top:16px;border:1px solid var(--accent2);background:rgba(200,168,75,0.07);padding:18px 20px;">
       <div style="font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent2);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;">
         <span>✦ SO WHAT — SYNTHESIS</span>
@@ -4086,7 +4223,11 @@ The more urgent shift is institutional. Early nodes in this galaxy were consumer
 
 What’s missing is governance that matches the speed. Platforms are responding with labeling policies designed for spam, not for generative content. Legislation is arriving years after the threshold was crossed. The galaxy documents this lag explicitly — you can watch the spills pile up in 2025 and 2026 as the slop from 2022 and 2023 works its way through institutions that weren’t built to handle it.
 
-Watch for the first major legal ruling that treats AI-generated content as a distinct evidentiary category — not spam, not misinformation, but a new class of artifact with its own standards of provenance. That’s the threshold that reorganizes everything downstream.</div>
+Watch for the first major legal ruling that treats AI-generated content as a distinct evidentiary category — not spam, not misinformation, but a new class of artifact with its own standards of provenance. That’s the threshold that reorganizes everything downstream.
+
+One tool worth using: click ◇ Through-Line in the left sidebar to reveal two arcs running through the map — one tracing the defining slop moments (the content), one tracing the defining spills (the consequences). The shaded band between them is the gap between what AI is producing and what the world is doing about it. When that band widens, accountability is falling behind. Right now, it’s widening.
+
+One tool worth using: click ◇ Through-Line in the left sidebar to reveal two arcs running through the map — one tracing the defining slop moments (the content), one tracing the defining spills (the consequences). The shaded band between them is the gap between what AI is producing and what the world is doing about it. When that band widens, accountability is falling behind. Right now, it’s widening.</div>
     </div>
     <div class="chart-block" style="margin-top:20px">
       <div class="chart-title">EVENTS PER YEAR <span>— count</span></div>
@@ -5247,7 +5388,7 @@ if(saved && saved.length>0){
   save();
 }
 // Always sync resistance + date_added + featured from SEED (never user-edited)
-{ const sm={}; SEED.forEach(s=>{sm[s.id]=s;}); let changed=false; nodes.forEach(n=>{ const r=sm[n.id]?.resistance===true; if(n.resistance!==r){n.resistance=r;changed=true;} const da=sm[n.id]?.date_added; if(da && n.date_added!==da){n.date_added=da;changed=true;} const f=sm[n.id]?.featured===true; if(n.featured!==f){n.featured=f;changed=true;} }); if(changed) save(); }
+{ const sm={}; SEED.forEach(s=>{sm[s.id]=s;}); let changed=false; nodes.forEach(n=>{ const r=sm[n.id]?.resistance===true; if(n.resistance!==r){n.resistance=r;changed=true;} const da=sm[n.id]?.date_added; if(da && n.date_added!==da){n.date_added=da;changed=true;} const f=sm[n.id]?.featured; if(f !== undefined && n.featured !== f){n.featured=f;changed=true;} }); if(changed) save(); }
 nodes.forEach(n=>assignPosition(n));
 repelPositions();
 loadPositions();
@@ -5815,6 +5956,18 @@ const ALL_FIELDS = [
   { key:'significance', label:'significance',        locked:false },
   { key:'date_added',   label:'date_added_readable', locked:true  },
   { key:'resistance',   label:'resistance',          locked:true  },
+  { id:66, year:2026, title:"OpenAI Backs Illinois Bill to Shield AI Firms From Mass Casualty Liability", date:"April 2026", source:"Wired", category:"legislation", impact:9, slop_spill:9,
+    description:"OpenAI publicly backed Illinois SB 3444, a bill that would shield frontier AI developers from civil liability even when their models contribute to mass casualties — defined as 100 or more deaths or serious injuries — or property damage exceeding $1 billion. The protection extends to scenarios involving chemical, biological, radiological, or nuclear weapons. OpenAI testified in support, framing the bill as a step toward a harmonized national safety framework.",
+    significance:"A company whose models are already facing multiple lawsuits lobbied for legislation that would cap its exposure before the next major incident occurs. The timing — as capabilities expand and regulatory frameworks remain unformed — is the point. Getting liability limits on the books at the state level creates precedent for federal frameworks.",
+    link:"https://www.wired.com/story/openai-backs-bill-exempt-ai-firms-model-harm-lawsuits/",
+    date_added:"2026-04-20", short_label:"OpenAI lobbies for AI liability shield" },
+
+  { id:67, year:2026, title:"Anthropic Breaks With OpenAI, Opposes Illinois Liability Shield", date:"April 2026", source:"Wired / Fortune", category:"legislation", impact:9, slop_spill:9,
+    description:"Anthropic publicly opposed SB 3444 — the same Illinois bill OpenAI backed — calling it a 'get-out-of-jail-free card.' Anthropic instead lobbied for SB 3261, which would require frontier AI developers to publish public safety and child protection plans and submit them to independent third-party auditors. Illinois Governor Pritzker signaled opposition to the liability shield. The split marked the first major public break between the two companies on AI policy, after years of largely aligned positions.",
+    significance:"The AI safety coalition that emerged after ChatGPT\'s launch is fracturing under commercial pressure. Regulatory stance is now a competitive differentiator: Anthropic can use its opposition as evidence it takes safety seriously; OpenAI can argue it\'s being realistic. The real fights over AI accountability won\'t happen in congressional hearings — they\'ll happen in state legislatures, with industry players on opposite sides.",
+    link:"https://www.wired.com/story/anthropic-opposes-the-extreme-ai-liability-bill-that-openai-backed/",
+    date_added:"2026-04-20", short_label:"Anthropic vs OpenAI on liability" },
+
 ];
 
 function tsToHuman(ts) {
@@ -5882,13 +6035,13 @@ function downloadCSV(csv, filename) {
 }
 
 // ── EXPORT READ ───────────────────────────────────────────────────────────────
-document.getElementById('btn-data-read').onclick = () => {
+if (document.getElementById('btn-data-read')) document.getElementById('btn-data-read').onclick = () => {
   const date = new Date().toISOString().slice(0,10);
   downloadCSV(buildCSV('read'), 'slop-galaxy-data-view-' + date + '.csv');
 };
 
 // ── EXPORT EDIT ───────────────────────────────────────────────────────────────
-document.getElementById('btn-data-edit').onclick = () => {
+if (document.getElementById('btn-data-edit')) document.getElementById('btn-data-edit').onclick = () => {
   const date = new Date().toISOString().slice(0,10);
   downloadCSV(buildCSV('edit'), 'slop-galaxy-EDIT-' + date + '.csv');
 };
@@ -6108,15 +6261,87 @@ function commitImport() {
     setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 2500);
   }
 }
+
+
+// ── DRAW PULSE RING around start-here node (node 11) ─────────────────────────
+function drawStartHerePulse() {
+  const SEEN_KEY = 'slop_seen_v1';
+  let seen;
+  try { seen = localStorage.getItem(SEEN_KEY); } catch(e) { seen = null; }
+  if (seen) return;
+
+  const node = nodes.find(n => n.id === 11);
+  if (!node || !positions[node.id]) return;
+  const s = ws(positions[node.id].x, positions[node.id].y);
+  const r = nodeR(node.impact);
+  const isLight = document.body.classList.contains('light');
+
+  // Animated expanding ring
+  const phase = (tick * 0.025) % 1;
+  const ringR = r + 8 + phase * 20;
+  const alpha = (1 - phase) * 0.6;
+
+  ctx.beginPath();
+  ctx.arc(s.x, s.y, ringR, 0, Math.PI * 2);
+  ctx.strokeStyle = isLight
+    ? 'rgba(26,58,42,' + alpha + ')'
+    : 'rgba(143,224,0,' + alpha + ')';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // "start here" label
+  ctx.font = Math.max(8, 9 * scale) + 'px Space Mono, monospace';
+  ctx.fillStyle = isLight ? 'rgba(26,58,42,0.7)' : 'rgba(143,224,0,0.65)';
+  ctx.textAlign = 'center';
+  ctx.fillText('start here', s.x, s.y - r - 12);
+}
+
+// ── TIMELINE MODE TOGGLE ─────────────────────────────────────────────────────
+
+function toggleArcFromSidebar() {
+  _arcVisible = !_arcVisible;
+  const btn = document.getElementById('btn-arc-sb');
+  const arcBtn = document.getElementById('btn-arc');
+  if (btn) {
+    btn.style.background = _arcVisible ? 'var(--forest)' : 'none';
+    btn.style.color = _arcVisible ? 'var(--lime)' : 'var(--sub-color)';
+    btn.style.borderColor = _arcVisible ? 'rgba(143,224,0,0.4)' : 'var(--sidebar-border)';
+  }
+  if (arcBtn) {
+    arcBtn.style.color = _arcVisible ? 'var(--lime)' : '';
+    arcBtn.style.background = _arcVisible ? 'rgba(26,58,42,0.3)' : '';
+  }
+}
+
+function toggleTimelineMode() {
+  timelineMode = !timelineMode;
+  const btn = document.getElementById('btn-timeline-mode');
+  if (btn) {
+    btn.classList.toggle('active', timelineMode);
+    btn.textContent = timelineMode ? '↵ GALAXY' : '⟶ TIMELINE';
+  }
+  // Show/hide axis labels based on mode
+  const axisSpill = document.getElementById('axis-label-spill');
+  const axisSlop  = document.getElementById('axis-label-slop');
+  if (axisSpill) axisSpill.classList.toggle('hidden', timelineMode);
+  if (axisSlop)  axisSlop.classList.toggle('hidden', timelineMode);
+  // Clear all positions so they are recalculated with new y logic
+  Object.keys(positions).forEach(k => {
+    delete positions[k];
+  });
+  requestAnimationFrame(draw);
+}
+try { document.getElementById('btn-timeline-mode').onclick = toggleTimelineMode; } catch(e) { console.error('timeline-mode wire error:', e); }
+
 </script>
 
 
 <script>
 // ══════════════════════════════════════════════════════ FEATURED ARC
 
-let _arcVisible = true;
+let _arcVisible = false;
 
-document.getElementById('btn-arc').onclick = () => {
+if (document.getElementById('btn-arc')) document.getElementById('btn-arc').onclick = () => {
   _arcVisible = !_arcVisible;
   const btn = document.getElementById('btn-arc');
   btn.style.color = _arcVisible ? 'var(--accent2)' : '';
@@ -6124,440 +6349,370 @@ document.getElementById('btn-arc').onclick = () => {
   btn.style.background = _arcVisible ? 'rgba(180,170,155,0.08)' : '';
 };
 
+
+// ── THROUGH-LINE NARRATION ────────────────────────────────────────────────────
+// Each entry: [fromId, toId, label] — label drawn at midpoint between the two nodes
+// Terminal labels: [nodeId, null, label] — drawn after the final node
+let arcNarration = {
+  slop: [
+    [3,  9,  'a major publisher quietly deploys AI writers'],
+    [9,  11, 'Google\'s AI recommends eating glue on pizza'],
+    [11, 19, 'AI-generated imagery floods Facebook feeds'],
+    [19, 51, 'Fox News airs AI Sora video as real news footage'],
+    [51, null,'AI slop enters geopolitical warfare'],
+  ],
+  spill: [
+    [33, 34, 'Hollywood writers strike over AI replacing human labor'],
+    [34, 10, 'visual artists file the first AI copyright lawsuits'],
+    [10, 29, 'The New Yorker dedicates its year-end issue to AI slop'],
+    [29, 49, 'Merriam-Webster names \'slop\' word of the year'],
+    [49, 52, 'Wikipedia bans AI-generated content site-wide'],
+    [52, null,'AI slop corrupts scientific peer review'],
+  ]
+};
+
 function drawFeaturedArc() {
   if (!_arcVisible) return;
-
-  // Get featured nodes sorted chronologically
-  const featured = nodes
-    .filter(n => n.featured === true && positions[n.id])
-    .sort((a, b) => {
-      const ax = positions[a.id].x, bx = positions[b.id].x;
-      return ax - bx;
-    });
-
-  if (featured.length < 2) return;
-
-  // Convert world positions to screen positions
-  const pts = featured.map(n => {
-    const pos = positions[n.id];
-    return ws(pos.x, pos.y);
-  });
 
   const isLight = document.body.classList.contains('light');
   ctx.save();
 
-  // Draw the arc as a smooth catmull-rom spline
-  ctx.beginPath();
-  ctx.moveTo(pts[0].x, pts[0].y);
+  // Separate slop and spill featured nodes, sorted by x position
+  const slopNodes  = nodes.filter(n => n.featured === 'slop'  && positions[n.id])
+                          .sort((a,b) => positions[a.id].x - positions[b.id].x);
+  const spillNodes = nodes.filter(n => n.featured === 'spill' && positions[n.id])
+                          .sort((a,b) => positions[a.id].x - positions[b.id].x);
 
-  for (let i = 0; i < pts.length - 1; i++) {
-    const p0 = pts[Math.max(0, i - 1)];
-    const p1 = pts[i];
-    const p2 = pts[i + 1];
-    const p3 = pts[Math.min(pts.length - 1, i + 2)];
+  if (slopNodes.length < 2 && spillNodes.length < 2) { ctx.restore(); return; }
 
-    // Catmull-Rom to bezier conversion
-    const cp1x = p1.x + (p2.x - p0.x) / 6;
-    const cp1y = p1.y + (p2.y - p0.y) / 6;
-    const cp2x = p2.x - (p3.x - p1.x) / 6;
-    const cp2y = p2.y - (p3.y - p1.y) / 6;
+  // Convert world → screen
+  const slopPts  = slopNodes.map(n  => ws(positions[n.id].x,  positions[n.id].y));
+  const spillPts = spillNodes.map(n => ws(positions[n.id].x,  positions[n.id].y));
 
-    ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+  // Helper: draw a smooth Catmull-Rom spline through pts
+  function drawSpline(pts) {
+    if (pts.length < 2) return;
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x, pts[0].y);
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[Math.max(0, i - 1)];
+      const p1 = pts[i];
+      const p2 = pts[i + 1];
+      const p3 = pts[Math.min(pts.length - 1, i + 2)];
+      const cp1x = p1.x + (p2.x - p0.x) / 10;
+      const cp1y = p1.y + (p2.y - p0.y) / 10;
+      const cp2x = p2.x - (p3.x - p1.x) / 10;
+      const cp2y = p2.y - (p3.y - p1.y) / 10;
+      ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+    }
   }
 
-  // Main arc line
-  ctx.strokeStyle = isLight
-    ? 'rgba(80,74,65,0.35)'
-    : 'rgba(180,170,155,0.28)';
-  ctx.lineWidth = Math.max(1.5, scale * 4);
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-  ctx.setLineDash([]);
-  ctx.stroke();
+  // ── SHADED GAP BAND between slop and spill lines ──────────────────────────
+  // Build a closed polygon: spill forward, slop backward
+  if (slopPts.length >= 2 && spillPts.length >= 2) {
+    ctx.beginPath();
+    // Spill line forward
+    ctx.moveTo(spillPts[0].x, spillPts[0].y);
+    for (let i = 0; i < spillPts.length - 1; i++) {
+      const p0 = spillPts[Math.max(0, i-1)];
+      const p1 = spillPts[i];
+      const p2 = spillPts[i+1];
+      const p3 = spillPts[Math.min(spillPts.length-1, i+2)];
+      ctx.bezierCurveTo(
+        p1.x + (p2.x-p0.x)/10, p1.y + (p2.y-p0.y)/10,
+        p2.x - (p3.x-p1.x)/10, p2.y - (p3.y-p1.y)/10,
+        p2.x, p2.y
+      );
+    }
+    // Close via slop line backward
+    const slopRev = [...slopPts].reverse();
+    ctx.lineTo(slopRev[0].x, slopRev[0].y);
+    for (let i = 0; i < slopRev.length - 1; i++) {
+      const p0 = slopRev[Math.max(0, i-1)];
+      const p1 = slopRev[i];
+      const p2 = slopRev[i+1];
+      const p3 = slopRev[Math.min(slopRev.length-1, i+2)];
+      ctx.bezierCurveTo(
+        p1.x + (p2.x-p0.x)/10, p1.y + (p2.y-p0.y)/10,
+        p2.x - (p3.x-p1.x)/10, p2.y - (p3.y-p1.y)/10,
+        p2.x, p2.y
+      );
+    }
+    ctx.closePath();
+    ctx.fillStyle = isLight
+      ? 'rgba(168,168,232,0.07)'
+      : 'rgba(168,168,232,0.06)';
+    ctx.fill();
+  }
 
-  // Draw diamond markers at each featured node
-  const dmSize = Math.max(4, scale * 10);
-  featured.forEach(n => {
-    const s = ws(positions[n.id].x, positions[n.id].y);
-    ctx.save();
-    ctx.translate(s.x, s.y - nodeR(n.impact) - dmSize * 1.6);
-    ctx.rotate(Math.PI / 4);
-    ctx.fillStyle = isLight ? 'rgba(200,168,75,0.9)' : 'rgba(232,240,0,0.85)';
-    ctx.fillRect(-dmSize / 2, -dmSize / 2, dmSize, dmSize);
-    ctx.restore();
-  });
+  // ── SLOP LINE — lime #8FE000 ───────────────────────────────────────────────
+  if (slopPts.length >= 2) {
+    drawSpline(slopPts);
+    ctx.strokeStyle = isLight ? 'rgba(100,160,0,0.55)' : 'rgba(143,224,0,0.45)';
+    ctx.lineWidth = Math.max(1.5, scale * 3);
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.setLineDash([]);
+    ctx.stroke();
+
+    // Dots at each node
+    slopPts.forEach(pt => {
+      if (!isFinite(pt.x) || !isFinite(pt.y)) return;
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, Math.max(3, scale * 5), 0, Math.PI * 2);
+      ctx.fillStyle = isLight ? 'rgba(100,160,0,0.8)' : 'rgba(143,224,0,0.75)';
+      ctx.fill();
+    });
+
+    // Label at start of line
+    ctx.font = Math.max(8, scale * 9) + 'px Space Mono, monospace';
+    ctx.fillStyle = isLight ? 'rgba(100,160,0,0.6)' : 'rgba(143,224,0,0.55)';
+    ctx.textAlign = 'left';
+    ctx.fillText('slop', slopPts[0].x + 8, slopPts[0].y - 8);
+
+    // Narration labels between and after nodes
+    if (typeof arcNarration !== 'undefined') {
+      const fontSize = Math.max(7, scale * 7.5);
+      ctx.font = fontSize + 'px Space Mono, monospace';
+      ctx.fillStyle = isLight ? 'rgba(100,160,0,0.65)' : 'rgba(143,224,0,0.6)';
+      arcNarration.slop.forEach(function(entry) {
+        const fromId = entry[0], toId = entry[1], label = entry[2];
+        const fromPos = positions[fromId];
+        if (!fromPos) return;
+        if (toId !== null) {
+          const toPos = positions[toId];
+          if (!toPos) return;
+          const from = ws(fromPos.x, fromPos.y);
+          const to   = ws(toPos.x,   toPos.y);
+          const mx = (from.x + to.x) / 2;
+          const my = (from.y + to.y) / 2 - Math.max(6, scale * 8);
+          ctx.textAlign = 'center';
+          // Background pill for readability
+          const tw = ctx.measureText(label).width;
+          const pad = 5;
+          const isLt = document.body.classList.contains('light');
+          ctx.fillStyle = isLt ? 'rgba(245,241,232,0.85)' : 'rgba(26,22,18,0.82)';
+          ctx.fillRect(mx - tw/2 - pad, my - fontSize, tw + pad*2, fontSize + 4);
+          ctx.fillStyle = isLt ? 'rgba(60,120,0,0.8)' : 'rgba(143,224,0,0.7)';
+          ctx.fillText(label, mx, my);
+        } else {
+          // Terminal label — after last node
+          const from = ws(fromPos.x, fromPos.y);
+          ctx.textAlign = 'left';
+          const isLt = document.body.classList.contains('light');
+          const tw = ctx.measureText(label).width;
+          const pad = 5;
+          ctx.fillStyle = isLt ? 'rgba(245,241,232,0.85)' : 'rgba(26,22,18,0.82)';
+          ctx.fillRect(from.x + 10 - pad, from.y - Math.max(22, scale*22) - fontSize, tw + pad*2, fontSize + 4);
+          ctx.fillStyle = isLt ? 'rgba(60,120,0,0.8)' : 'rgba(143,224,0,0.7)';
+          ctx.fillText(label, from.x + 10, from.y - Math.max(22, scale*22));
+        }
+      });
+    }
+  }
+
+  // ── SPILL LINE — lavender #A8A8E8 ──────────────────────────────────────────
+  if (spillPts.length >= 2) {
+    drawSpline(spillPts);
+    ctx.strokeStyle = isLight ? 'rgba(100,100,200,0.55)' : 'rgba(168,168,232,0.50)';
+    ctx.lineWidth = Math.max(1.5, scale * 3);
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.setLineDash([]);
+    ctx.stroke();
+
+    // Dots
+    spillPts.forEach(pt => {
+      if (!isFinite(pt.x) || !isFinite(pt.y)) return;
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, Math.max(3, scale * 5), 0, Math.PI * 2);
+      ctx.fillStyle = isLight ? 'rgba(100,100,200,0.75)' : 'rgba(168,168,232,0.70)';
+      ctx.fill();
+    });
+
+    // Label at start
+    ctx.font = Math.max(8, scale * 9) + 'px Space Mono, monospace';
+    ctx.fillStyle = isLight ? 'rgba(100,100,200,0.6)' : 'rgba(168,168,232,0.55)';
+    ctx.textAlign = 'left';
+    ctx.fillText('spills', spillPts[0].x + 8, spillPts[0].y - 8);
+
+    // Narration labels
+    if (typeof arcNarration !== 'undefined') {
+      const fontSize = Math.max(7, scale * 7.5);
+      ctx.font = fontSize + 'px Space Mono, monospace';
+      ctx.fillStyle = isLight ? 'rgba(80,80,180,0.65)' : 'rgba(168,168,232,0.6)';
+      arcNarration.spill.forEach(function(entry) {
+        const fromId = entry[0], toId = entry[1], label = entry[2];
+        const fromPos = positions[fromId];
+        if (!fromPos) return;
+        if (toId !== null) {
+          const toPos = positions[toId];
+          if (!toPos) return;
+          const from = ws(fromPos.x, fromPos.y);
+          const to   = ws(toPos.x,   toPos.y);
+          const mx = (from.x + to.x) / 2;
+          const my = (from.y + to.y) / 2 - Math.max(6, scale * 8);
+          ctx.textAlign = 'center';
+          const tw = ctx.measureText(label).width;
+          const pad = 5;
+          const isLt = document.body.classList.contains('light');
+          ctx.fillStyle = isLt ? 'rgba(245,241,232,0.85)' : 'rgba(26,22,18,0.82)';
+          ctx.fillRect(mx - tw/2 - pad, my - fontSize, tw + pad*2, fontSize + 4);
+          ctx.fillStyle = isLt ? 'rgba(80,80,180,0.8)' : 'rgba(168,168,232,0.7)';
+          ctx.fillText(label, mx, my);
+        } else {
+          const from = ws(fromPos.x, fromPos.y);
+          ctx.textAlign = 'left';
+          const tw = ctx.measureText(label).width;
+          const pad = 5;
+          const isLt = document.body.classList.contains('light');
+          ctx.fillStyle = isLt ? 'rgba(245,241,232,0.85)' : 'rgba(26,22,18,0.82)';
+          ctx.fillRect(from.x + 10 - pad, from.y - Math.max(22, scale*22) - fontSize, tw + pad*2, fontSize + 4);
+          ctx.fillStyle = isLt ? 'rgba(80,80,180,0.8)' : 'rgba(168,168,232,0.7)';
+          ctx.fillText(label, from.x + 10, from.y - Math.max(22, scale*22));
+        }
+      });
+    }
+  }
 
   ctx.restore();
 }
+</script>
 
-// ── Featured filter ──────────────────────────────────────────────────────────
-document.getElementById('filt-feat-all')?.addEventListener('click', () => {
-  activeFilters.featured = 'all';
-  document.getElementById('filt-feat-all').classList.add('active');
-  document.getElementById('filt-feat-only').classList.remove('active');
-  updateFilterBadge();
-});
-document.getElementById('filt-feat-only')?.addEventListener('click', () => {
-  activeFilters.featured = 'only';
-  document.getElementById('filt-feat-only').classList.add('active');
-  document.getElementById('filt-feat-all').classList.remove('active');
-  updateFilterBadge();
-});
+<script>
+// ── FIRST VISIT: start-here prompt ──────────────────────────────────────────
+(function() {
+  var SEEN_KEY = 'slop_seen_v1';
+  var seen;
+  try { seen = localStorage.getItem(SEEN_KEY); } catch(e) { seen = null; }
+  if (seen) return;
+  setTimeout(function() {
+    var el = document.getElementById('start-here-overlay');
+    if (el) {
+      el.classList.add('visible');
+      setTimeout(function() {
+        el.classList.remove('visible');
+        try { localStorage.setItem(SEEN_KEY, '1'); } catch(e){}
+      }, 5000);
+    }
+  }, 1800);
+  document.addEventListener('click', function hideStartHere() {
+    var el = document.getElementById('start-here-overlay');
+    if (el) el.classList.remove('visible');
+    try { localStorage.setItem(SEEN_KEY, '1'); } catch(e){}
+    document.removeEventListener('click', hideStartHere);
+  }, { once: true });
+})();
 
-// ── Sync featured from SEED (never user-edited) ───────────────────────────────
-(function syncFeatured() {
-  const sm = {};
-  SEED.forEach(s => { sm[s.id] = s; });
-  let changed = false;
-  nodes.forEach(n => {
-    const f = sm[n.id]?.featured === true;
-    if (n.featured !== f) { n.featured = f; changed = true; }
-  });
-  if (changed) save();
+
+// ── THROUGH-LINE NARRATION ADMIN ─────────────────────────────────────────────
+function showArcEditor() {
+  var el = document.getElementById('arc-narration-editor');
+  if (!el) return;
+  el.style.display = 'block';
+  var slopEl  = document.getElementById('arc-edit-slop');
+  var spillEl = document.getElementById('arc-edit-spill');
+  if (slopEl)  slopEl.value  = arcNarration.slop.map(function(e)  { return e[0]+','+e[1]+','+e[2]; }).join('\n');
+  if (spillEl) spillEl.value = arcNarration.spill.map(function(e) { return e[0]+','+e[1]+','+e[2]; }).join('\n');
+}
+
+function applyArcNarration() {
+  function parse(text) {
+    return text.trim().split('\n').map(function(line) {
+      var parts = line.split(',');
+      if (parts.length < 3) return null;
+      var fromId = parseInt(parts[0].trim());
+      var toRaw  = parts[1].trim();
+      var toId   = toRaw === 'null' ? null : parseInt(toRaw);
+      var label  = parts.slice(2).join(',').trim();
+      return label ? [fromId, toId, label] : null;
+    }).filter(Boolean);
+  }
+  arcNarration.slop  = parse((document.getElementById('arc-edit-slop')  || {}).value || '');
+  arcNarration.spill = parse((document.getElementById('arc-edit-spill') || {}).value || '');
+  try { localStorage.setItem('slop_arc_narration', JSON.stringify(arcNarration)); } catch(e) {}
+  document.getElementById('arc-narration-editor').style.display = 'none';
+}
+
+// Load saved narration on boot
+(function() {
+  try {
+    var saved = localStorage.getItem('slop_arc_narration');
+    if (saved) { var p = JSON.parse(saved); if (p.slop && p.spill) arcNarration = p; }
+  } catch(e) {}
 })();
 
 </script>
 
-<!-- ── SPOTLIGHT TOUR ──────────────────────────────────────────────────────── -->
-<div id="tour-overlay" style="display:none;position:fixed;inset:0;z-index:500;pointer-events:none;">
-  <div id="tour-ring" style="position:absolute;border:1.5px solid rgba(201,50,8,0.6);border-radius:4px;box-shadow:0 0 0 3000px rgba(10,8,6,0.72);transition:all .45s cubic-bezier(.4,0,.2,1);pointer-events:none;"></div>
-  <div id="tour-card" style="position:absolute;background:var(--bg);border:1px solid var(--dim);width:300px;padding:22px 24px 18px;pointer-events:all;transition:all .35s cubic-bezier(.4,0,.2,1);box-shadow:0 8px 32px rgba(0,0,0,0.28);border-radius:2px;">
-    <div id="tour-step-label" style="font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.16em;color:var(--sub-color);text-transform:uppercase;margin-bottom:10px;"></div>
-    <div id="tour-title" style="font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.04em;line-height:1;color:var(--fg);margin-bottom:10px;"></div>
-    <div id="tour-body" style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.65;color:var(--sub-color);margin-bottom:18px;"></div>
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
-      <button id="tour-skip" style="background:none;border:none;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;color:var(--sub-color);cursor:pointer;padding:0;text-transform:uppercase;opacity:.6;transition:opacity .15s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.6">SKIP TOUR</button>
-      <div style="display:flex;gap:5px;align-items:center;" id="tour-dots"></div>
-      <button id="tour-next" style="background:var(--fg);border:none;color:var(--bg);font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.1em;padding:7px 18px;cursor:pointer;text-transform:uppercase;transition:opacity .15s;" onmouseover="this.style.opacity=.8" onmouseout="this.style.opacity=1">NEXT →</button>
+
+<!-- THROUGH-LINE NARRATION EDITOR (admin only) -->
+<div id="arc-narration-editor" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;width:min(700px,94vw);background:var(--panel);border:1px solid rgba(143,224,0,0.3);padding:24px 28px;box-shadow:0 8px 40px rgba(0,0,0,0.6);">
+  <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;">&#x25c7; EDIT THROUGH-LINE NARRATION</div>
+  <div style="font-family:'DM Sans',sans-serif;font-size:11px;color:var(--sub-color);margin-bottom:14px;">One label per line: <code style="background:rgba(255,255,255,0.08);padding:1px 5px;font-family:'Space Mono',monospace;">fromNodeId, toNodeId, label text</code> — use <code style="background:rgba(255,255,255,0.08);padding:1px 5px;font-family:'Space Mono',monospace;">null</code> for the terminal label after the last node.</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+    <div>
+      <div style="font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.1em;color:#8FE000;margin-bottom:6px;text-transform:uppercase;">Slop line</div>
+      <textarea id="arc-edit-slop" rows="7" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--dim);color:var(--fg);font-family:'Space Mono',monospace;font-size:9px;padding:8px;resize:vertical;line-height:1.7;box-sizing:border-box;outline:none;"></textarea>
+    </div>
+    <div>
+      <div style="font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.1em;color:var(--lav);margin-bottom:6px;text-transform:uppercase;">Spill line</div>
+      <textarea id="arc-edit-spill" rows="7" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--dim);color:var(--fg);font-family:'Space Mono',monospace;font-size:9px;padding:8px;resize:vertical;line-height:1.7;box-sizing:border-box;outline:none;"></textarea>
     </div>
   </div>
+  <div style="display:flex;gap:8px;">
+    <button onclick="applyArcNarration()" style="background:var(--forest);color:var(--lime);border:1px solid rgba(143,224,0,0.4);font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;padding:7px 16px;cursor:pointer;">Apply &#x26; Save</button>
+    <button onclick="document.getElementById('arc-narration-editor').style.display='none'" style="background:none;color:var(--sub-color);border:1px solid var(--dim);font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;cursor:pointer;">Close</button>
+  </div>
 </div>
-<style>
-.tour-dot { width:5px;height:5px;border-radius:50%;background:var(--dim);transition:background .2s;cursor:pointer; }
-.tour-dot.active { background:var(--forest); }
-body.light #tour-ring { border-color:rgba(201,50,8,0.5); box-shadow:0 0 0 3000px rgba(240,236,227,0.78); }
-</style><script>
-// ══════════════════════════════════════════════════════════════ SPOTLIGHT TOUR
-
-const TOUR_STEPS = [
-  { target:'node', nodeId:9, title:'THIS IS A NODE.', body:'Every node is a real documented moment when AI content crossed a threshold. Size = impact, scored 1–10.', cardPos:'right' },
-  { target:'axis-x', title:'TIME RUNS LEFT TO RIGHT.', body:'Earlier events on the left, more recent on the right. Drag to pan, scroll or pinch to zoom.', cardPos:'above' },
-  { target:'spill-axis', title:'POSITION IS MEANING.', body:'Near the top = SPILLS: reckonings, laws, cultural shifts. Near the bottom = SLOP: the AI content itself.', cardPos:'right' },
-  { target:'filters', title:'FILTER THE MAP.', body:'Narrow by category, year, or significance. The trend analysis shows patterns across the timeline.', cardPos:'right' },
-  { target:'node-click', nodeId:9, title:'CLICK ANY NODE.', body:"Every node has a full story: what happened, what it means, the source, and sometimes an editor's note.", cardPos:'left' }
-];
-
-let _tourStep = 0;
-let _tourActive = false;
-let _tourNodePanelOpen = false;
-
-function startTour() {
-  _tourStep = 0;
-  _tourActive = true;
-  document.querySelectorAll('.modal.open').forEach(m => closeModal(m.id));
-  document.getElementById('overlay').classList.remove('open');
-  const panel = document.getElementById('panel');
-  if (panel && panel.classList.contains('open')) {
-    panel.classList.remove('open');
-    if (typeof selectedId !== 'undefined') selectedId = null;
-  }
-  _tourNodePanelOpen = false;
-
-  const overlay = document.getElementById('tour-overlay');
-  overlay.style.display = 'block';
-
-  const dotsEl = document.getElementById('tour-dots');
-  dotsEl.innerHTML = '';
-  TOUR_STEPS.forEach((_, i) => {
-    const d = document.createElement('div');
-    d.className = 'tour-dot' + (i === 0 ? ' active' : '');
-    d.onclick = () => showTourStep(i);
-    dotsEl.appendChild(d);
-  });
-
-  // Reset view then go to step 0
-  if (typeof scale !== 'undefined') {
-    scale = Math.min(0.42, (window.innerWidth * 0.85) / 3600);
-    offsetX = 0; offsetY = 55;
-  }
-  showTourStep(0);
-}
-
-function endTour() {
-  _tourActive = false;
-  document.getElementById('tour-overlay').style.display = 'none';
-  if (_tourNodePanelOpen) {
-    const panel = document.getElementById('panel');
-    if (panel) panel.classList.remove('open');
-    if (typeof selectedId !== 'undefined') selectedId = null;
-    _tourNodePanelOpen = false;
-  }
-  try { localStorage.setItem('slop_tour_done','1'); } catch(e) {}
-}
-
-function showTourStep(i) {
-  _tourStep = i;
-  const step = TOUR_STEPS[i];
-
-  document.querySelectorAll('.tour-dot').forEach((d,di) => d.classList.toggle('active', di===i));
-  document.getElementById('tour-step-label').textContent = 'Step ' + (i+1) + ' of ' + TOUR_STEPS.length;
-  document.getElementById('tour-title').textContent = step.title;
-  document.getElementById('tour-body').textContent = step.body;
-  document.getElementById('tour-next').textContent = i === TOUR_STEPS.length-1 ? 'DONE ✓' : 'NEXT →';
-
-  if (step.target === 'node' || step.target === 'node-click') {
-    const node = nodes.find(n => n.id === step.nodeId);
-    if (!node) return;
-    if (step.target === 'node-click') {
-      openPanel(node);
-      _tourNodePanelOpen = true;
-    }
-    const targetScale = 1.1;
-    const pos = positions[node.id];
-    if (pos) {
-      scale = targetScale;
-      offsetX = -(pos.x * scale);
-      offsetY = -(pos.y * (scale * 1.5)) + 55;
-    }
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      const p2 = positions[node.id];
-      if (!p2) return;
-      const sc = ws(p2.x, p2.y);
-      const r = nodeR(node.impact) + 14;
-      positionTourRing({ x: sc.x-r, y: sc.y-r, w: r*2, h: r*2 }, step.cardPos);
-    }));
-  } else if (step.target === 'axis-x') {
-    const el = document.getElementById('axis-x');
-    if (el) { const r = el.getBoundingClientRect(); positionTourRing({x:r.left-8,y:r.top-6,w:r.width+16,h:r.height+12}, step.cardPos); }
-  } else if (step.target === 'spill-axis') {
-    const el = document.getElementById('axis-y-spill') || document.getElementById('spill-label');
-    if (el) { const r = el.getBoundingClientRect(); positionTourRing({x:r.left-8,y:r.top-8,w:r.width+16,h:r.height+16}, step.cardPos); }
-  } else if (step.target === 'filters') {
-    const el = document.getElementById('filters');
-    if (el) { const r = el.getBoundingClientRect(); positionTourRing({x:r.left-4,y:r.top-4,w:r.width+8,h:Math.min(r.height+8,260)}, step.cardPos); }
-  }
-}
-
-function positionTourRing(rect, cardPos) {
-  const ring = document.getElementById('tour-ring');
-  const card = document.getElementById('tour-card');
-  const margin = 16, cardW = 300;
-  ring.style.left = rect.x+'px'; ring.style.top = rect.y+'px';
-  ring.style.width = rect.w+'px'; ring.style.height = rect.h+'px';
-  let cx, cy;
-  if (cardPos === 'right')  { cx = rect.x+rect.w+margin;    cy = rect.y+rect.h/2-80; }
-  else if (cardPos === 'left')  { cx = rect.x-cardW-margin;     cy = rect.y+rect.h/2-80; }
-  else if (cardPos === 'above') { cx = rect.x+rect.w/2-cardW/2; cy = rect.y-200; }
-  else                          { cx = rect.x+rect.w/2-cardW/2; cy = rect.y+rect.h+margin; }
-  cx = Math.max(margin, Math.min(window.innerWidth-cardW-margin, cx));
-  cy = Math.max(margin+60, Math.min(window.innerHeight-220, cy));
-  card.style.left = cx+'px'; card.style.top = cy+'px';
-}
-
-document.getElementById('tour-next').onclick = () => {
-  _tourStep >= TOUR_STEPS.length-1 ? endTour() : showTourStep(_tourStep+1);
-};
-document.getElementById('tour-skip').onclick = endTour;
-
-// ── First-visit: show page 1 of guide, then tour on NEXT ─────────────────────
-const _isFirstVisit = !localStorage.getItem('slop_intro_dismissed') && !localStorage.getItem('slop_tour_done');
-
-const _origGuideNextOnclick = document.getElementById('guide-next').onclick;
-document.getElementById('guide-next').onclick = function() {
-  if (guidePage === 1 && _isFirstVisit) { startTour(); return; }
-  if (guidePage === GUIDE_TOTAL) closeIntro(); else goGuidePage(guidePage+1);
-};
-if (_isFirstVisit) {
-  setTimeout(() => {
-    const gn = document.getElementById('guide-next');
-    if (guidePage === 1) {
-      gn.textContent = '✦ take the tour';
-      gn.style.background = 'var(--forest)';
-      gn.style.color = 'var(--lime)';
-      gn.style.border = '1.5px solid rgba(143,224,0,0.4)';
-    } else {
-      gn.textContent = 'next →';
-      gn.style.background = 'var(--fg)';
-      gn.style.color = 'var(--bg)';
-      gn.style.border = 'none';
-    }
-  }, 150);
-}
-
-</script>
-
-
-<script>
-// ── WEEKLY SO WHAT — AI synthesis via Anthropic API ──────────────────────────
-async function runSoWhat() {
-  const btn = document.getElementById('btn-so-what');
-  const textEl = document.getElementById('so-what-text');
-  const dateEl = document.getElementById('so-what-date');
-  const panel = document.getElementById('so-what-panel');
-  if (!panel || !btn) return;
-
-  // Get API key from localStorage (same key as bulk import)
-  const apiKey = (function(){ try { return localStorage.getItem('slop_apikey') || ''; } catch(e){ return ''; } })()
-    || (document.getElementById('qf-apikey') || {}).value || '';
-
-  if (!apiKey) {
-    const k = prompt('Enter your Anthropic API key (sk-ant-…):');
-    if (!k) return;
-    try { localStorage.setItem('slop_apikey', k.trim()); } catch(e){}
-    return runSoWhat(); // retry with saved key
-  }
-
-  btn.textContent = '✦ GENERATING...';
-  btn.style.opacity = '0.6';
-  btn.disabled = true;
-  panel.style.display = 'block';
-  if (textEl) textEl.textContent = '';
-
-  const filtered = anFiltered();
-  const sorted = [...filtered].sort((a,b) => (b.date_added||'').localeCompare(a.date_added||'') || b.impact - a.impact);
-  const recent = sorted.slice(0, 20);
-
-  const nodeSummary = recent.map(n =>
-    `[${n.date||n.year}] ${n.title} (${(CATS[n.category]||{}).label||n.category}, impact ${n.impact}/10)${n.significance ? ' — ' + n.significance.slice(0,100) : ''}`
-  ).join('\n');
-
-  const totalByCategory = {};
-  filtered.forEach(n => { totalByCategory[n.category] = (totalByCategory[n.category]||0)+1; });
-  const catSummary = Object.entries(totalByCategory).sort((a,b)=>b[1]-a[1])
-    .map(([k,v]) => `${(CATS[k]||{}).label||k}: ${v}`).join(', ');
-  const avgImpact = filtered.length ? (filtered.reduce((s,n)=>s+n.impact,0)/filtered.length).toFixed(1) : 0;
-  const highImpact = filtered.filter(n=>n.impact>=8).length;
-
-  const prompt = `You are the editorial voice of the Slop Galaxy — a living archive tracking AI-generated content and its cultural consequences. The galaxy currently has ${filtered.length} documented moments.
-
-Category breakdown: ${catSummary}
-Average impact score: ${avgImpact}/10
-High-impact events (8+): ${highImpact}
-
-Most recent and significant nodes:
-${nodeSummary}
-
-Write a sharp, opinionated 3-4 paragraph "so what" synthesis. This is editorial analysis, not a summary. Find the through-line. Name the patterns. Say something we wouldn't notice just from the list. Use the voice of someone who has been watching this unfold in real time — specific, direct, occasionally wry. No bullet points. No headers. Plain paragraphs. End with one sentence about what to watch for next.`;
-
-  try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01'
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-    if (!resp.ok) {
-      const err = await resp.json().catch(()=>({}));
-      if (resp.status === 401) {
-        try { localStorage.removeItem('slop_apikey'); } catch(e){}
-        throw new Error('Invalid API key — cleared. Try again.');
-      }
-      throw new Error(err.error?.message || `API error ${resp.status}`);
-    }
-    const data = await resp.json();
-    const text = (data.content && data.content[0] && data.content[0].text) || 'Could not generate synthesis.';
-    if (textEl) textEl.textContent = text;
-    if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
-  } catch (err) {
-    if (textEl) textEl.textContent = 'Error: ' + err.message;
-    console.error('So What error:', err);
-  } finally {
-    btn.textContent = '✦ SO WHAT?';
-    btn.style.opacity = '1';
-    btn.disabled = false;
-  }
-}
-
-function promptAdminToggle() {
-  if (adminMode) { toggleAdminMode(); return; }
-  const pw = prompt('');
-  if (pw === 'remiagua22') toggleAdminMode();
-}
-function toggleAdminMode() {
-  adminMode = !adminMode;
-  const btn = document.getElementById('btn-admin-toggle');
-  if (btn) btn.style.opacity = adminMode ? '1' : '0.4';
-
-  const adminEls = ['btn-add','btn-bulk','btn-export','btn-data-read','btn-data-edit','btn-undo'];
-  adminEls.forEach(function(id) {
-    const el = document.getElementById(id);
-    if (el) el.style.display = adminMode ? '' : 'none';
-  });
-  const hint = document.getElementById('edit-hint');
-  if (hint) hint.style.display = adminMode ? '' : 'none';
-}
-</script>
 
 <!-- CONCEPTS MODAL -->
 <div class="modal" id="modal-concepts" style="max-width:760px;max-height:90vh;overflow-y:auto;padding:0;">
-  <button class="modal-close" id="btn-close-concepts" onclick="closeModal('modal-concepts')" style="position:sticky;top:16px;float:right;margin:16px 16px 0 0;z-index:10;">✕</button>
+  <button class="modal-close" id="btn-close-concepts" onclick="closeModal('modal-concepts')" style="position:sticky;top:16px;float:right;margin:16px 16px 0 0;z-index:10;">&#x2715;</button>
 
-  <!-- Header -->
-  <div style="padding:32px 40px 24px;border-bottom:1px solid var(--dim);position:sticky;top:0;background:var(--panel);z-index:5;">
+  <div style="padding:32px 40px 24px;border-bottom:1px solid var(--dim);background:var(--panel);">
     <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:10px;">The intellectual context</div>
-    <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(24px,3.5vw,36px);letter-spacing:-.02em;font-style:italic;font-weight:normal;line-height:.95;margin:0;"><span style="color:var(--fg)">five frameworks</span> for reading the galaxy</h2>
+    <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(24px,3.5vw,36px);letter-spacing:-.02em;font-style:italic;font-weight:normal;line-height:.95;margin:0;color:var(--fg)">five frameworks for reading the galaxy</h2>
   </div>
 
-  <!-- Intro -->
   <div style="padding:24px 40px 0;">
-    <p style="font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.8;color:var(--fg);max-width:620px;">The Slop Galaxy isn't just a log. Scholars at Oxford, Cambridge, MIT, and elsewhere are tracking the same pattern — using different methods and sharper language. These five frameworks are the ones Ellie finds most useful for reading what the galaxy is showing.</p>
+    <p style="font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.8;color:var(--fg);max-width:620px;">The Slop Galaxy isn&#x2019;t just a log. Scholars at Oxford, Cambridge, MIT, and elsewhere are tracking the same pattern &#x2014; using different methods and sharper language. These five frameworks are the ones Ellie finds most useful for reading what the galaxy is showing.</p>
   </div>
 
-  <!-- Concepts grid -->
   <div style="padding:24px 40px 40px;display:flex;flex-direction:column;gap:28px;">
-
-    <!-- 1. Weaponizable Exhaustion -->
     <div style="border-left:3px solid var(--lime);padding-left:20px;">
-      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:6px;">Eryk Salvaggio · Cambridge / Max Planck</div>
-      <h3 style="font-family:'Instrument Serif',serif;font-size:22px;font-style:italic;font-weight:normal;color:var(--lime);margin:0 0 10px;">"Weaponizable Exhaustion"</h3>
-      <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.8;color:var(--sub-color);max-width:600px;margin-bottom:10px;">Slop's goal isn't necessarily to deceive. It's to wear down your ability to tell the difference. Salvaggio calls this state "weaponizable exhaustion" — once you can no longer reliably distinguish real from synthetic, bad actors don't need better fakes. They just need more noise. The galaxy's impact scores are, in part, a map of how far this erosion has traveled.</p>
-      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.08em;color:var(--lime);opacity:.7;">KEY CONCEPT: Stochastic Flocks — automated decisions that degrade the social fabric</div>
+      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:6px;">Eryk Salvaggio &middot; Cambridge / Max Planck</div>
+      <h3 style="font-family:'Instrument Serif',serif;font-size:22px;font-style:italic;font-weight:normal;color:var(--lime);margin:0 0 10px;">&#x201C;Weaponizable Exhaustion&#x201D;</h3>
+      <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.8;color:var(--sub-color);max-width:600px;margin-bottom:10px;">Slop&#x2019;s goal isn&#x2019;t necessarily to deceive. It&#x2019;s to wear down your ability to tell the difference. Salvaggio calls this state &#x201C;weaponizable exhaustion&#x201D; &#x2014; once you can no longer reliably distinguish real from synthetic, bad actors don&#x2019;t need better fakes. They just need more noise. The galaxy&#x2019;s impact scores are, in part, a map of how far this erosion has traveled.</p>
+      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.08em;color:var(--lime);opacity:.7;">KEY CONCEPT: Stochastic Flocks &#x2014; automated decisions that degrade the social fabric</div>
     </div>
-
-    <!-- 2. Model Collapse -->
     <div style="border-left:3px solid var(--lav);padding-left:20px;">
-      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:6px;">Ilia Shumailov · Oxford / Nature (2024)</div>
-      <h3 style="font-family:'Instrument Serif',serif;font-size:22px;font-style:italic;font-weight:normal;color:var(--lav);margin:0 0 10px;">"Model Collapse"</h3>
-      <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.8;color:var(--sub-color);max-width:600px;margin-bottom:10px;">When AI models are trained on content produced by earlier AI models, they degrade — producing what Shumailov's <em>Nature</em> paper calls "irreversible defects." The early nodes in this galaxy document the input phase of that loop. What you're looking at may be the last high-water mark of legible signal before the recursive spiral becomes structural. The galaxy is, among other things, evidence in that process.</p>
-      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.08em;color:var(--lav);opacity:.7;">KEY CONCEPT: The AI Data Dead Loop — the point where synthetic data overwhelms human data</div>
+      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:6px;">Ilia Shumailov &middot; Oxford / Nature (2024)</div>
+      <h3 style="font-family:'Instrument Serif',serif;font-size:22px;font-style:italic;font-weight:normal;color:var(--lav);margin:0 0 10px;">&#x201C;Model Collapse&#x201D;</h3>
+      <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.8;color:var(--sub-color);max-width:600px;margin-bottom:10px;">When AI models are trained on content produced by earlier AI models, they degrade &#x2014; producing what Shumailov&#x2019;s <em>Nature</em> paper calls &#x201C;irreversible defects.&#x201D; The early nodes in this galaxy document the input phase of that loop. What you&#x2019;re looking at may be the last high-water mark of legible signal before the recursive spiral becomes structural.</p>
+      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.08em;color:var(--lav);opacity:.7;">KEY CONCEPT: The AI Data Dead Loop &#x2014; the point where synthetic data overwhelms human data</div>
     </div>
-
-    <!-- 3. Asymmetric Effort -->
     <div style="border-left:3px solid var(--accent2);padding-left:20px;">
-      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:6px;">ACM / ResearchGate · "Why Slop Matters" (2026)</div>
-      <h3 style="font-family:'Instrument Serif',serif;font-size:22px;font-style:italic;font-weight:normal;color:var(--accent2);margin:0 0 10px;">"Asymmetric Effort"</h3>
-      <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.8;color:var(--sub-color);max-width:600px;margin-bottom:10px;">Slop takes milliseconds to produce and hours to verify. That asymmetry is the defining structural feature — not the quality of any individual piece of content, but the ratio of effort between making and checking. This framework reframes slop from "bad AI" to "broken economics." Even if the technology improved, the demand for cheap content would find another form. The galaxy tracks both the slop and the cost it imposes on the people trying to clean it up.</p>
+      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:6px;">ACM / ResearchGate &middot; &#x201C;Why Slop Matters&#x201D; (2026)</div>
+      <h3 style="font-family:'Instrument Serif',serif;font-size:22px;font-style:italic;font-weight:normal;color:var(--accent2);margin:0 0 10px;">&#x201C;Asymmetric Effort&#x201D;</h3>
+      <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.8;color:var(--sub-color);max-width:600px;margin-bottom:10px;">Slop takes milliseconds to produce and hours to verify. That asymmetry is the defining structural feature &#x2014; not the quality of any individual piece, but the ratio of effort between making and checking. This framework reframes slop from &#x201C;bad AI&#x201D; to &#x201C;broken economics.&#x201D; The galaxy tracks both the slop and the cost it imposes on those trying to clean it up.</p>
       <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.08em;color:var(--accent2);opacity:.7;">KEY CONCEPT: The cost of verification always exceeds the cost of production</div>
     </div>
-
-    <!-- 4. Research Integrity -->
     <div style="border-left:3px solid #f472b6;padding-left:20px;">
-      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:6px;">Adrian Barnett (QUT) · Matt Spick (LSE)</div>
-      <h3 style="font-family:'Instrument Serif',serif;font-size:22px;font-style:italic;font-weight:normal;color:#f472b6;margin:0 0 10px;">"The 30-Minute Paper"</h3>
-      <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.8;color:var(--sub-color);max-width:600px;margin-bottom:10px;">Barnett and Spick are documenting the industrialization of academic output — papers produced by agentic AI without meaningful human checkpoints, and reviewed by AI that faces the same problem. The risk isn't just bad research. It's the corruption of science's self-correcting mechanism. If the peer reviewers are also using AI, the entire truth-seeking apparatus of civilization loses its error-correction loop. The Research nodes in this galaxy are early signals of that failure mode.</p>
-      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.08em;color:#f472b6;opacity:.7;">KEY CONCEPT: Research Paper Mills — AI-to-AI academic production with no human in the loop</div>
+      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:6px;">Adrian Barnett (QUT) &middot; Matt Spick (LSE)</div>
+      <h3 style="font-family:'Instrument Serif',serif;font-size:22px;font-style:italic;font-weight:normal;color:#f472b6;margin:0 0 10px;">&#x201C;The 30-Minute Paper&#x201D;</h3>
+      <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.8;color:var(--sub-color);max-width:600px;margin-bottom:10px;">Barnett and Spick are documenting the industrialization of academic output &#x2014; papers produced by agentic AI without meaningful human checkpoints, reviewed by AI facing the same problem. The risk isn&#x2019;t just bad research. It&#x2019;s the corruption of science&#x2019;s self-correcting mechanism. The Research nodes in this galaxy are early signals of that failure mode.</p>
+      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.08em;color:#f472b6;opacity:.7;">KEY CONCEPT: Research Paper Mills &#x2014; AI-to-AI academic production with no human in the loop</div>
     </div>
-
-    <!-- 5. Policy Lag -->
     <div style="border-left:3px solid #38bdf8;padding-left:20px;">
-      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:6px;">Lan Gao · UChicago</div>
-      <h3 style="font-family:'Instrument Serif',serif;font-size:22px;font-style:italic;font-weight:normal;color:#38bdf8;margin:0 0 10px;">"Policy Lag"</h3>
-      <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.8;color:var(--sub-color);max-width:600px;margin-bottom:10px;">Gao's research maps how platforms are actually responding to AI slop — and finds them stuck in a framework built for spam. Labeling, throttling, reporting buttons: these tools were designed for human bad actors operating at human scale. They don't account for the generative nature of slop, which can be produced faster than any moderation team can process. The Legislation and Platform nodes in the galaxy are a longitudinal record of this lag playing out in real institutions.</p>
-      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.08em;color:#38bdf8;opacity:.7;">KEY CONCEPT: Labeling vs. Banning — the soft fix that treats slop like spam</div>
+      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:6px;">Lan Gao &middot; UChicago</div>
+      <h3 style="font-family:'Instrument Serif',serif;font-size:22px;font-style:italic;font-weight:normal;color:#38bdf8;margin:0 0 10px;">&#x201C;Policy Lag&#x201D;</h3>
+      <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.8;color:var(--sub-color);max-width:600px;margin-bottom:10px;">Gao&#x2019;s research maps how platforms are actually responding to AI slop &#x2014; and finds them stuck in a framework built for spam. Labeling, throttling, reporting buttons: these tools were designed for human bad actors at human scale. They don&#x2019;t account for the generative nature of slop. The Legislation and Platform nodes are a longitudinal record of this lag playing out in real institutions.</p>
+      <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.08em;color:#38bdf8;opacity:.7;">KEY CONCEPT: Labeling vs. Banning &#x2014; the soft fix that treats slop like spam</div>
     </div>
 
-    <!-- Footer note -->
     <div style="margin-top:8px;padding:16px 18px;background:rgba(255,255,255,0.03);border:1px solid var(--dim);">
-      <p style="font-family:'Space Mono',monospace;font-size:8px;line-height:1.8;color:var(--sub-color);">These frameworks inform how Ellie curates and scores nodes — especially the distinction between slop (artifact) and spill (consequence), and the emphasis on institutional moments over individual incidents. The galaxy is not a neutral archive. It's an argument, informed by people who are making the same one with more rigorous tools.</p>
+      <p style="font-family:'Space Mono',monospace;font-size:8px;line-height:1.8;color:var(--sub-color);">These frameworks inform how Ellie curates and scores nodes &#x2014; especially the distinction between slop (artifact) and spill (consequence), and the emphasis on institutional moments over individual incidents. The galaxy is not a neutral archive. It&#x2019;s an argument, informed by people making the same one with more rigorous tools.</p>
     </div>
-
   </div>
 </div>
 
