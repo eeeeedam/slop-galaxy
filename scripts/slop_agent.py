@@ -26,26 +26,32 @@ MAX_NEW_NODES     = 12         # cap per run to avoid noise floods
 GALAXY_FILE       = "index.html"  # path in repo root
 
 RSS_FEEDS = [
-    ("Wired AI",            "https://www.wired.com/feed/tag/artificial-intelligence/rss"),
-    ("The Verge AI",        "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"),
-    ("404 Media",           "https://www.404media.co/rss"),
-    ("MIT Tech Review",     "https://www.technologyreview.com/feed/"),
-    ("Reuters Tech",        "https://feeds.reuters.com/reuters/technologyNews"),
-    ("BBC Tech",            "https://feeds.bbci.co.uk/news/technology/rss.xml"),
-    ("arXiv cs.AI",         "https://rss.arxiv.org/rss/cs.AI"),
-    ("arXiv cs.CY",         "https://rss.arxiv.org/rss/cs.CY"),
-    ("Reddit r/artificial", "https://www.reddit.com/r/artificial/.rss"),
+    # Wired removed — blocks GitHub Actions IPs (use Google News queries instead)
+    ("The Verge AI",            "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"),
+    ("404 Media",               "https://www.404media.co/rss"),
+    ("MIT Tech Review",         "https://www.technologyreview.com/feed/"),
+    ("BBC Tech",                "https://feeds.bbci.co.uk/news/technology/rss.xml"),
+    ("arXiv cs.AI",             "https://rss.arxiv.org/rss/cs.AI"),
+    ("arXiv cs.CY",             "https://rss.arxiv.org/rss/cs.CY"),
+    ("arXiv cs.IR",             "https://rss.arxiv.org/rss/cs.IR"),   # info retrieval
+    ("Reddit r/artificial",     "https://www.reddit.com/r/artificial/.rss"),
     ("Reddit r/MediaSynthesis", "https://www.reddit.com/r/MediaSynthesis/.rss"),
+    ("Reddit r/law",            "https://www.reddit.com/r/law/search.rss?q=AI+generated&sort=new"),
+    ("Reddit r/Journalism",     "https://www.reddit.com/r/Journalism/search.rss?q=AI&sort=new"),
 ]
 
 GOOGLE_QUERIES = [
     '"AI slop" OR "AI-generated content" ban OR lawsuit OR legislation',
-    '"AI-generated" fake OR fabricated news OR journalism 2026',
+    '"AI-generated" fake OR fabricated OR synthetic news OR journalism',
     'artificial intelligence deepfake institutional response 2026',
-    '"model collapse" OR "synthetic content" research findings 2026',
-    'AI writing fraud academic publishing 2026',
+    '"model collapse" OR "synthetic content" research findings',
+    'AI writing fraud academic publishing peer review',
     '"AI content" platform policy ban moderation 2026',
-    'AI propaganda deepfake election misinformation 2026',
+    'AI propaganda deepfake election misinformation',
+    'site:wired.com "AI-generated" OR "AI slop" 2026',
+    'site:theverge.com "AI-generated" OR "artificial intelligence" content harm 2026',
+    '"AI generated" copyright lawsuit settlement 2026',
+    'artificial intelligence misinformation children education 2026',
 ]
 
 IMPACT_RUBRIC = """
