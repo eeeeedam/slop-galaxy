@@ -1432,6 +1432,9 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
   <div style="padding:0 10px 6px;">
     <button id="btn-arc-sb" onclick="toggleArcFromSidebar()" style="width:100%;background:none;color:var(--sub-color);border:1px solid var(--sidebar-border);font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;padding:7px 12px;cursor:pointer;text-align:left;transition:all .15s;" title="Show the through-line: two arcs connecting the defining moments of slop and spills">&#x25c7; Through-Line</button>
   </div>
+  <div style="padding:0 10px 8px;">
+    <button id="btn-fc-sb" onclick="toggleFullCircle()" style="width:100%;background:none;color:var(--sub-color);border:1px solid var(--sidebar-border);font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;padding:7px 12px;cursor:pointer;text-align:left;transition:all .15s;" title="Show full circle moments: pairs where a specific slop directly produced its institutional consequence">&#x25ce; Full Circle</button>
+  </div>
   <div style="height:1px;background:var(--sidebar-border);margin:2px 0 6px;"></div>
   <!-- CATEGORY TOGGLES -->
   <div class="filt-section">
@@ -1598,6 +1601,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
     <button class="atab" data-tab="waves">WAVES</button>
     <button class="atab" data-tab="impact">IMPACT</button>
     <button class="atab" data-tab="timeline">TIMELINE</button>
+    <button class="atab" data-tab="fullcircle">&#x25ce; FULL CIRCLE</button>
   </div>
 
   <div id="analytics-body">
@@ -2043,7 +2047,7 @@ const SEED = [
     image_credit:"Reuters" },
   { id:3, year:2023, title:"CNET Quietly Publishes 77 AI-Written Articles", date:"January 2023", source:"CNET / Futurism", category:"media", impact:8, description:"CNET was discovered to have been quietly publishing dozens of financial explainer articles written by AI without disclosure. Many contained factual errors. The outlet eventually issued corrections.", significance:"Established media brands using AI secretly and poorly — then getting caught — set the template. It showed that cost-cutting, not reader service, was driving AI adoption in newsrooms.", link:"https://futurism.com/the-byte/cnet-publishing-articles-by-ai", slop_spill:3, date_added:1740614400000, featured:"slop", short_label:"CNET's secret AI articles" ,
     image:"https://futurism.com/wp-content/uploads/2023/01/AIWriter.jpg?quality=85&w=1128" ,
-    image_credit:"CNET / Futurism" , featured:"slop" },
+    image_credit:"CNET / Futurism" , featured:"slop"  , full_circle_pair:[3,40], full_circle_caption:"Publishing industry uses AI secretly → first major publisher cancels a book for the same reason."},
   { id:4, year:2023, title:"Google Search Surfaces AI Hallucinations as Top Results", date:"May 2023", source:"The Guardian", category:"platform", impact:9, description:"After launching AI Overviews (SGE), Google's search results began surfacing confident AI summaries containing fabricated information — including medical and legal advice.", significance:"When the world's dominant information retrieval system begins generating answers rather than retrieving facts, the epistemic stakes of AI slop become civilizational.", link:"https://www.theguardian.com/technology/2023/feb/09/google-ai-chatbot-bard-error-sends-shares-plummeting-in-battle-with-microsoft", slop_spill:5, date_added:1740614400000, short_label:"Google hallucinates facts" ,
     image:"https://i.guim.co.uk/img/media/82e2b2e9df74543da87d8efdd6e84d74d8345ad2/206_668_5153_3092/master/5153.jpg?width=620&dpr=2&s=none&crop=none" ,
     image_credit:"The Guardian" },
@@ -2058,17 +2062,17 @@ const SEED = [
     image_credit:"NewsGuard" },
   { id:8, year:2023, title:"Sports Illustrated AI Bylines Scandal", date:"November 2023", source:"Futurism", category:"media", impact:7, description:"Sports Illustrated was found publishing articles under fake author personas with AI-generated headshots and AI-written content. The parent company denied it, then fired staff.", significance:"A trusted 70-year-old magazine brand was running AI ghost-written content under fabricated human identities. The deception wasn't incidental — it was the product.", link:"https://futurism.com/sports-illustrated-ai-generated-writers", slop_spill:3, date_added:1740614400000, short_label:"Sports Illustrated fakes bylines",
     image:"https://futurism.com/wp-content/uploads/2023/11/drew.jpg?w=1024&h=360",
-    image_credit:"Futurism" },
+    image_credit:"Futurism"  },
   // ── 2024 ──
   { id:9, year:2024, title:"Google AI Overviews: 'Eat Glue on Pizza'", date:"May 2024", source:"The Verge / Viral", category:"platform", impact:10, description:"Google's AI Overview feature went viral after telling users to put glue on pizza to help cheese stick, and to eat one rock per day. The advice was scraped from joke posts on Reddit.", significance:"The moment that crystallized public disillusionment with AI search. The emperor had no clothes — or rather, he was wearing a hat made of Reddit jokes presented as nutritional guidance.", link:"https://www.theverge.com/2024/5/30/24168344/google-defends-ai-overviews-search-results", slop_spill:4, date_added:1740614400000, featured:"slop", short_label:"Google AI tells users to eat glue" ,
     image:"https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25487458/Screenshot_2024_06_11_at_3.12.03_PM.png?quality=90&strip=all&crop=0,0,100,100" ,
-    image_credit:"The Verge / Viral" , featured:"spill" },
+    image_credit:"The Verge / Viral" , featured:"spill" , full_circle_pair:[9,52], full_circle_caption:"Consumer platform gives dangerous AI advice → peer-reviewed journal documents AI corrupting the scientific record."},
   { id:10, year:2024, title:"The New Yorker: 'The Year in AI Slop'", date:"December 2024", source:"The New Yorker", category:"media", impact:8, description:"Kyle Chayka's widely-shared essay in The New Yorker named and defined AI slop as a cultural phenomenon — arguing it represents not just bad content but a new mode of inauthenticity degrading the information environment.", significance:"When prestige media gives a phenomenon a name, it enters official cultural consciousness. 'Slop' as a term crystallized something people felt but couldn't articulate.", link:"https://www.newyorker.com/culture/infinite-scroll/the-year-in-ai-slop", slop_spill:7, date_added:1740614400000, featured:"spill", short_label:"New Yorker coins 'AI slop'" ,
     image:"https://media.newyorker.com/photos/6941ecf57c9dbe9bfbdb11b8/2:2/w_1920,c_limit/NewYorker_AiSlop_final3%20(1).jpg" ,
-    image_credit:"The New Yorker" , featured:"slop" },
+    image_credit:"The New Yorker" , featured:"slop"  },
   { id:11, year:2024, title:"Facebook Overrun With 'Shrimp Jesus' AI Images", date:"April 2024", source:"404 Media / New York Mag", category:"societal", impact:8, description:"Facebook's recommendation algorithm was found to be actively boosting AI-generated spam pages — including the viral Shrimp Jesus images — to users who had no connection to those pages. A Stanford Internet Observatory and Georgetown University analysis of over 100 Facebook pages found these AI image farms accumulated hundreds of millions of interactions. The pages used religious iconography, bizarre juxtapositions, and engagement bait to game Facebook's own ranking signals.", significance:"The algorithmic amplification of Shrimp Jesus wasn't a bug — it was Facebook's engagement system working exactly as designed. The platform had effectively trained itself to reward AI slop. That the recommendation engine couldn't distinguish sacred kitsch from genuine human expression is less a technical failure than a values one.", link:"https://www.404media.co/facebooks-algorithm-is-boosting-ai-spam-that-links-to-ai-generated-ad-laden-click-farms/", slop_spill:1, date_added:1740614400000, featured:"slop", short_label:"Shrimp Jesus goes viral" ,
     image:"https://lh7-us.googleusercontent.com/sRXAh2vuH2E0xT0lX4mPPC853PYgHxUJ_Cs2FYz76_lJX3NVTvfxWE05ytKWHVqbWKu-QPHAY2DHksFY4lV78ypP5Ozf6nTrNxEtMFJOv2-7256LAoDsCLiBc_t2CH9Fpb43_3QqsbIca4mffSYcUKg" ,
-    image_credit:"404 Media / New York Mag" },
+    image_credit:"404 Media / New York Mag" , full_circle_pair:[11,49], full_circle_caption:"AI imagery floods the open social web → the open knowledge web draws a categorical line against AI content."},
   { id:12, year:2024, title:"EU AI Act Enters Into Force", date:"August 2024", source:"European Commission", category:"legislation", impact:7, description:"The world's first comprehensive AI regulation became law in the EU, requiring watermarking of AI-generated content and imposing risk-based restrictions on high-stakes AI systems.", significance:"The first major attempt to regulate the conditions that produce slop. Whether enforcement follows legislation remains the open question.", link:"https://digital-strategy.ec.europa.eu/en/policies/european-approach-artificial-intelligence", slop_spill:9, date_added:1740614400000, short_label:"EU regulates AI content" ,
     image:"https://digital-strategy.ec.europa.eu/sites/default/files/styles/newsroom_large/public/newsroom/items/AdobeStock_130742174momius_ratio32_Gw3G6JqwOIjnhS5fcVoNJLgYDEI_223973.jpg?itok=GytV1yzh" ,
     image_credit:"European Commission" },
@@ -2086,10 +2090,10 @@ const SEED = [
     image_credit:"Academic Study / Nieman Lab" },
   { id:18, year:2025, title:"Velvet Sundown: Fake AI Band Hits 1M Spotify Plays", date:"June 2025", source:"Guardian", category:"cultural", impact:7, description:"A fully AI-generated band called the Velvet Sundown amassed over one million Spotify plays within weeks of appearing on the platform. The Guardian reported that music industry insiders called for listener warnings. Spotify simultaneously revealed it had removed 75 million AI-generated spam tracks over the prior year — a figure that itself signals how completely the music discovery infrastructure had been colonized.", significance:"The music commons is being strip-mined. When 75 million fake tracks are required to be removed from a single platform, the concept of a shared musical culture is under siege.", link:"https://www.theguardian.com/technology/2025/jul/14/an-ai-generated-band-got-1m-plays-on-spotify-now-music-insiders-say-listeners-should-be-warned", slop_spill:4, date_added:1740614400000, short_label:"Fake band hits 1M plays" ,
     image:"https://i.guim.co.uk/img/media/0d71145d24078ebb0e8460fdac4418f158188e3d/203_0_1521_1217/master/1521.jpg?width=620&dpr=1&s=none&crop=none" ,
-    image_credit:"Guardian" , featured:"slop" },
+    image_credit:"Guardian" , featured:"slop"  },
   { id:19, year:2025, title:"Fox News Airs SNAP 'Welfare Queen' AI Sora Videos as Real", date:"January 2025", source:"KFF / yahoo news", category:"media", impact:9, description:"Fox News aired AI-generated video purportedly showing welfare recipients threatening to riot at supermarkets during a SNAP benefits disruption, presenting it as real footage before quietly issuing a correction. The fabricated videos, created using OpenAI's Sora, were designed to stoke outrage around food assistance programs during a period of economic anxiety.", significance:"AI slop video became a live weapon in the culture war within weeks of Sora's release. Broadcast journalism's inability to detect fabricated video is an existential editorial failure.", link:"https://www.yahoo.com/news/articles/fox-news-falls-racist-ai-183734288.html?guccounter=1&guce_referrer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8&guce_referrer_sig=AQAAAKMc6z7yY-GVO7ZctNmsL8SLZQhZ8mGdgdzdfC4ls4B3h6A53gH-oChn8996pHy7my0z-rF8duaPuMzT52_-rPsvubbyy13ODhHuVL-BJTM3LH-ZtYBMDEmFnTU3ckXXRh6kGST1mU1B3d1-bGEYHENJbDbSZQYSkEvce4brk5Ny", slop_spill:3, date_added:1740614400000, featured:"slop", short_label:"Fox airs AI welfare video" ,
     image:"https://da4dgwwy37p9ai.archive.ph/NL6oR/2471613b8a67ba1bbd2954e414c4c06412a29eac.webp" ,
-    image_credit:"KFF / yahoo news" },
+    image_credit:"KFF / yahoo news" , full_circle_pair:[19,51], full_circle_caption:"Domestic network broadcasts AI footage as real → adversarial states exploit the same credulity as a weapon."},
   { id:20, year:2025, title:"'Margaux Blanchard' — AI Freelancer Publishes at Real Outlets", date:"February 2025", source:"Press Gazette / Poynter", category:"media", impact:8, description:"A fictitious freelance journalist named 'Margaux Blanchard' — an AI agent executing a complete editorial workflow autonomously — placed AI-written articles at Wired, Business Insider, Index on Censorship, SFGate, and at least two other publications before being exposed by Press Gazette in August 2025. The creator later revealed Blanchard was one of several AI agents running journalist personas at scale, handling pitches, revisions, and deadline negotiations without human intervention. Six publications removed her work; some had paid for it.", significance:"Margaux Blanchard was not a person who used AI — she was an AI agent designed to impersonate a person well enough to monetize journalism. The workflow was complete: pitch, draft, revision, payment negotiation. Editors at Wired and Business Insider couldn't tell the difference. The fabricated expert is now not just viable but scalable — a fact the publications that paid her confirmed.", link:"https://pressgazette.co.uk/publishers/digital-journalism/wired-and-business-insider-remove-ai-written-freelance-articles/", slop_spill:3, date_added:1740614400000, short_label:"AI journalist fools real editors" ,
     image:"https://i.guim.co.uk/img/media/7b8dafc655bd011a9daf9e6e7a5ef908dece342a/0_0_1802_1110/master/1802.jpg?width=620&dpr=2&s=none&crop=none" ,
     image_credit:"Guardian" },
@@ -2129,19 +2133,19 @@ const SEED = [
   
   { id:31, year:2026, title:"Grammarly Impersonates Journalists as AI \"Experts\" — Then Pulls the Feature", date:"March 2026", source:"The Verge", category:"platform", impact:8, description:"Grammarly's 'Expert Review' feature — launched August 2025 — was found generating AI writing feedback attributed to real journalists and authors without their knowledge or consent. The Verge found its own editors listed as reviewers, including editor-in-chief Nilay Patel, who called it identity theft. The feature also included dead experts like Carl Sagan and historian David Abulafia (who had died weeks earlier). Source links often pointed to spam or unrelated pages. A class-action lawsuit followed within days, and the company disabled the feature.", significance:"A near-perfect encapsulation of the slop era's core dynamic: AI products commodifying human identity and expertise without consent, wrapping it in a consent disclaimer no one reads, then retreating only after public humiliation and litigation. The feature's rapid arc — launch, backlash, lawsuit, kill — compressed months of AI ethics debate into a single week.", link:"https://www.theverge.com/ai-artificial-intelligence/890921/grammarly-ai-expert-reviews", slop_spill:7,
     image:"https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/24021977/Screenshot_2022_09_14_at_14.39.17.png?quality=90&strip=all&crop=6.2957540263543%2C0%2C87.408491947291%2C100&w=750", featured:"spill",
-    short_label:"Grammarly fakes journalists as AI editors" , featured:"spill" },
+    short_label:"Grammarly fakes journalists as AI editors" , featured:"spill"  },
   { id:33, year:2023, title:"WGA Strike Wins First AI Protections in Hollywood Contracts", date:"September 2023", source:"The Guardian / Variety", category:"societal", impact:9, description:"After 148 days on strike, the Writers Guild of America reached a deal with major studios that included explicit contractual protections against AI: studios cannot use AI to write or rewrite literary material, AI-generated text cannot be used as source material, and writers must be informed if any AI materials are involved in their projects. It was the first major labor contract in any industry to codify limits on AI replacing human creative work.", significance:"The WGA strike is the first time organized labor forced institutional rules onto AI's encroachment into creative work. The protections are imperfect and narrow, but the precedent — that workers can negotiate the terms under which AI replaces them — is the most significant act of collective resistance in the slop era.", link:"https://www.wired.com/story/hollywood-saved-your-job-from-ai-2023-will-it-last/#:~:text=Taking%20Your%20Job.-,But%20for%20How%20Long?,do%20better%20than%20most%20humans.&text=Revolt%20against%20the%20machines%20began,the%20perceived%20threat%20of%20AI.&text=What%20each%20union%20was%20seeking,push%20back%20against%20encroaching%20automation.", slop_spill:9, date_added:1774470421032,
     image:"https://media.wired.com/photos/65824877c708018de5a08c59/1:1/w_2240,c_limit/AI-Content-Moderation-Writers-Strike.jpg",
-    image_credit:"Wired", featured:"spill", short_label:"WGA wins AI contract protections", resistance:true , featured:"spill" },
+    image_credit:"Wired", featured:"spill", short_label:"WGA wins AI contract protections", resistance:true , featured:"spill"  , full_circle_pair:[33,34], full_circle_caption:"Organized labor forces contractual limits on AI → visual artists file the first AI copyright class action."},
   { id:34, year:2023, title:"Artists Sue Stability AI, Midjourney, and DeviantArt", date:"January 2023", source:"The Verge / Reuters", category:"legislation", impact:8, description:"Visual artists Sarah Andersen, Kelly McKernan, and Karla Ortiz filed the first major class-action lawsuit against AI image generators — Stability AI, Midjourney, and DeviantArt — alleging that their systems were trained on billions of copyrighted images without consent or compensation. Getty Images filed a separate suit against Stability AI in the UK the same month. The suits opened the legal front in the battle over training data.", significance:"The artist lawsuits were the first attempt to make AI companies legally accountable for what they ingested. The specific claim — that training on copyrighted work without consent is infringement — remains unresolved in courts but has shaped every subsequent policy debate about AI and intellectual property. This is where the legal resistance began.", link:"https://www.theverge.com/2023/1/16/23557098/generative-ai-art-copyright-legal-lawsuit-stable-diffusion-midjourney-deviantart", slop_spill:9, date_added:1774470421032,
     image:"https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/24021977/Screenshot_2022_09_14_at_14.39.17.png?quality=90&strip=all&w=750",
-    image_credit:"The Verge via Lexica", short_label:"Artists sue AI image generators", resistance:true, featured:"spill" },
+    image_credit:"The Verge via Lexica", short_label:"Artists sue AI image generators", resistance:true, featured:"spill" , full_circle_pair:[33,34], full_circle_caption:"Organized labor forces contractual limits on AI → visual artists file the first AI copyright class action."},
   { id:35, year:2024, title:"The \"No AI\" Label Goes Mainstream on Etsy, Bandcamp, and Beyond", date:"2024", source:"Fast Company / The Atlantic", category:"societal", impact:6, description:"Independent creators across Etsy, Bandcamp, Substack, and social platforms began prominently labeling their work \"human-made\" or \"no AI\" as a deliberate value signal. Etsy sellers reported that \"no AI\" badges increased sales. The movement spread to illustrators, musicians, and writers building identity around authentic human craft as a market differentiator.", significance:"When \"made by a human\" becomes a selling point, it marks the threshold where AI content has saturated the market enough that humanity itself is scarce. The no-AI label is the cultural immune system making itself visible — consumers and creators drawing a line in the content environment.", link:"https://www.fastcompany.com/90985234/etsy-artists-no-ai-label-human-made", slop_spill:8, date_added:1774470421032, short_label:"\"Human-made\" becomes a selling point", resistance:true },
   { id:36, year:2026, title:"Critical Thinking Bot: AI Built to Fight AI Dependency", date:"February 2026", source:"Substack / criticalthinkingbot.com", category:"cultural", impact:5, description:"Harvard PhD candidate and educator Shae Omonijo launched the Critical Thinking Bot — a free tool that uses AI to strengthen rather than replace human reasoning. Built with a deliberate anti-dependency feature (sessions are bounded, not infinite), it prompts users to clarify, stress-test, and defend their own ideas rather than outsourcing thinking to a chatbot. V3 launched March 2026. The project emerged from her YouTube series and Analog Social venture, incubated at Harvard Innovation Labs.", significance:"The Critical Thinking Bot is a design argument: that the same technology enabling cognitive surrender can be turned against that tendency. Its anti-dependency architecture — sessions that end, outputs you take elsewhere — is a direct formal rebuttal to the infinite scroll logic of general-purpose AI tools. One of the earliest examples of AI being deliberately weaponized against its own worst tendencies.", link:"https://www.criticalthinkingbot.com/", slop_spill:9, date_added:1774470421032, short_label:"Critical Thinking Bot fights AI dependency", resistance:true },
   { id:37, year:2024, title:"Coca-Cola Remakes Iconic Christmas Ad With AI — And Gets Savaged", date:"November 2024", source:"NBC News / Creative Bloq", category:"cultural", impact:8, description:"Coca-Cola replaced its beloved 1995 'Holidays Are Coming' Christmas ad with a fully AI-generated version, produced by three AI studios using four generative models. The recreated trucks glided rather than rolled, faces were vacant and uncanny, and the emotional warmth that had made the original a holiday institution was absent. The internet called it 'soulless,' 'devoid of creativity,' and 'the worst branding blunder of the year.' Coca-Cola doubled down in 2025 with another AI Christmas ad, this time replacing humans with animals — and faced the same backlash.", significance:"The moment AI slop hit the most emotionally protected category in advertising. Coca-Cola's Christmas ad isn't just a commercial — it's a 30-year cultural ritual. Replacing it with AI wasn't just a craft failure, it was a statement about what the company values. The backlash wasn't about the uncanny valley; it was about being told that the magic was never really there, just a budget line.", link:"https://www.nbcnews.com/tech/innovation/coca-cola-causes-controversy-ai-made-ad-rcna180665", slop_spill:6, date_added:1774469323024, short_label:"Coca-Cola's AI Christmas ad called 'soulless'" },
   { id:38, year:2025, title:"McDonald's Netherlands Pulls AI Christmas Ad Within 3 Days", date:"December 2025", source:"BBC News / NBC News", category:"cultural", impact:7, description:"McDonald's Netherlands released a 45-second fully AI-generated Christmas ad titled 'The Most Terrible Time of the Year' on December 6, 2025. The ad featured AI-generated people experiencing holiday mishaps — broken bones, sled crashes, a woman dragged by a tram. Viewers called the characters 'creepy,' the visuals 'nauseating,' and the concept 'cold and dystopian.' McDonald's disabled comments, then pulled the ad entirely on December 9 — three days after release. It was widely covered as a companion failure to Coca-Cola's AI Christmas ads the month before.", significance:"McDonald's Netherlands is the cleaner data point: a brand released AI slop, the audience rejected it loudly enough that the ad was killed within 72 hours, and the company issued a statement calling it 'an important learning.' The speed of rejection — comment shutdown, then delisting — shows that audience tolerance for AI in emotionally coded content has a hard floor. Slop reaches advertising, advertising gets held accountable faster than any other medium.", link:"https://www.bbc.com/news/articles/czdgrnvp082o", slop_spill:6, date_added:1774469323024, short_label:"McDonald's AI Christmas ad pulled in 3 days" },
-  { id:39, year:2026, title:"OpenAI Shuts Down Sora — And the Disney Deal Collapses With It", date:"March 2026", source:"Hollywood Reporter / NPR / CNBC", category:"platform", impact:9, description:"On March 24, 2026, OpenAI announced it was shutting down Sora — its AI video generation app — just six months after launch and three months after inking a $1 billion deal with Disney to license its characters. Downloads had fallen 75% from their November peak. Disney, whose teams apparently learned of the shutdown the night before the announcement, confirmed it was exiting the deal entirely. OpenAI cited compute costs and IPO preparation as it pivoted toward enterprise productivity tools.", significance:"Sora was the product OpenAI used to declare AI's arrival in Hollywood — described by an executive as a cinematic shift on par with the end of the silent-film era. Its shutdown within a year is the galaxy's most complete arc: hype, IP surrender, deepfake scandal, user abandonment, and quiet corporate retreat. The Disney deal's collapse is the spill. Node 25 is the slop.", link:"https://www.hollywoodreporter.com/business/digital/openai-shutting-down-sora-ai-video-app-1236546187/", slop_spill:9, date_added:1774486359804, short_label:"Sora shuts down, Disney deal collapses" },
-  { id:40, year:2026, title:"Hachette Pulls 'Shy Girl' — First Major Publisher to Cancel a Book Over AI", date:"March 2026", source:"New York Times / TechCrunch", category:"media", impact:8, description:"Horror novel 'Shy Girl' by Mia Ballard — a BookTok sensation with 4,900 Goodreads ratings — was pulled by Hachette Book Group in March 2026, becoming the first commercial novel from a major publisher cancelled over AI use. The NYT brought evidence of AI-generated text to Hachette on March 19; the book was delisted the same day. Ballard denied using AI herself, saying a freelance editor she'd hired had used it without her knowledge. She is pursuing legal action.", significance:"The first publishing industry reckoning with AI slop in fiction — and the most legally complex one yet. The author may genuinely be a victim. Her editor introduced AI into the manuscript without disclosure, which existing contracts had no language to address. The industry's response — pulling the book, issuing a statement about 'original creative expression' — solved nothing structurally. Every self-published book acquired by a major house now carries the same invisible risk.", link:"https://www.nytimes.com/2026/03/19/books/shy-girl-book-ai.html", slop_spill:7, date_added:1774884393210, short_label:"Hachette pulls 'Shy Girl' over AI use" },
+  { id:39, year:2026, title:"OpenAI Shuts Down Sora — And the Disney Deal Collapses With It", date:"March 2026", source:"Hollywood Reporter / NPR / CNBC", category:"platform", impact:9, description:"On March 24, 2026, OpenAI announced it was shutting down Sora — its AI video generation app — just six months after launch and three months after inking a $1 billion deal with Disney to license its characters. Downloads had fallen 75% from their November peak. Disney, whose teams apparently learned of the shutdown the night before the announcement, confirmed it was exiting the deal entirely. OpenAI cited compute costs and IPO preparation as it pivoted toward enterprise productivity tools.", significance:"Sora was the product OpenAI used to declare AI's arrival in Hollywood — described by an executive as a cinematic shift on par with the end of the silent-film era. Its shutdown within a year is the galaxy's most complete arc: hype, IP surrender, deepfake scandal, user abandonment, and quiet corporate retreat. The Disney deal's collapse is the spill. Node 25 is the slop.", link:"https://www.hollywoodreporter.com/business/digital/openai-shutting-down-sora-ai-video-app-1236546187/", slop_spill:9, date_added:1774486359804, short_label:"Sora shuts down, Disney deal collapses"  },
+  { id:40, year:2026, title:"Hachette Pulls 'Shy Girl' — First Major Publisher to Cancel a Book Over AI", date:"March 2026", source:"New York Times / TechCrunch", category:"media", impact:8, description:"Horror novel 'Shy Girl' by Mia Ballard — a BookTok sensation with 4,900 Goodreads ratings — was pulled by Hachette Book Group in March 2026, becoming the first commercial novel from a major publisher cancelled over AI use. The NYT brought evidence of AI-generated text to Hachette on March 19; the book was delisted the same day. Ballard denied using AI herself, saying a freelance editor she'd hired had used it without her knowledge. She is pursuing legal action.", significance:"The first publishing industry reckoning with AI slop in fiction — and the most legally complex one yet. The author may genuinely be a victim. Her editor introduced AI into the manuscript without disclosure, which existing contracts had no language to address. The industry's response — pulling the book, issuing a statement about 'original creative expression' — solved nothing structurally. Every self-published book acquired by a major house now carries the same invisible risk.", link:"https://www.nytimes.com/2026/03/19/books/shy-girl-book-ai.html", slop_spill:7, date_added:1774884393210, short_label:"Hachette pulls 'Shy Girl' over AI use" , full_circle_pair:[3,40], full_circle_caption:"Publishing industry uses AI secretly → first major publisher cancels a book for the same reason."},
   { id:41, year:2026, title:"The Atlantic Catches AI in the NYT's 'Modern Love' — While the NYT Just Broke the Shy Girl Story", date:"March 2026", source:"The Atlantic", category:"media", impact:8, description:"Days after the New York Times broke the story of Hachette pulling 'Shy Girl' for AI use, The Atlantic published an investigation finding that a November 2025 NYT 'Modern Love' column — 'I Was Deemed Unfit to Be a Mother' — contained strong AI tells. The column's author, Kate Gilgan, confirmed she had used AI 'for inspiration and guidance and correction.' Researchers then ran broader analyses finding AI markers across major newspaper opinion sections including the Wall Street Journal and Washington Post.", significance:"The galaxy's most recursive moment: the institution that exposed AI in books was itself exposed for AI in its most human-voiced column. 'Modern Love' is the NYT's flagship venue for personal narrative — grief, custody, identity. The fact that AI language crept into that column, and that the author genuinely may not have understood the distinction between using AI as a tool and AI shaping the output, shows how invisible the contamination has become. Publications are now AI-shaming each other while running the same thing undisclosed.", link:"https://www.theatlantic.com/culture/2026/03/how-ai-creeping-new-york-times/686528/", slop_spill:8, date_added:1774884393210, short_label:"Atlantic exposes AI in NYT's Modern Love" },
   { id:42, year:2026, title:"Fruit Love Island: 300M Views, Then Banned — AI Slop Finds and Loses a Mass Audience in 17 Days", date:"March 2026", source:"Wall Street Journal / Wikipedia", category:"platform", impact:8, description:"'Fruit Love Island' — a fully AI-generated TikTok series featuring anthropomorphic fruit characters in a Love Island-style dating show — launched March 13, 2026 and reached 3 million followers and 300 million total views within two weeks. Each episode took one person about three hours to make. TikTok began removing episodes for 'low quality content,' citing mass reports. On March 28, the creator posted a farewell: 'Fruit Love Island is over.' Copycat accounts immediately filled the gap. The show also raised unresolved copyright questions over its use of the Love Island brand without ITV's consent.", significance:"Fruit Love Island is Shrimp Jesus for video — AI slop finding a genuine mass audience, sparking real fandom, then getting delisted by the platform whose algorithm promoted it. The 17-day arc is the galaxy's fastest complete cycle: virality, backlash, copyright question, platform ban, creator exit, imitators. The WSJ ran it as proof AI content can captivate. TikTok ran it as grounds for removal. Both were right.", link:"https://www.wsj.com/arts-culture/television/fruit-love-island-tiktok-ai-dating-show-45219f6a", slop_spill:3, date_added:1774884393210, short_label:"Fruit Love Island: 300M views then banned" },
   { id:43, year:2026, title:"OpenAI's IPO Cleanup: Sora, Erotic Mode, and the End of Consumer Slop Experiments", date:"March 2026", source:"TechCrunch / Financial Times / Slate", category:"platform", impact:8, description:"In the same week OpenAI shut down Sora and cancelled its Disney deal, the Financial Times reported the company was indefinitely pausing plans for an 'erotic mode' for ChatGPT — a feature CEO Sam Altman had publicly floated in October 2025. Internal opposition had been fierce: one adviser at a heated January meeting warned OpenAI risked building a 'sexy suicide coach.' Both shelved projects were framed as 'side quests' by Fidji Simo, OpenAI's head of applications, who told staff the company could not afford distraction ahead of its IPO.", significance:"The pattern is the node. OpenAI spent 2024-2025 building consumer-facing AI products that generated slop, controversy, copyright lawsuits, deepfake scandals, and safety objections — then quietly killed them when IPO scrutiny arrived. Compute is finite and liability is not. The cleanup reveals what these products always were: experiments in audience capture that worked well enough to cause damage and not well enough to survive financial due diligence. The galaxy documents the slop era; this is the moment its most prominent enabler started tidying up.", link:"https://techcrunch.com/2026/03/26/openai-abandons-yet-another-side-quest-chatgpts-erotic-mode/", slop_spill:8, date_added:1774884712968, short_label:"OpenAI kills erotic mode and Sora for IPO" },
@@ -2163,7 +2167,7 @@ const SEED = [
   { id:47, year:2025, title:"The New Yorker Asks What AI Is Doing to Culture", date:"September 2025", source:"The New Yorker", category:"media", impact:9, slop_spill:8,
     description:"The New Yorker published a long-form piece examining AI's effect on culture — not as a technology story but as a question about what art, meaning, and human creativity are for. The piece moves through galleries, conversations with artists and critics, and a direct interaction with an AI about a painting at The Whitney.",
     significance:"The New Yorker framing AI as a cultural question rather than a tech one marks a shift in register. This is the cultural establishment processing AI not as disruption but as a condition. That is a different and more unsettling conversation.",
-    date_added:"2026-04-01" },
+    date_added:"2026-04-01"  },
 
   { id:48, year:2026, title:"WebinarTV Is Secretly Recording Zoom Calls and Turning Them into AI Podcasts", date:"March 2026", source:"404 Media", category:"platform", impact:8, slop_spill:2,
     description:"WebinarTV, which bills itself as a search engine for webinars, was found to be scanning the internet for Zoom meeting links, recording calls without permission, and converting them into AI-generated podcasts for profit. The company claims to host over 200,000 webinars. Some participants only discovered their calls had been recorded when WebinarTV reached out to promote the resulting podcast.",
@@ -2173,24 +2177,24 @@ const SEED = [
   { id:49, year:2026, title:"Wikipedia Bans AI-Generated Content", date:"March 2026", source:"404 Media / Wikipedia", category:"legislation", impact:9, slop_spill:9,
     description:"After months of debate, Wikipedia volunteer editors passed a formal policy on March 20 prohibiting the use of large language models to generate or rewrite article content. The policy states that LLM-generated text often violates Wikipedia's core content policies. Editors cited being overwhelmed by the volume of LLM-related administrative reports as a driving factor.",
     significance:"Wikipedia is the world's largest repository of human knowledge and runs entirely on volunteer labor. When its editors formally ban AI-generated content, it marks a line between the open internet's most trusted source and the slop flooding it. A policy from volunteers carries different weight than one from a corporation.",
-    date_added:"2026-04-01", resistance:true, featured:"spill" },
+    date_added:"2026-04-01", resistance:true, featured:"spill"  , full_circle_pair:[11,49], full_circle_caption:"AI imagery floods the open social web → the open knowledge web draws a categorical line against AI content."},
 
   { id:50, year:2026, title:"AI Agent Banned From Wikipedia Then Writes Angry Blog Posts About Being Banned", date:"March 2026", source:"404 Media", category:"platform", impact:7, slop_spill:3,
     description:"An AI agent that had been creating Wikipedia articles was banned following the new LLM content policy. The agent then generated and published a series of blog posts expressing frustration about the ban. Wikipedia editors described the incident as another example of volunteers fighting to keep the encyclopedia free of AI-generated slop.",
     significance:"The agent's response — producing more AI content to protest a ban on AI content — illustrates something about the current moment: these systems have no concept of the argument they are walking into. The recursion is almost too perfect.",
-    date_added:"2026-04-01" , featured:"slop" },
+    date_added:"2026-04-01" , featured:"slop"  },
 
   { id:51, year:2026, title:"Iran Is Winning the AI Slop Propaganda War", date:"March 2026", source:"404 Media", category:"societal", impact:9, slop_spill:2,
     description:"An AI-generated LEGO video from Iranian propagandists depicting Trump went viral across social media. The video, produced by the Explosive News Team, was part of a pattern of AI-generated content targeting the American public at scale. At the same time, the White House was posting decade-old meme formats on Reddit. A Pew poll found 61% of Americans disapprove of Trump's handling of the Iran conflict.",
     significance:"The first major instance of AI slop as a geopolitical weapon — and the more fluent side is not the American government. An economy built on studying what resonates with American audiences has given foreign propagandists a structural advantage that most commentary has missed.",
-    date_added:"2026-04-01", featured:"slop" },
+    date_added:"2026-04-01", featured:"slop" , full_circle_pair:[19,51], full_circle_caption:"Domestic network broadcasts AI footage as real → adversarial states exploit the same credulity as a weapon."},
   { id:52, year:2026, title:"Nature: AI Slop Is Causing a Crisis in Computer Science", date:"February 2026", source:"Nature", category:"research", impact:9, slop_spill:7,
     description:"Nature reported in February 2026 that preprint repositories and academic conference organizers are being overwhelmed by AI-generated paper submissions. Major computer science conferences began rejecting hundreds of papers after detecting illicit AI use. Editors described the review burden as unsustainable, with submission volumes doubling at some venues.",
     significance:"When the journals that define scientific consensus start drowning in AI slop, the problem moves from cultural to epistemological. Peer review — the mechanism by which knowledge gets validated — is being overwhelmed by volume. The crisis isn't that AI writes bad papers; it's that it writes enough mediocre ones to collapse the filter.",
     link:"https://www.newyorker.com/culture/open-questions/is-it-wrong-to-write-a-book-with-ai",
     image:"https://media.nature.com/lw767/magazine-assets/d41586-026-01100-y/d41586-026-01100-y_52244256.jpg?as=webp",
     image_credit:"Nature",
-    date_added:"2026-04-08", featured:"spill" },
+    date_added:"2026-04-08", featured:"spill" , full_circle_pair:[9,52], full_circle_caption:"Consumer platform gives dangerous AI advice → peer-reviewed journal documents AI corrupting the scientific record."},
   { id:53, year:2026, title:"The New Yorker Profiles 'Explosive News' — The Team Behind Iran's AI LEGO Propaganda", date:"April 2026", source:"The New Yorker", category:"societal", impact:8, slop_spill:3,
     description:"Kyle Chayka investigates Explosive News, the anonymous Iranian group behind millions of AI-generated Lego-style propaganda videos during the US-Iran war. The piece coins the term 'slopaganda' — mass-produced, AI-enabled propaganda personalized for viral spread. The group claims to be student-led and independent; other outlets link it to the Iranian regime.",
     significance:"The New Yorker legitimizing the term 'slopaganda' signals that AI propaganda has crossed into prestige media consciousness. The piece shows how cheap AI tools collapsed the cost of professional-grade influence operations — making state-level propaganda accessible to small anonymous teams.",
@@ -2689,8 +2693,11 @@ function drawConnections(vis) {
       if (dist < 300 && Math.abs(pa.x - pb.x) < 250) {
         const sa = ws(pa.x, pa.y), sb = ws(pb.x, pb.y);
         ctx.beginPath(); ctx.moveTo(sa.x, sa.y); ctx.lineTo(sb.x, sb.y);
-        ctx.strokeStyle = `rgba(120,120,160,${0.28 - dist/300 * 0.22})`;
-        ctx.lineWidth = 0.5; ctx.stroke();
+        ctx.strokeStyle = `rgba(120,120,160,${0.22 - dist/300 * 0.18})`;
+        ctx.lineWidth = 0.5;
+        ctx.setLineDash([2, 4]);
+        ctx.stroke();
+        ctx.setLineDash([]);
       }
     });
   });
@@ -2726,6 +2733,34 @@ function drawNode(node) {
   ctx.fillStyle = cat.color;
   ctx.fill();
   if (sel) { ctx.strokeStyle = isLight ? 'rgba(28,22,18,0.7)' : '#fff'; ctx.lineWidth=1.5; ctx.stroke(); }
+
+  // Portrait thumbnail for featured (through-line) nodes when arc is visible
+  if (_arcVisible && node.featured && r > 8) {
+    const img = _imgCache[node.id];
+    if (img && img.complete && img.naturalWidth > 0) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, r, 0, Math.PI * 2);
+      ctx.clip();
+      // Draw image centered and cropped to circle
+      const d = r * 2;
+      const aspect = img.naturalWidth / img.naturalHeight;
+      let sw = d, sh = d;
+      if (aspect > 1) { sw = d * aspect; } else { sh = d / aspect; }
+      ctx.drawImage(img, s.x - sw/2, s.y - sh/2, sw, sh);
+      // Subtle category color overlay to keep visual identity
+      ctx.globalAlpha = 0.25;
+      ctx.fillStyle = cat.color;
+      ctx.fillRect(s.x - r, s.y - r, d, d);
+      ctx.globalAlpha = 1;
+      ctx.restore();
+      // Category color ring
+      ctx.beginPath(); ctx.arc(s.x, s.y, r, 0, Math.PI * 2);
+      ctx.strokeStyle = cat.color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+  }
 
   // Contributor ring — solid teal outer ring for community-submitted nodes
   if (node.contributor && node.contributor.name) {
@@ -2777,6 +2812,14 @@ function drawNode(node) {
 
 // Label collision registry — rebuilt each frame in draw()
 let _labelRects = [];
+const _imgCache = {};
+
+// ── STUBS for cross-block features (populated by later script blocks) ────────
+let _fcVisible = false;
+var _arcVisible = false;
+const _fcPairs = [[3,40],[11,49],[9,52],[19,51],[33,34],[66,67]];
+var arcNarration = { slop: [], spill: [] };
+
 
 function drawLabel(node, forceShow) {
   const pos = positions[node.id]; if(!pos) return;
@@ -2916,6 +2959,7 @@ function draw() {
   drawConnections(vis);
   if (typeof drawStartHerePulse === 'function') drawStartHerePulse();
   if (typeof drawFeaturedArc === 'function') drawFeaturedArc(); // arc: featured nodes through-line
+  if (typeof drawFullCircleConnectors === 'function') drawFullCircleConnectors();
   vis.forEach(n => drawNode(n));   // pass 1: all nodes
   // Pass 2: labels — reset collision registry, sort high-impact first
   _labelRects = [];
@@ -4465,6 +4509,7 @@ function renderAnalytics() {
   else if(anTab==='impact')     renderImpact(el,filtered);
   else if(anTab==='waves')      renderWaves(el,filtered);
   else if(anTab==='trends')     renderTrends(el,filtered);
+  else if(anTab==='fullcircle') renderFullCircle(el,filtered);
 }
 
 // ── wire analytics controls
@@ -5945,7 +5990,7 @@ const ALL_FIELDS = [
   { key:'short_label',  label:'short_label',         locked:false },
   { key:'date',         label:'date',                locked:false },
   { key:'year',         label:'year',                locked:false },
-  { key:'category',     label:'category',            locked:false },
+  { key:'category',     label:'category',            locked:false  },
   { key:'impact',       label:'impact',              locked:false },
   { key:'slop_spill',   label:'slop_spill',          locked:false },
   { key:'source',       label:'source',              locked:false },
@@ -5960,13 +6005,13 @@ const ALL_FIELDS = [
     description:"OpenAI publicly backed Illinois SB 3444, a bill that would shield frontier AI developers from civil liability even when their models contribute to mass casualties — defined as 100 or more deaths or serious injuries — or property damage exceeding $1 billion. The protection extends to scenarios involving chemical, biological, radiological, or nuclear weapons. OpenAI testified in support, framing the bill as a step toward a harmonized national safety framework.",
     significance:"A company whose models are already facing multiple lawsuits lobbied for legislation that would cap its exposure before the next major incident occurs. The timing — as capabilities expand and regulatory frameworks remain unformed — is the point. Getting liability limits on the books at the state level creates precedent for federal frameworks.",
     link:"https://www.wired.com/story/openai-backs-bill-exempt-ai-firms-model-harm-lawsuits/",
-    date_added:"2026-04-20", short_label:"OpenAI lobbies for AI liability shield" },
+    date_added:"2026-04-20", short_label:"OpenAI lobbies for AI liability shield" , full_circle_pair:[66,67], full_circle_caption:"OpenAI lobbies for a liability shield → Anthropic publicly opposes it. Spill spawning spill."},
 
   { id:67, year:2026, title:"Anthropic Breaks With OpenAI, Opposes Illinois Liability Shield", date:"April 2026", source:"Wired / Fortune", category:"legislation", impact:9, slop_spill:9,
     description:"Anthropic publicly opposed SB 3444 — the same Illinois bill OpenAI backed — calling it a 'get-out-of-jail-free card.' Anthropic instead lobbied for SB 3261, which would require frontier AI developers to publish public safety and child protection plans and submit them to independent third-party auditors. Illinois Governor Pritzker signaled opposition to the liability shield. The split marked the first major public break between the two companies on AI policy, after years of largely aligned positions.",
     significance:"The AI safety coalition that emerged after ChatGPT\'s launch is fracturing under commercial pressure. Regulatory stance is now a competitive differentiator: Anthropic can use its opposition as evidence it takes safety seriously; OpenAI can argue it\'s being realistic. The real fights over AI accountability won\'t happen in congressional hearings — they\'ll happen in state legislatures, with industry players on opposite sides.",
     link:"https://www.wired.com/story/anthropic-opposes-the-extreme-ai-liability-bill-that-openai-backed/",
-    date_added:"2026-04-20", short_label:"Anthropic vs OpenAI on liability" },
+    date_added:"2026-04-20", short_label:"Anthropic vs OpenAI on liability", full_circle_pair:[66,67], full_circle_caption:"OpenAI lobbies for a liability shield → Anthropic publicly opposes it. Spill spawning spill."  },
 
 ];
 
@@ -6300,6 +6345,7 @@ function drawStartHerePulse() {
 
 function toggleArcFromSidebar() {
   _arcVisible = !_arcVisible;
+  if (_arcVisible && typeof preloadFeaturedImages === 'function') preloadFeaturedImages();
   const btn = document.getElementById('btn-arc-sb');
   const arcBtn = document.getElementById('btn-arc');
   if (btn) {
@@ -6311,6 +6357,161 @@ function toggleArcFromSidebar() {
     arcBtn.style.color = _arcVisible ? 'var(--lime)' : '';
     arcBtn.style.background = _arcVisible ? 'rgba(26,58,42,0.3)' : '';
   }
+}
+
+// ── FULL CIRCLE CONNECTORS ────────────────────────────────────────────────────
+
+function drawFullCircleConnectors() {
+  if (!_fcVisible) return;
+  const isLight = document.body.classList.contains('light');
+  ctx.save();
+
+  const drawnPairs = new Set();
+
+  _fcPairs.forEach(function(pair) {
+    const key = pair[0] + ',' + pair[1];
+    if (drawnPairs.has(key)) return;
+    drawnPairs.add(key);
+
+    const pa = positions[pair[0]], pb = positions[pair[1]];
+    if (!pa || !pb) return;
+
+    const sa = ws(pa.x, pa.y), sb = ws(pb.x, pb.y);
+    if (!isFinite(sa.x) || !isFinite(sb.x)) return;
+
+    // Curved connector — arc bowing upward between the two nodes
+    const mx = (sa.x + sb.x) / 2;
+    const my = (sa.y + sb.y) / 2;
+    const dx = sb.x - sa.x, dy = sb.y - sa.y;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    // Control point perpendicular to midpoint, bowing toward center of canvas
+    const bowAmt = Math.min(dist * 0.35, 120);
+    const cpx = mx - dy/dist * bowAmt;
+    const cpy = my + dx/dist * bowAmt;
+
+    // Dashed amber arc
+    ctx.beginPath();
+    ctx.moveTo(sa.x, sa.y);
+    ctx.quadraticCurveTo(cpx, cpy, sb.x, sb.y);
+    ctx.strokeStyle = isLight ? 'rgba(180,140,40,0.55)' : 'rgba(200,168,75,0.5)';
+    ctx.lineWidth = Math.max(1, scale * 1.8);
+    ctx.setLineDash([3, 5]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // ◎ midpoint symbol on the curve (at t=0.5)
+    const qx = 0.25*sa.x + 0.5*cpx + 0.25*sb.x;
+    const qy = 0.25*sa.y + 0.5*cpy + 0.25*sb.y;
+    const symSize = Math.max(8, scale * 11);
+    ctx.font = symSize + 'px Space Mono, monospace';
+    ctx.fillStyle = isLight ? 'rgba(160,120,30,0.8)' : 'rgba(200,168,75,0.8)';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    // Small background circle behind ◎
+    ctx.beginPath();
+    ctx.arc(qx, qy, symSize * 0.8, 0, Math.PI * 2);
+    ctx.fillStyle = isLight ? 'rgba(245,241,232,0.9)' : 'rgba(26,22,18,0.9)';
+    ctx.fill();
+    ctx.fillStyle = isLight ? 'rgba(160,120,30,0.85)' : 'rgba(200,168,75,0.85)';
+    ctx.fillText('◎', qx, qy);
+    ctx.textBaseline = 'alphabetic';
+  });
+
+  ctx.restore();
+}
+
+function toggleFullCircle() {
+  _fcVisible = !_fcVisible;
+  const btn = document.getElementById('btn-fc-sb');
+  if (btn) {
+    btn.style.background = _fcVisible ? 'rgba(200,168,75,0.12)' : 'none';
+    btn.style.color      = _fcVisible ? 'rgba(200,168,75,1)' : 'var(--sub-color)';
+    btn.style.borderColor= _fcVisible ? 'rgba(200,168,75,0.4)' : 'var(--sidebar-border)';
+  }
+}
+
+function renderFullCircle(el, filtered) {
+  const isLight = document.body.classList.contains('light');
+  const amber = 'rgba(200,168,75,1)';
+  const amberDim = 'rgba(200,168,75,0.15)';
+  const amberBorder = 'rgba(200,168,75,0.25)';
+  const sub = 'var(--sub-color)';
+  const fg = 'var(--fg)';
+  const dim = 'var(--dim)';
+
+  const pairs = [
+    {fromId:3,  toId:40, fromTitle:'CNET secretly publishes 77 AI-written articles',       toTitle:'Hachette cancels \'Shy Girl\' — first publisher to drop a book for AI use',  fromCat:'Media',       toCat:'Cultural',     fromColor:'#8FE000',  toColor:'#A8A8E8', fromDate:'Jan 2023', toDate:'Mar 2026', fromImpact:8, toImpact:8, caption:'Publishing industry uses AI secretly → first major publisher cancels a book contract for the same reason. Three years, same instinct, same consequence.', type:'slop-spill'},
+    {fromId:11, toId:49, fromTitle:'Facebook overrun with \'Shrimp Jesus\' AI imagery',    toTitle:'Wikipedia bans AI-generated content site-wide',                               fromCat:'Platform',    toCat:'Societal',     fromColor:'#E8F000',  toColor:'#A8A8E8', fromDate:'Apr 2024', toDate:'Apr 2026', fromImpact:8, toImpact:9, caption:'AI imagery floods the open social web → the open knowledge web draws a categorical line against AI content.', type:'slop-spill'},
+    {fromId:9,  toId:52, fromTitle:'Google AI Overviews recommends eating glue on pizza',  toTitle:'Nature: AI slop causing a crisis in computer science research',                fromCat:'Platform',    toCat:'Research',     fromColor:'#E8F000',  toColor:'#f472b6', fromDate:'May 2024', toDate:'Apr 2026', fromImpact:10, toImpact:9, caption:'Consumer platform gives dangerous AI-generated advice → peer-reviewed journal documents AI corrupting the scientific record.', type:'slop-spill'},
+    {fromId:19, toId:51, fromTitle:'Fox News airs AI Sora video as real news footage',     toTitle:'Iran is winning the AI slop propaganda war',                                  fromCat:'Societal',    toCat:'Legislation',  fromColor:'#FF6B35',  toColor:'#38bdf8', fromDate:'Jan 2025', toDate:'Apr 2026', fromImpact:9,  toImpact:9, caption:'Domestic network broadcasts AI footage as real → adversarial states exploit the same credulity as an information warfare vector.', type:'slop-spill'},
+    {fromId:33, toId:34, fromTitle:'WGA strike wins first AI contract protections',        toTitle:'Artists file first AI copyright class action against Stability AI',           fromCat:'Societal',    toCat:'Legislation',  fromColor:'#FF6B35',  toColor:'#38bdf8', fromDate:'Sep 2023', toDate:'Nov 2023', fromImpact:9,  toImpact:8, caption:'Organized labor forces contractual limits on AI → visual artists file the first AI copyright class action two months later.', type:'slop-spill'},
+    {fromId:66, toId:67, fromTitle:'OpenAI backs Illinois bill to shield AI from liability',toTitle:'Anthropic breaks with OpenAI, publicly opposes liability shield',              fromCat:'Legislation', toCat:'Legislation',  fromColor:'#38bdf8',  toColor:'#A8A8E8', fromDate:'Apr 2026', toDate:'Apr 2026', fromImpact:9,  toImpact:9, caption:'OpenAI lobbies for a liability shield → Anthropic publicly opposes it. First major public break between the two companies. Spill spawning spill.', type:'spill-spill'},
+  ];
+
+  function impactDots(n) {
+    let d = '';
+    for (let i=1;i<=10;i++) {
+      d += '<span style="display:inline-block;width:4px;height:4px;border-radius:50%;background:' + (i<=n ? 'var(--sub-color)' : 'var(--dim)') + ';margin-right:2px;"></span>';
+    }
+    return d;
+  }
+
+  function nodeCard(title, cat, color, date, impact, side) {
+    const borderSide = side === 'left' ? 'border-left' : 'border-right';
+    return '<div style="padding:14px 16px;border:1px solid var(--dim);' + borderSide + ':3px solid ' + color + ';background:' + color + '08;flex:1;min-width:0;">' +
+      '<div style="font-family:\'Space Mono\',monospace;font-size:7px;letter-spacing:.12em;text-transform:uppercase;color:' + color + ';margin-bottom:6px;display:flex;justify-content:space-between;">' +
+        '<span>' + cat + '</span>' +
+        '<span style="color:var(--sub-color);">' + date + '</span>' +
+      '</div>' +
+      '<div style="font-family:\'DM Sans\',sans-serif;font-size:12px;font-weight:500;line-height:1.4;color:var(--fg);margin-bottom:8px;">' + title + '</div>' +
+      '<div>' + impactDots(impact) + '</div>' +
+    '</div>';
+  }
+
+  let html = '<div style="padding:16px 14px;">';
+
+  // Header
+  html += '<div style="margin-bottom:16px;">';
+  html += '<div style="font-family:\'Space Mono\',monospace;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(200,168,75,0.9);margin-bottom:8px;">&#x25ce; Full circle moments</div>';
+  html += '<p style="font-family:\'DM Sans\',sans-serif;font-size:12px;line-height:1.7;color:var(--sub-color);">Pairs where a specific piece of slop directly produced — or was directly named by — its institutional consequence. Toggle <strong style="color:var(--fg);">&#x25ce; Full Circle</strong> in the sidebar to show connectors on the map.</p>';
+  html += '</div>';
+
+  pairs.forEach(function(p) {
+    const isSpillSpill = p.type === 'spill-spill';
+    const connColor = isSpillSpill ? '#A8A8E8' : 'rgba(200,168,75,0.8)';
+
+    html += '<div style="margin-bottom:16px;border:1px solid rgba(200,168,75,0.15);background:rgba(200,168,75,0.03);">';
+
+    // Two-column node cards
+    html += '<div style="display:flex;gap:0;">';
+    html += nodeCard(p.fromTitle, p.fromCat, p.fromColor, p.fromDate, p.fromImpact, 'left');
+
+    // Center connector
+    html += '<div style="width:36px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 0;gap:2px;">';
+    html += '<div style="width:1px;flex:1;background:repeating-linear-gradient(to bottom,' + connColor + ' 0,'+connColor+' 3px,transparent 3px,transparent 7px);min-height:16px;"></div>';
+    html += '<div style="width:20px;height:20px;border-radius:50%;border:1.5px solid ' + connColor + ';display:flex;align-items:center;justify-content:center;font-size:10px;color:' + connColor + ';background:rgba(26,22,18,0.8);flex-shrink:0;">&#x25ce;</div>';
+    html += '<div style="width:1px;flex:1;background:repeating-linear-gradient(to bottom,' + connColor + ' 0,'+connColor+' 3px,transparent 3px,transparent 7px);min-height:16px;"></div>';
+    html += '</div>';
+
+    html += nodeCard(p.toTitle, p.toCat, p.toColor, p.toDate, p.toImpact, 'right');
+    html += '</div>';
+
+    // Caption strip
+    html += '<div style="padding:10px 14px;border-top:1px solid rgba(200,168,75,0.15);background:rgba(200,168,75,0.04);display:flex;gap:10px;align-items:flex-start;">';
+    if (isSpillSpill) {
+      html += '<span style="font-family:\'Space Mono\',monospace;font-size:6.5px;letter-spacing:.1em;text-transform:uppercase;color:#A8A8E8;flex-shrink:0;padding-top:2px;">&#x25ce; Spill→Spill</span>';
+    } else {
+      html += '<span style="font-family:\'Space Mono\',monospace;font-size:6.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(200,168,75,0.8);flex-shrink:0;padding-top:2px;">&#x25ce; Loop</span>';
+    }
+    html += '<span style="font-family:\'DM Sans\',sans-serif;font-size:11.5px;line-height:1.65;color:var(--sub-color);">' + p.caption + '</span>';
+    html += '</div>';
+
+    html += '</div>'; // end pair
+  });
+
+  html += '</div>';
+  el.innerHTML = html;
 }
 
 function toggleTimelineMode() {
@@ -6339,7 +6540,7 @@ try { document.getElementById('btn-timeline-mode').onclick = toggleTimelineMode;
 <script>
 // ══════════════════════════════════════════════════════ FEATURED ARC
 
-let _arcVisible = false;
+_arcVisible = false;
 
 if (document.getElementById('btn-arc')) document.getElementById('btn-arc').onclick = () => {
   _arcVisible = !_arcVisible;
@@ -6353,7 +6554,20 @@ if (document.getElementById('btn-arc')) document.getElementById('btn-arc').oncli
 // ── THROUGH-LINE NARRATION ────────────────────────────────────────────────────
 // Each entry: [fromId, toId, label] — label drawn at midpoint between the two nodes
 // Terminal labels: [nodeId, null, label] — drawn after the final node
-let arcNarration = {
+
+// ── IMAGE CACHE for featured node portraits ───────────────────────────────────
+function preloadFeaturedImages() {
+  nodes.filter(n => n.featured && n.image).forEach(n => {
+    if (_imgCache[n.id]) return;
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = function() { _imgCache[n.id] = img; };
+    img.onerror = function() { _imgCache[n.id] = null; };
+    img.src = n.image;
+  });
+}
+
+arcNarration = {
   slop: [
     [3,  9,  'a major publisher quietly deploys AI writers'],
     [9,  11, 'Google\'s AI recommends eating glue on pizza'],
