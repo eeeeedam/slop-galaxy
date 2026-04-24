@@ -1527,6 +1527,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
   <button class="btn" id="btn-add" style="display:none">+ ADD NODE</button>
   <button class="btn green" id="btn-bulk" style="display:none">⬆ BULK IMPORT URLs</button>
   <button class="btn btn-export-style" id="btn-export" style="display:none">⬇ EXPORT SITE</button>
+      <button id="btn-export-baked" onclick="exportWithLocalStorage()" style="display:none;" title="Export HTML with all local edits baked in — ready to upload to repo">&#x21E9; Export + Edits</button>
   <button class="btn" id="btn-data-read" style="display:none;border-color:rgba(200,168,75,0.5);color:var(--lime);">⊞ DATA VIEW</button>
   <button class="btn" id="btn-data-edit" style="display:none;border-color:rgba(200,168,75,0.5);color:var(--lime);">✎ DATA EDIT</button>
   <button class="btn" id="btn-admin-toggle" onclick="promptAdminToggle()" title="" style="font-size:10px;padding:2px 8px;opacity:0.15;font-size:0;width:16px;height:16px;border-radius:50%;padding:0;min-width:0;border-color:rgba(255,255,255,0.08);">⚙</button>
@@ -2276,7 +2277,26 @@ const SEED = [
     significance:"State-sponsored AI slop doesn\'t need to persuade the home audience. It only needs to reach the target. The internet blackout-plus-whitelisted-creators model is a new playbook: suppress internally, amplify externally, manufacture authenticity through apparent independence.",
     link:"https://www.theverge.com/policy/910401/iran-war-propaganda-blackout-lego-ai-slop",
     date_added:"2026-04-13", short_label:"Iran blackout + AI slop whitelisting", featured:false },
+,
 
+  { id:66, year:2026, title:"OpenAI Backs Illinois Bill to Shield AI Firms From Mass Casualty Liability", date:"April 2026", source:"Wired", category:"legislation", impact:9, slop_spill:9,
+    description:"OpenAI publicly backed Illinois SB 3444, a bill that would shield frontier AI developers from civil liability even when their models contribute to mass casualties — defined as 100 or more deaths or serious injuries — or property damage exceeding $1 billion. The protection extends to scenarios involving chemical, biological, radiological, or nuclear weapons. OpenAI testified in support, framing the bill as a step toward a harmonized national safety framework.",
+    significance:"A company whose models are already facing multiple lawsuits lobbied for legislation that would cap its exposure before the next major incident occurs. The timing — as capabilities expand and regulatory frameworks remain unformed — is the point. Getting liability limits on the books at the state level creates precedent for federal frameworks.",
+    link:"https://www.wired.com/story/openai-backs-bill-exempt-ai-firms-model-harm-lawsuits/",
+    date_added:"2026-04-20", short_label:"OpenAI lobbies for AI liability shield" , full_circle_pair:[66,67], full_circle_caption:"OpenAI lobbies for a liability shield → Anthropic publicly opposes it. Spill spawning spill."},
+
+  { id:67, year:2026, title:"Anthropic Breaks With OpenAI, Opposes Illinois Liability Shield", date:"April 2026", source:"Wired / Fortune", category:"legislation", impact:9, slop_spill:9,
+    description:"Anthropic publicly opposed SB 3444 — the same Illinois bill OpenAI backed — calling it a 'get-out-of-jail-free card.' Anthropic instead lobbied for SB 3261, which would require frontier AI developers to publish public safety and child protection plans and submit them to independent third-party auditors. Illinois Governor Pritzker signaled opposition to the liability shield. The split marked the first major public break between the two companies on AI policy, after years of largely aligned positions.",
+    significance:"The AI safety coalition that emerged after ChatGPT\'s launch is fracturing under commercial pressure. Regulatory stance is now a competitive differentiator: Anthropic can use its opposition as evidence it takes safety seriously; OpenAI can argue it\'s being realistic. The real fights over AI accountability won\'t happen in congressional hearings — they\'ll happen in state legislatures, with industry players on opposite sides.",
+    link:"https://www.wired.com/story/anthropic-opposes-the-extreme-ai-liability-bill-that-openai-backed/",
+    date_added:"2026-04-20", short_label:"Anthropic vs OpenAI on liability", full_circle_pair:[66,67], full_circle_caption:"OpenAI lobbies for a liability shield → Anthropic publicly opposes it. Spill spawning spill."  },
+
+  { id:68, year:2026, title:"Hacker News Bans AI-Generated and AI-Edited Comments",
+    date:"April 2026", source:"Hacker News / Y Combinator", category:"platform", impact:7, slop_spill:8,
+    description:"Y Combinator's Hacker News updated its guidelines to explicitly prohibit AI-generated or AI-edited comments, citing that such content degrades the quality of technical discussion. The ban covers both fully generated text and human text that has been substantially edited by AI.",
+    significance:"Hacker News is one of the few high-signal technical forums that has resisted moderation decay. A ban here signals that even communities with strong norms against low-quality content are now codifying anti-slop rules explicitly — and that AI-edited text is being treated as categorically different from human-written text.",
+    link:"https://news.ycombinator.com/newsguidelines.html",
+    date_added:"2026-04-24", date_added:"2026-04-24", short_label:"Hacker News bans AI comments" }
 ];
 
 // ═══════════════════════════════════════════════════════════ STATE
@@ -6001,23 +6021,10 @@ const ALL_FIELDS = [
   { key:'significance', label:'significance',        locked:false },
   { key:'date_added',   label:'date_added_readable', locked:true  },
   { key:'resistance',   label:'resistance',          locked:true  },
-  { id:66, year:2026, title:"OpenAI Backs Illinois Bill to Shield AI Firms From Mass Casualty Liability", date:"April 2026", source:"Wired", category:"legislation", impact:9, slop_spill:9,
-    description:"OpenAI publicly backed Illinois SB 3444, a bill that would shield frontier AI developers from civil liability even when their models contribute to mass casualties — defined as 100 or more deaths or serious injuries — or property damage exceeding $1 billion. The protection extends to scenarios involving chemical, biological, radiological, or nuclear weapons. OpenAI testified in support, framing the bill as a step toward a harmonized national safety framework.",
-    significance:"A company whose models are already facing multiple lawsuits lobbied for legislation that would cap its exposure before the next major incident occurs. The timing — as capabilities expand and regulatory frameworks remain unformed — is the point. Getting liability limits on the books at the state level creates precedent for federal frameworks.",
-    link:"https://www.wired.com/story/openai-backs-bill-exempt-ai-firms-model-harm-lawsuits/",
-    date_added:"2026-04-20", short_label:"OpenAI lobbies for AI liability shield" , full_circle_pair:[66,67], full_circle_caption:"OpenAI lobbies for a liability shield → Anthropic publicly opposes it. Spill spawning spill."},
+  
+  ,
 
-  { id:67, year:2026, title:"Anthropic Breaks With OpenAI, Opposes Illinois Liability Shield", date:"April 2026", source:"Wired / Fortune", category:"legislation", impact:9, slop_spill:9,
-    description:"Anthropic publicly opposed SB 3444 — the same Illinois bill OpenAI backed — calling it a 'get-out-of-jail-free card.' Anthropic instead lobbied for SB 3261, which would require frontier AI developers to publish public safety and child protection plans and submit them to independent third-party auditors. Illinois Governor Pritzker signaled opposition to the liability shield. The split marked the first major public break between the two companies on AI policy, after years of largely aligned positions.",
-    significance:"The AI safety coalition that emerged after ChatGPT\'s launch is fracturing under commercial pressure. Regulatory stance is now a competitive differentiator: Anthropic can use its opposition as evidence it takes safety seriously; OpenAI can argue it\'s being realistic. The real fights over AI accountability won\'t happen in congressional hearings — they\'ll happen in state legislatures, with industry players on opposite sides.",
-    link:"https://www.wired.com/story/anthropic-opposes-the-extreme-ai-liability-bill-that-openai-backed/",
-    date_added:"2026-04-20", short_label:"Anthropic vs OpenAI on liability", full_circle_pair:[66,67], full_circle_caption:"OpenAI lobbies for a liability shield → Anthropic publicly opposes it. Spill spawning spill."  },
-,
-  { id:68, year:2025, title:"Hacker News bans AI-generated/edited comments", date:"January 2025", source:"Reddit r/MediaSynthesis", category:"platform", impact:6, slop_spill:7,
-    description:"Hacker News implemented a policy banning AI-generated and AI-edited comments on their platform. The policy represents a response to concerns about synthetic content degrading discussion quality on the tech-focused forum.",
-    significance:"This marks a notable platform taking a hard stance against AI-generated discourse, suggesting growing institutional concern about synthetic content\'s impact on authentic community discussion.",
-    link:"https://www.reddit.com/r/MediaSynthesis/comments/1rr466x/hacker_news_bans_aigeneratededited_comments/",
-    date_added:"2026-04-24" }
+  
 ];
 
 function tsToHuman(ts) {
@@ -6517,6 +6524,74 @@ function renderFullCircle(el, filtered) {
 
   html += '</div>';
   el.innerHTML = html;
+}
+
+
+// ── ADMIN EXPORT WITH LOCALSTORAGE BAKED IN ──────────────────────────────────
+function exportWithLocalStorage() {
+  // 1. Collect all relevant localStorage keys
+  const lsData = {};
+  const keysToExport = [
+    'slop_nodes',           // node edits made in admin mode
+    'slop_arc_narration',   // through-line narration edits
+    'slop_so_what',         // so-what panel text
+    'slop_site_text',       // any other site text edits
+  ];
+  keysToExport.forEach(function(key) {
+    try {
+      const val = localStorage.getItem(key);
+      if (val) lsData[key] = val;
+    } catch(e) {}
+  });
+
+  // 2. Get current HTML source
+  const source = document.documentElement.outerHTML;
+
+  // 3. Build a boot script that restores localStorage on load
+  const lsKeys = Object.keys(lsData);
+  let bootScript = '';
+  if (lsKeys.length > 0) {
+    const lsJson = JSON.stringify(lsData)
+      .replace(/\\/g, '\\\\')
+      .replace(/`/g, '\\`');
+    bootScript = `<script id="slop-boot">
+(function(){
+  var data = JSON.parse(\`${lsJson}\`);
+  Object.keys(data).forEach(function(k){ try{ localStorage.setItem(k, data[k]); }catch(e){} });
+  var el = document.getElementById('slop-boot');
+  if(el) el.remove();
+})();
+<\/script>`;
+  }
+
+  // 4. Strip any previous boot script
+  const stripped = source.replace(/<script id="slop-boot">[\s\S]*?<\/script>/i, '');
+
+  // 5. Inject boot script just before </body>
+  let exported;
+  if (!stripped.includes('</body>')) {
+    exported = stripped + bootScript;
+  } else {
+    exported = stripped.replace('</body>', bootScript + '\n</body>');
+  }
+
+  // 6. Download
+  const blob = new Blob([exported], { type: 'text/html;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  const date = new Date().toISOString().slice(0,10);
+  a.href     = url;
+  a.download = 'slop-galaxy-' + date + '.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+  // 7. Show confirmation
+  const saved = lsKeys.length > 0
+    ? lsKeys.length + ' localStorage keys baked in: ' + lsKeys.join(', ')
+    : 'No localStorage edits found — clean export.';
+  alert('Downloaded: slop-galaxy-' + date + '.html\n\n' + saved + '\n\nUpload this file to the repo as index.html.');
 }
 
 function toggleTimelineMode() {
