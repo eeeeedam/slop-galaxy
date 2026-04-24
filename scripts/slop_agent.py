@@ -130,6 +130,30 @@ def fetch_url(url, timeout=15):
         return None
 
 
+def fetch_og_image(url):
+    """Fetch the og:image URL from an article page."""
+    try:
+        text = fetch_url(url, timeout=10)
+        if not text:
+            return None
+        pats = [
+            'property="og:image"[^>]+content="([^"]+)"',
+            "property='og:image'[^>]+content='([^']+)'",
+            'content="([^"]+)"[^>]+property="og:image"',
+            "content='([^']+)'[^>]+property='og:image'",
+            'name="twitter:image"[^>]+content="([^"]+)"',
+            "name='twitter:image'[^>]+content='([^']+)'",
+        ]
+        for pat in pats:
+            m = re.search(pat, text, re.IGNORECASE)
+            if m:
+                img = m.group(1).strip()
+                if img.startswith('http'):
+                    return img
+    except Exception:
+        pass
+    return None
+
 def call_claude(prompt, max_tokens=1200):
     """Call Claude claude-sonnet-4-20250514 and return text response."""
     payload = json.dumps({
@@ -331,6 +355,14 @@ Return only the JSON object, nothing else."""
     if impact < IMPACT_THRESHOLD:
         return None
 
+    # Fetch og:image from article
+    if not data.get("image") and item.get("link"):
+        img = fetch_og_image(item["link"])
+        if img:
+            data["image"] = img
+            data["image_credit"] = data.get("source", "")
+            print(f"    → image: {img[:60]}")
+
     return data
 
 
@@ -360,16 +392,76 @@ def node_to_js(node, node_id):
     significance= escape_js(node.get("significance", ""))
     link        = escape_js(node.get("link", ""))
 
+    image     = escape_js(node.get("image", ""))
+    image_credit = escape_js(node.get("image_credit", ""))
+
+    image_fields = ""
+    if image:
+        image_fields = f'\n    image:"{image}",'
+        if image_credit:
+            image_fields += f'\n    image_credit:"{image_credit}",'
+
     return (
         f'  {{ id:{node_id}, year:{year}, title:"{title}", '
         f'date:"{date_str}", source:"{source}", category:"{category}", '
         f'impact:{impact}, slop_spill:{slop_spill},\n'
         f'    description:"{description}",\n'
         f'    significance:"{significance}",\n'
-        f'    link:"{link}",\n'
+        f'    link:"{link}",{image_fields}\n'
         f'    date_added:"{today}" }}'
     )
 
+
+
+def patch_missing_images(html):
+    """One-time: fetch og:image for all nodes missing an image."""
+    import re as _re
+    node_starts = [(int(m.group(1)), m.start()) for m in _re.finditer(r'\{ id:(\d+),', html)]
+    node_starts.sort(key=lambda x: x[1])
+    patched = 0
+
+    for idx, (nid, start) in enumerate(node_starts):
+        end = node_starts[idx+1][1] if idx+1 < len(node_starts) else html.find('];\n', start)
+        block = html[start:end]
+
+        img_match = _re.search(r'image:"([^"]*)"', block)
+        if img_match and img_match.group(1):
+            continue  # already has image
+
+        link_match = _re.search(r'link:"([^"]+)"', block)
+        if not link_match:
+            continue
+
+        link = link_match.group(1)
+        title_match = _re.search(r'title:"([^"]+)"', block)
+        title = title_match.group(1) if title_match else f'Node {nid}'
+
+        print(f"  [{nid}] Fetching image for: {title[:50]}")
+        img = fetch_og_image(link)
+        time.sleep(0.8)
+
+        if not img:
+            print(f"    no image found")
+            continue
+
+        src_match = _re.search(r'source:"([^"]+)"', block)
+        credit = src_match.group(1) if src_match else ""
+
+        # Insert image before date_added or short_label
+        anchor = _re.search(r',\s*(?:date_added|short_label):', block)
+        if anchor:
+            insert_at = start + anchor.start()
+            insertion = f',\n    image:"{img}",\n    image_credit:"{credit}"'
+            html = html[:insert_at] + insertion + html[insert_at:]
+            patched += 1
+            print(f"    → {img[:60]}")
+            # Recompute positions after insertion
+            offset = len(insertion)
+            node_starts = [(nid2, pos2 + offset if pos2 > insert_at else pos2)
+                          for nid2, pos2 in node_starts]
+
+    print(f"\nPatched {patched} nodes with images.")
+    return html
 
 # ── PATCH GALAXY ──────────────────────────────────────────────────────────────
 
@@ -389,8 +481,13 @@ def patch_galaxy(html, new_nodes):
 # ── MAIN ──────────────────────────────────────────────────────────────────────
 
 def main():
+    import sys
+    patch_images_mode = '--patch-images' in sys.argv
+
     print(f"\n{'='*60}")
     print(f"Slop Galaxy Agent — {datetime.date.today()}")
+    if patch_images_mode:
+        print("MODE: Backlog image patch")
     print(f"{'='*60}\n")
 
     # Load galaxy
@@ -398,6 +495,15 @@ def main():
         raise FileNotFoundError(f"Galaxy file not found: {GALAXY_FILE}")
     with open(GALAXY_FILE, encoding="utf-8") as f:
         html = f.read()
+
+    # ── BACKLOG IMAGE PATCH MODE ──────────────────────────────────────────────
+    if patch_images_mode:
+        print("Fetching og:image for all nodes missing images...")
+        patched_html = patch_missing_images(html)
+        with open(GALAXY_FILE, "w", encoding="utf-8") as f:
+            f.write(patched_html)
+        print("Done. Upload index.html to repo.")
+        return
 
     existing_titles, existing_links, existing_fps = extract_existing(html)
     max_id = get_max_id(html)
