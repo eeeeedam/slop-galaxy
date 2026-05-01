@@ -1259,6 +1259,29 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
 
     
 
+    <!-- TOOLS CALLOUT in gp-2 -->
+    <div id="gp-2-tools" style="display:block;padding:0 40px 28px;">
+      <div style="border:1px solid var(--dim);background:rgba(255,255,255,0.02);padding:16px 20px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:2px;">Three tools that deepen the map</div>
+        <div style="display:flex;gap:10px;align-items:baseline;">
+          <span style="font-family:'Space Mono',monospace;font-size:8px;color:var(--lime);flex-shrink:0;">&#x25c7; Through-Line</span>
+          <span style="font-family:'DM Sans',sans-serif;font-size:12px;line-height:1.6;color:var(--sub-color);">Two annotated arcs connect the defining slop and spill moments. The gap between them is the argument. Toggle from the sidebar.</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:baseline;">
+          <span style="font-family:'Space Mono',monospace;font-size:8px;color:rgba(200,168,75,1);flex-shrink:0;">&#x25ce; Full Circle</span>
+          <span style="font-family:'DM Sans',sans-serif;font-size:12px;line-height:1.6;color:var(--sub-color);">Links pairs where a specific slop directly produced its institutional consequence. Amber connectors on the map.</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:baseline;">
+          <span style="font-family:'Space Mono',monospace;font-size:8px;color:var(--sub-color);flex-shrink:0;">&#x27f6; Timeline</span>
+          <span style="font-family:'DM Sans',sans-serif;font-size:12px;line-height:1.6;color:var(--sub-color);">Collapses the map to strict chronological order. Removes the slop/spill axis. Good for reading the story linearly.</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:baseline;">
+          <span style="font-family:'Space Mono',monospace;font-size:8px;color:var(--lime);flex-shrink:0;">&#x25c8; Patterns</span>
+          <span style="font-family:'DM Sans',sans-serif;font-size:12px;line-height:1.6;color:var(--sub-color);">Charts, trends, and a running synthesis of what the data shows. Includes the Full Circle tab and a Concepts modal with five academic frameworks behind the curation.</span>
+        </div>
+      </div>
+    </div>
+
     <!-- PAGE 3 — SLOP vs SPILL -->
     <div class="guide-page" id="gp-3" style="padding:36px 40px 28px;">
       <div style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:14px;">Page 3 of 5</div>
@@ -5471,7 +5494,7 @@ let guidePage = 1;
 const GUIDE_TOTAL = 5;
 
 const GUIDE_CONTENT = {
-  'gp1-p1': "This is a real-time map of how AI is evolving and devolving humanity's tastes and tolerances.",
+  'gp1-p1': "This is a real-time record of every moment AI-generated content crossed a line — into a courtroom, a newsroom, a child’s video feed, a scientific journal.",
   'gp1-p2': "Each node on this map is a documented moment when AI-generated content crossed a threshold or changed a human norm. The nodes include platform failures, legal reckonings, scandals, and cultural shifts.",
   'gp1-p3': "Take about 90 seconds with these five pages. They will make the map make sense.",
   'gp2-intro': "Every node is a real, documented event. Here is how to read what you are looking at.",
@@ -5479,6 +5502,8 @@ const GUIDE_CONTENT = {
   'gp2-p2': "Color tells you the category: platform, media, cultural, legislation, research, or societal.",
   'gp2-p3': "Left to right is earlier to more recent. Pan with one finger, pinch to zoom in and out.",
   'gp2-p4': "Expand any node to read the full story: what happened, what it means, and sometimes a note from Ellie.",
+  'gp2-p5': "Three tools deepen the map: the \u25c7 Through-Line draws two annotated arcs connecting the defining slop and spill moments. \u25ce Full Circle links the pairs where a specific slop directly produced its consequence. \u27f6 Timeline flattens the map into strict chronological order.",
+  'gp2-p6': "The Patterns panel (\u25c8 Patterns) gives you charts, trends, and a synthesis of what the data shows. The Concepts modal explains the academic frameworks behind the curation." ,
   'gp3-intro': "The vertical position of each node shows whether this moment is SLOP (the content itself) or a SPILL (the AI-enabled consequences).",
   'gp3-spill': "The consequences. Legislation, lawsuits, platform policies, cultural reckonings that AI content triggered.",
   'gp3-slop': "The artifacts. Fake images, AI-written articles, synthetic personas, generated audio and video.",
