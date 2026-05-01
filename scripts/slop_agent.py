@@ -187,7 +187,7 @@ def url_fingerprint(url):
 
 def extract_existing(html):
     """Pull existing node titles and links from galaxy HTML for dedup."""
-    titles = set(t.lower() for t in re.findall(r'title:"([^"]+)"', html))
+    titles = set(re.findall(r'title:"([^"]+)"', html))
     links  = set(re.findall(r'link:"([^"]+)"', html))
     fps    = set(url_fingerprint(l) for l in links)
     return titles, links, fps
@@ -530,7 +530,32 @@ def main():
     print(f"\nTotal raw candidates: {len(candidates)}")
 
     # ── DEDUP ──────────────────────────────────────────────────────────────────
+    def title_words(t):
+        """Return a set of significant words from a title for fuzzy matching."""
+        stop = {'a','an','the','and','or','of','in','to','for','is','are',
+                'was','were','has','have','that','this','with','on','at','by',
+                'it','its','as','be','from','but','not','how','why','what',
+                'who','when','where','will','can','i','we','they','their'}
+        words = re.sub(r'[^a-z0-9 ]', '', t.lower()).split()
+        return set(w for w in words if w not in stop and len(w) > 2)
+
+    def is_title_duplicate(new_title, existing_titles):
+        """Return True if new_title is >60% word-overlap with any existing title."""
+        new_words = title_words(new_title)
+        if not new_words:
+            return False
+        for existing in existing_titles:
+            ex_words = title_words(existing)
+            if not ex_words:
+                continue
+            overlap = len(new_words & ex_words)
+            similarity = overlap / min(len(new_words), len(ex_words))
+            if similarity >= 0.6:
+                return True
+        return False
+
     seen_fps = set()
+    seen_titles = set(existing_titles)  # seed with all existing node titles
     deduped = []
     for item in candidates:
         fp = url_fingerprint(item["link"])
@@ -540,7 +565,11 @@ def main():
             continue
         if item["link"] in existing_links:
             continue
+        # Title similarity check — catches same story from different URLs
+        if is_title_duplicate(item["title"], seen_titles):
+            continue
         seen_fps.add(fp)
+        seen_titles.add(item["title"])
         deduped.append(item)
 
     print(f"After dedup: {len(deduped)} candidates\n")
