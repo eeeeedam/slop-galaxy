@@ -1664,7 +1664,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(180,40,10,0.6); }
   </div>
   <div class="pcat" id="dp-cat"></div>
   <div class="ptitle" id="dp-title"></div>
-  <div class="pmeta"><span id="dp-date"></span><span id="dp-src"></span><a id="dp-src-link" href="#" target="_blank" style="display:none;margin-left:6px;color:var(--sub-color);font-size:9px;text-decoration:none;border-bottom:1px solid var(--dim);transition:color .18s" title="View source">↗</a></div>
+  <div class="pmeta"><span id="dp-date"></span><a id="dp-src" href="#" target="_blank" style="color:var(--sub-color);text-decoration:none;border-bottom:1px solid rgba(180,170,155,0.35);transition:color .18s;padding-bottom:1px;cursor:pointer;"></a></div>
   <div class="pmeta" style="margin-top:4px"><span id="dp-added" style="font-size:8px;color:var(--sub-color);letter-spacing:.06em"></span></div>
   <div id="dp-contributor" style="display:none;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);margin-top:4px;margin-bottom:2px;"></div>
   <div class="plabel">WHAT HAPPENED</div>
@@ -3253,7 +3253,12 @@ function openPanel(node){
   document.getElementById('dp-cat').style.color=catTextColor(cat.color);
   document.getElementById('dp-title').textContent=node.title;
   document.getElementById('dp-date').textContent=node.date;
-  document.getElementById('dp-src').textContent=node.source;
+  const dpSrc = document.getElementById('dp-src');
+  if (dpSrc) {
+    dpSrc.textContent = node.source || '';
+    if (node.link) { dpSrc.href = node.link; dpSrc.style.opacity = '1'; }
+    else { dpSrc.removeAttribute('href'); dpSrc.style.opacity = '0.55'; }
+  }
   const addedEl = document.getElementById('dp-added');
   const contribEl = document.getElementById('dp-contributor');
   if (contribEl) {
@@ -3308,13 +3313,10 @@ function openPanel(node){
     if (imgCredit) imgCredit.textContent = '';
   }
   const rb=document.getElementById('dp-read');
-  const srcLink=document.getElementById('dp-src-link');
   if(node.link){
     rb.href=node.link; rb.style.display='inline-block';
-    srcLink.href=node.link; srcLink.style.display='inline';
   } else {
     rb.style.display='none';
-    srcLink.style.display='none';
   }
   const adminActions=document.getElementById('dp-admin-actions');
   adminActions.style.display=adminMode?'flex':'none';
@@ -6024,12 +6026,7 @@ const ALL_FIELDS = [
   
   ,
 
-  ,
-  { id:69, year:2025, title:"Hacker News bans AI-generated/edited comments", date:"January 2025", source:"Reddit r/MediaSynthesis", category:"platform", impact:6, slop_spill:7,
-    description:"Hacker News, a major tech community platform, implemented a policy explicitly banning AI-generated or AI-edited comments. The policy represents a formal institutional response to concerns about synthetic content degrading discussion quality.",
-    significance:"Signals a shift from major tech platforms toward active content authenticity enforcement rather than laissez-faire approaches. Reveals growing institutional recognition that AI-generated discourse poses structural threats to community integrity.",
-    link:"https://www.reddit.com/r/MediaSynthesis/comments/1rr466x/hacker_news_bans_aigeneratededited_comments/",
-    date_added:"2026-04-24" }
+  
 ];
 
 function tsToHuman(ts) {
