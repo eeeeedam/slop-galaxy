@@ -6,3 +6,6 @@
   - [6/ss:7] Hacker News bans AI-generated/edited comments
 
 2026-04-27: 0 new nodes added (from 7 candidates)
+2026-05-04: 1 new nodes added
+  - [6/ss:5] ASU Faculty Revolt Against AI Tool Chopping Up Their Lectures
+
