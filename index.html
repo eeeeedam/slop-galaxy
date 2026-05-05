@@ -2319,7 +2319,15 @@ const SEED = [
     description:"Y Combinator's Hacker News updated its guidelines to explicitly prohibit AI-generated or AI-edited comments, citing that such content degrades the quality of technical discussion. The ban covers both fully generated text and human text that has been substantially edited by AI.",
     significance:"Hacker News is one of the few high-signal technical forums that has resisted moderation decay. A ban here signals that even communities with strong norms against low-quality content are now codifying anti-slop rules explicitly — and that AI-edited text is being treated as categorically different from human-written text.",
     link:"https://news.ycombinator.com/newsguidelines.html",
-    date_added:"2026-04-24", date_added:"2026-04-24", short_label:"Hacker News bans AI comments" }
+    date_added:"2026-04-24", date_added:"2026-04-24", short_label:"Hacker News bans AI comments" },
+
+  { id:69, year:2024, title:"ASU Faculty Revolt Against AI Tool Chopping Up Their Lectures", date:"December 2024", source:"404 Media", category:"research", impact:6, slop_spill:5,
+    description:"Arizona State University deployed ASU Atomic, a beta tool that automatically chops faculty lectures into short clips and uses AI to generate learning materials, without obtaining proper faculty consent. Professors expressed significant concern about their intellectual property being processed without permission.",
+    significance:"Reveals tension between institutional AI adoption and faculty rights, highlighting questions about content ownership and consent in academic settings where AI tools are deployed top-down.",
+    link:"https://www.404media.co/asu-atomic-ai-modules-arizona-state-university/",
+    image:"https://storage.ghost.io/c/0f/76/0f76b548-bc58-4f25-abc3-3f5ebca07da4/content/images/size/w1200/2026/04/1437339306_2195243781-1.jpg",
+    image_credit:"404 Media",
+    date_added:"2026-05-04" }
 ];
 
 // ═══════════════════════════════════════════════════════════ STATE
@@ -6051,14 +6059,7 @@ const ALL_FIELDS = [
   
   ,
 
-  ,
-  { id:69, year:2024, title:"ASU Faculty Revolt Against AI Tool Chopping Up Their Lectures", date:"December 2024", source:"404 Media", category:"research", impact:6, slop_spill:5,
-    description:"Arizona State University deployed ASU Atomic, a beta tool that automatically chops faculty lectures into short clips and uses AI to generate learning materials, without obtaining proper faculty consent. Professors expressed significant concern about their intellectual property being processed without permission.",
-    significance:"Reveals tension between institutional AI adoption and faculty rights, highlighting questions about content ownership and consent in academic settings where AI tools are deployed top-down.",
-    link:"https://www.404media.co/asu-atomic-ai-modules-arizona-state-university/",
-    image:"https://storage.ghost.io/c/0f/76/0f76b548-bc58-4f25-abc3-3f5ebca07da4/content/images/size/w1200/2026/04/1437339306_2195243781-1.jpg",
-    image_credit:"404 Media",
-    date_added:"2026-05-04" }
+  
 ];
 
 function tsToHuman(ts) {
