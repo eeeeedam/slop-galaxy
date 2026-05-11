@@ -9,3 +9,6 @@
 2026-05-04: 1 new nodes added
   - [6/ss:5] ASU Faculty Revolt Against AI Tool Chopping Up Their Lectures
 
+2026-05-11: 1 new nodes added
+  - [7/ss:6] Chinese 'Haotian AI' Deepfake Software Powers Global Video Call Scams
+
