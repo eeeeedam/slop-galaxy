@@ -12,3 +12,7 @@
 2026-05-11: 1 new nodes added
   - [7/ss:6] Chinese 'Haotian AI' Deepfake Software Powers Global Video Call Scams
 
+2026-05-18: 2 new nodes added
+  - [7/ss:6] ArXiv Bans Researchers for Uploading AI-Generated Academic Papers
+  - [7/ss:8] Nonconsensual AI deepfake porn spreads across platforms despite policies
+
