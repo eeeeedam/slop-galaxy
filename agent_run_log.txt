@@ -16,3 +16,7 @@
   - [7/ss:6] ArXiv Bans Researchers for Uploading AI-Generated Academic Papers
   - [7/ss:8] Nonconsensual AI deepfake porn spreads across platforms despite policies
 
+2026-05-25: 2 new nodes added
+  - [7/ss:8] AI Deepfakes Target Five Teen Girls, Tear Pennsylvania High School Apart
+  - [7/ss:6] Streamer Uses Real-Time Deepfake to Impersonate MrBeast Making Inappropriate Comments
+
