@@ -31,8 +31,10 @@ jobs:
           GOOGLE_CSE_ID: ${{ secrets.GOOGLE_CSE_ID }}
         run: python scripts/slop_agent.py
 
-      - name: Commit changes
+- name: Commit changes
         run: |
+          echo "=== COMMIT STEP START ==="
+          cat .git/config
           git config user.name "Slop Galaxy Agent"
           git config user.email "agent@sloptilyoudrop.com"
           git fetch origin main
@@ -41,6 +43,7 @@ jobs:
           git diff --staged --quiet || git commit -m "agent: weekly node update $(date +%Y-%m-%d)"
           git push origin main --force
 
+     
       - name: Trigger Pages rebuild
         uses: actions/github-script@v7
         with:
