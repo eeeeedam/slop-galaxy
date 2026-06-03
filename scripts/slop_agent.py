@@ -470,7 +470,13 @@ def patch_galaxy(html, new_nodes):
     if not new_nodes:
         return html
 
-    seed_close = html.rfind('\n];')
+    # Find the SEED array specifically — it starts with 'const SEED = ['
+    seed_start = html.find('const SEED = [')
+    if seed_start < 0:
+        raise ValueError("Could not find SEED array in galaxy HTML")
+
+    # Find the closing ]; that belongs to SEED (first one after SEED starts)
+    seed_close = html.find('\n];', seed_start)
     if seed_close < 0:
         raise ValueError("Could not find SEED array closing ]; in galaxy HTML")
 
