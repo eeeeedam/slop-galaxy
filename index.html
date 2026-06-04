@@ -5461,9 +5461,9 @@ resize();
 // Load from localStorage or use seed
 try {
   const layoutVer = localStorage.getItem('slop_layout_ver');
-  if (layoutVer !== '34i') {
+  if (layoutVer !== '35i') {
     localStorage.removeItem('slop_positions');
-    localStorage.setItem('slop_layout_ver', '34i');
+    localStorage.setItem('slop_layout_ver', '35i');
     // v33 migration: force reload from SEED so all new nodes appear
     // (editor notes from SEED are preserved via the merge below)
     localStorage.removeItem('slop_nodes');
