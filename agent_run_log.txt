@@ -4,3 +4,7 @@
   - [6/ss:4] Hundreds of AI-Generated Anti-Data Center Pages Flood Facebook
 
 2026-06-03: 0 new nodes added (from 13 candidates)
+2026-06-08: 2 new nodes added
+  - [6/ss:4] Meta launches AI-generated clickbait feed in standalone app
+  - [7/ss:6] Federal Courts Overwhelmed by Flood of AI-Generated Lawsuits
+
