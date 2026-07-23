@@ -14,3 +14,6 @@
 2026-07-06: 0 new nodes added (from 5 candidates)
 2026-07-13: 0 new nodes added (from 6 candidates)
 2026-07-20: 0 new nodes added (from 9 candidates)
+2026-07-23: 1 new nodes added
+  - [7/ss:6] Study: AI-generated fiction floods Amazon, dilutes self-pub market
+
