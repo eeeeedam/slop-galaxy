@@ -17,3 +17,6 @@
 2026-07-23: 1 new nodes added
   - [7/ss:6] Study: AI-generated fiction floods Amazon, dilutes self-pub market
 
+2026-07-27: 1 new nodes added
+  - [7/ss:5] Court Reporter Submits AI Transcription Errors in Official Record
+
