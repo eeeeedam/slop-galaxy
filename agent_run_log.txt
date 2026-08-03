@@ -20,3 +20,9 @@
 2026-07-27: 1 new nodes added
   - [7/ss:5] Court Reporter Submits AI Transcription Errors in Official Record
 
+2026-08-03: 4 new nodes added
+  - [7/ss:5] Google Earth AI Satellite Image Editor Pulled After One Day
+  - [7/ss:8] Major Labels Propose Rules Barring AI Songs from Charts
+  - [7/ss:4] AI Avatar Farm Marketed FDA-Recalled Supplements on TikTok Shop
+  - [6/ss:8] LinkedIn Launches User Reporting Tool for AI Slop
+
