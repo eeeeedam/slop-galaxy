@@ -28,3 +28,6 @@
 
 2026-08-10: 0 new nodes added (from 11 candidates)
 2026-08-17: 0 new nodes added (from 11 candidates)
+2026-08-24: 1 new nodes added
+  - [6/ss:8] LinkedIn's AI Slop Flag Button Reaches 1 Million Uses
+
