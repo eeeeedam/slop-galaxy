@@ -31,3 +31,7 @@
 2026-08-24: 1 new nodes added
   - [6/ss:8] LinkedIn's AI Slop Flag Button Reaches 1 Million Uses
 
+2026-08-31: 2 new nodes added
+  - [6/ss:7] Instagram Mandates 'AI-Generated Profile' Label for Fake Accounts
+  - [7/ss:7] Australia Bans AI Songs from Music Charts After DJ Scandal
+
