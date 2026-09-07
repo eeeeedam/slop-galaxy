@@ -35,3 +35,8 @@
   - [6/ss:7] Instagram Mandates 'AI-Generated Profile' Label for Fake Accounts
   - [7/ss:7] Australia Bans AI Songs from Music Charts After DJ Scandal
 
+2026-09-07: 3 new nodes added
+  - [6/ss:7] Instagram Misapplies AI Labels to Human-Made Content
+  - [6/ss:3] NY GOP Gubernatorial Candidate Uses AI Video to Smear Opponents
+  - [6/ss:3] Dolly Parton's Sister Pleads Against AI Slop After Singer's Death
+
