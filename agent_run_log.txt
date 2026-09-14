@@ -40,3 +40,7 @@
   - [6/ss:3] NY GOP Gubernatorial Candidate Uses AI Video to Smear Opponents
   - [6/ss:3] Dolly Parton's Sister Pleads Against AI Slop After Singer's Death
 
+2026-09-14: 2 new nodes added
+  - [8/ss:7] First Take It Down Act Sentencing: 15 Years for AI-Generated CSAM
+  - [7/ss:4] Project Rachel: Fake AI Scholar Publishes 10+ Papers, Gets Cited
+
