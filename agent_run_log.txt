@@ -45,3 +45,6 @@
   - [7/ss:4] Project Rachel: Fake AI Scholar Publishes 10+ Papers, Gets Cited
 
 2026-09-21: 0 new nodes added (from 7 candidates)
+2026-09-28: 1 new nodes added
+  - [7/ss:6] OpenAI and Microsoft Acknowledge AI Content Is Degrading the Web
+
