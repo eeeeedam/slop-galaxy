@@ -48,3 +48,7 @@
 2026-09-28: 1 new nodes added
   - [7/ss:6] OpenAI and Microsoft Acknowledge AI Content Is Degrading the Web
 
+2026-10-05: 2 new nodes added
+  - [7/ss:7] arXiv Rate-Limits Submissions Due to AI Slop Overload
+  - [7/ss:7] Study Finds Cloudflare, Google, Proton Power Deepfake Abuse Sites
+
