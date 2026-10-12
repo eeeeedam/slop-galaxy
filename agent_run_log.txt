@@ -52,3 +52,6 @@
   - [7/ss:7] arXiv Rate-Limits Submissions Due to AI Slop Overload
   - [7/ss:7] Study Finds Cloudflare, Google, Proton Power Deepfake Abuse Sites
 
+2026-10-12: 1 new nodes added
+  - [7/ss:5] Nikon Disqualifies AI-Generated Winner from Small World in Motion
+
