@@ -15,7 +15,7 @@
 <style>
 :root {
   /* Museum dark — warm charcoal */
-  --bg: #0A0B0D; --fg: #E8EAED; --accent: #5B73FF; --accent2: #8FA0FF; --lime: #5B73FF; --lav: #F0368C; --spill: #F0368C; --cat-platform: #E8EAED; --forest: #0A0B0D;
+  --bg: #0A0B0D; --fg: #E8EAED; --accent: #5B73FF; --accent2: #8FA0FF; --lime: #5B73FF; --lav: #F0368C; --spill: #F0368C; --cat-platform: #E8EAED; --forest: #2F4BFF; --on-acc: #FFFFFF;
   --dim: #2E3238; --panel: rgba(10,11,13,0.97); --green: #12A150;
   --input-bg: rgba(255,255,255,0.05); --input-border: #2E3238;
   --select-bg: #15171A; --select-fg: #E8EAED;
@@ -33,7 +33,7 @@
 
 body.light {
   /* Museum parchment */
-  --bg: #F4F6F8; --fg: #0A0B0D; --accent: #2F4BFF; --accent2: #1A2FC9; --lime: #2F4BFF; --lav: #E02A80; --spill: #E02A80; --cat-platform: #0A0B0D;
+  --bg: #F4F6F8; --fg: #0A0B0D; --accent: #2F4BFF; --accent2: #1A2FC9; --lime: #2F4BFF; --lav: #E02A80; --spill: #E02A80; --cat-platform: #0A0B0D; --forest: #2F4BFF; --on-acc: #FFFFFF;
   --dim: #D3D8DE; --panel: #F4F6F8; --green: #12A150;
   --input-bg: rgba(10,11,13,0.05); --input-border: #D3D8DE;
   --select-bg: #E8EBEF; --select-fg: #0A0B0D;
@@ -62,7 +62,7 @@ body.light {
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0A0B0D; --fg: #E8EAED; --accent: #5B73FF; --accent2: #8FA0FF; --lime: #5B73FF; --lav: #F0368C; --spill: #F0368C; --cat-platform: #E8EAED; --forest: #0A0B0D;
+  --bg: #0A0B0D; --fg: #E8EAED; --accent: #5B73FF; --accent2: #8FA0FF; --lime: #5B73FF; --lav: #F0368C; --spill: #F0368C; --cat-platform: #E8EAED; --forest: #2F4BFF; --on-acc: #FFFFFF;
   --dim: #2E3238; --panel: rgba(10,11,13,0.97); --green: #12A150;
   --input-bg: rgba(255,255,255,0.04); --input-border: #2E3238;
   --select-bg: #15171A; --select-fg: #E8EAED;
@@ -79,7 +79,7 @@ body.light {
 }
 
 body.light {
-  --bg: #F4F6F8; --fg: #0A0B0D; --accent: #2F4BFF; --accent2: #1A2FC9; --lime: #2F4BFF; --lav: #E02A80; --spill: #E02A80; --cat-platform: #0A0B0D;
+  --bg: #F4F6F8; --fg: #0A0B0D; --accent: #2F4BFF; --accent2: #1A2FC9; --lime: #2F4BFF; --lav: #E02A80; --spill: #E02A80; --cat-platform: #0A0B0D; --forest: #2F4BFF; --on-acc: #FFFFFF;
   --dim: #D3D8DE; --panel: #F4F6F8; --green: #12A150;
   --input-bg: rgba(0,0,0,0.05); --input-border: #D3D8DE;
   --select-bg: #E8EBEF; --select-fg: #0A0B0D;
@@ -116,13 +116,13 @@ body { background:var(--bg); color:var(--fg); font-family:'Inter',sans-serif; ov
 #header-main { padding:12px 28px 8px; display:flex; align-items:flex-end; justify-content:space-between; background:var(--bg); pointer-events:all; }
 #header-subnav { padding:4px 28px 6px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid rgba(128,120,100,0.18); background:var(--bg); }
 #header-subnav-left { display:flex; gap:0; }
-.hn-btn { font-family:'IBM Plex Mono',monospace; font-size:8px; letter-spacing:.1em; text-transform:uppercase; color:var(--sub-color); background:none; border:none; border-right:1px solid rgba(128,120,100,0.2); padding:3px 14px; cursor:pointer; pointer-events:all; transition:color .15s; }
+.hn-btn { font-family:'Inter Tight',sans-serif; font-size:14px; font-weight:700; letter-spacing:-.005em; color:var(--fg); background:none; border:none; border-right:1px solid rgba(128,120,100,0.2); padding:6px 16px; cursor:pointer; pointer-events:all; transition:color .15s; }
 .hn-btn:first-child { padding-left:0; }
 .hn-btn:last-child { border-right:none; }
 .hn-btn:hover { color:var(--lime); }
-.hn-btn-nav { color:var(--fg); border-right:1px solid rgba(128,120,100,0.2); background:rgba(47,75,255,0.10); }
+.hn-btn-nav { color:#fff; border-right:none; background:var(--forest); }
 body.light .hn-btn-nav { background:rgba(47,75,255,0.06); }
-.hn-btn-nav:hover { color:var(--fg) !important; background:rgba(47,75,255,0.16); }
+.hn-btn-nav:hover { color:#fff !important; background:#1A2FC9; }
 
 /* Title: Inter Tight matching guide modal headers */
 #header h1 { font-family:'Inter Tight',sans-serif; font-weight:600; font-size:clamp(28px,3.5vw,44px); letter-spacing:-.01em; line-height:1; color:var(--fg);  }
@@ -185,13 +185,13 @@ canvas#c { position:fixed; top:0; left:0; width:100%; height:100%; touch-action:
 
 /* ── CONTROLS ── */
 #controls { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:100; display:flex; gap:8px; }
-.btn { background:var(--panel); border:1px solid var(--dim); color:var(--fg); font-family:'IBM Plex Mono',monospace; font-size:10px; padding:8px 14px; cursor:pointer; letter-spacing:.07em; transition:all .15s; white-space:nowrap; }
+.btn { background:var(--panel); border:1px solid var(--fg); color:var(--fg); font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:12px; padding:10px 16px; cursor:pointer; letter-spacing:.07em; transition:all .15s; white-space:nowrap; }
 .btn:hover { border-color:var(--forest); color:var(--lime); }
 .btn:active { opacity:.8; }
 body.light .btn { background:var(--bg); color:var(--fg); border-color:var(--dim); }
 body.light .btn:hover { border-color:var(--forest); color:var(--lime); }
-body.light .btn.active { color:var(--lime); border-color:var(--forest); background:var(--forest); }
-.btn.active { background:var(--forest); color:var(--lime); border-color:var(--forest); }
+body.light .btn.active { color:#fff; border-color:var(--forest); background:var(--forest); }
+.btn.active { background:var(--forest); color:#fff; border-color:var(--forest); }
 .btn.green { border-color:#2a5a4a; }
 .btn.green:hover { border-color:var(--green); color:var(--green); }
 .btn:disabled { opacity:.3; cursor:not-allowed; pointer-events:none; }
@@ -246,7 +246,7 @@ body.light .modal-close:hover { background:#2F4BFF; border-color:#2F4BFF; color:
 .ff textarea { min-height:70px; }
 .frow { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .factions { display:flex; gap:10px; margin-top:20px; }
-.btn-primary { flex:1; background:var(--forest); color:var(--lime); border:none; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.07em; padding:11px; cursor:pointer; transition:opacity .18s; }
+.btn-primary { flex:1; background:var(--forest); color:#fff; border:none; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.07em; padding:11px; cursor:pointer; transition:opacity .18s; }
 .btn-primary:hover { opacity:.82; }
 .btn-primary.green-btn { background:var(--green); color:#fff; }
 .btn-cancel { background:none; border:1px solid var(--dim); color:var(--sub-color); font-family:'IBM Plex Mono',monospace; font-size:11px; padding:11px 16px; cursor:pointer; transition:all .18s; }
@@ -612,12 +612,8 @@ body.light #btn-patterns:hover, body.light #btn-listview:hover { background:rgba
   color:var(--fg);
 }
 #analytics-header h2 span { color:var(--lime); }
-#analytics-close {
-  background:none; border:1px solid var(--dim); color:var(--sub-color);
-  font-family:'IBM Plex Mono',monospace; font-size:10px; padding:6px 12px;
-  cursor:pointer; transition:all .18s; letter-spacing:.06em;
-}
-#analytics-close:hover { border-color:var(--fg); color:var(--fg); }
+#analytics-close { background:var(--forest); color:#fff; border:1px solid var(--forest); font:700 14px 'Inter Tight',sans-serif; padding:9px 16px; cursor:pointer; order:-1; }
+#analytics-close:hover { background:#1A2FC9; border-color:#1A2FC9; color:#fff; }
 
 #analytics-tabs {
   display:flex; gap:2px; padding:14px 28px 0; flex-shrink:0;
@@ -671,7 +667,7 @@ body.light #btn-patterns:hover, body.light #btn-listview:hover { background:rgba
   padding:5px 4px; cursor:pointer; transition:all .18s; text-align:center;
 }
 .mtbtn:hover { color:var(--fg); border-color:var(--fg); }
-.mtbtn.active { background:var(--forest); border-color:rgba(47,75,255,0.4); color:var(--lime); }
+.mtbtn.active { background:var(--forest); border-color:var(--forest); color:#fff; }
 
 #analytics-main {
   flex:1; padding:24px 28px; overflow-y:auto; display:flex; flex-direction:column; gap:28px;
@@ -976,8 +972,8 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(47,75,255,0.6); }
 }
 .an-tab:hover { border-color:var(--accent2); color:var(--accent2); }
 .an-tab.active {
-  background:var(--forest); color:var(--lime);
-  border-color:rgba(47,75,255,0.4); font-weight:700;
+  background:var(--forest); color:#fff;
+  border-color:var(--forest); font-weight:700;
 }
 
 /* ── Upgrade insight box to match galaxy editorial tone ── */
@@ -1026,22 +1022,23 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(47,75,255,0.6); }
   font-family:'IBM Plex Mono',monospace !important;
   font-size:7px !important; letter-spacing:.12em !important;
   background:var(--forest) !important;
-  color:var(--lime) !important;
-  border:1.5px solid rgba(47,75,255,0.4) !important;
+  color:#fff !important;
+  border:1.5px solid var(--forest) !important;
   padding:5px 12px !important; cursor:pointer;
   transition:all .15s !important;
   text-transform:uppercase;
 }
-#btn-so-what:hover { background:rgba(10,11,13,0.8) !important; border-color:var(--lime) !important; }
+#btn-so-what:hover { background:#1A2FC9 !important; border-color:#1A2FC9 !important; }
 #btn-so-what:disabled { opacity:0.5 !important; cursor:wait !important; }
 
 #intro #guide-chrome button {
-  border-color:rgba(47,75,255,0.3) !important;
-  color:rgba(47,75,255,0.7) !important;
+  border-color:rgba(255,255,255,0.45) !important;
+  color:rgba(255,255,255,0.9) !important;
 }
 #intro #guide-chrome button:hover {
-  border-color:var(--lime) !important;
-  color:var(--lime) !important;
+  border-color:#fff !important;
+  color:#fff !important;
+  background:rgba(255,255,255,0.14) !important;
 }
 #intro .guide-page { background:var(--bg); }
 
@@ -1079,7 +1076,7 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(47,75,255,0.6); }
 }
 .atab:hover { border-color:var(--lime); color:var(--lime); }
 .atab.active {
-  background:var(--forest); color:var(--lime);
+  background:var(--forest); color:#fff;
   border-color:rgba(47,75,255,0.4); font-weight:700;
 }
 #analytics-tabs {
@@ -1105,8 +1102,8 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(47,75,255,0.6); }
 }
 #btn-timeline-mode:hover { border-color:var(--lime); color:var(--lime); }
 #btn-timeline-mode.active {
-  background:var(--forest); color:var(--lime);
-  border-color:rgba(47,75,255,0.4);
+  background:var(--forest); color:#fff;
+  border-color:var(--forest);
 }
 
 /* ── IMPACT LEGEND ── */
@@ -1170,6 +1167,43 @@ body.light #axis-y-slop  .ay-sub  { color:rgba(47,75,255,0.6); }
 #axis-y-spill .ay-word{color:#FF5CA8}#axis-y-spill .ay-sub{color:rgba(240,54,140,.6)}
 body.light #axis-y-slop .ay-word{color:#2F4BFF}body.light #axis-y-slop .ay-sub{color:rgba(47,75,255,.7)}
 body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub{color:rgba(240,54,140,.7)}
+
+.about-live { font-family:'Inter',sans-serif; color:var(--fg); }
+.about-live .about-grid { display:grid; grid-template-columns:minmax(0,3fr) minmax(0,2fr); grid-template-rows:auto auto 1fr auto; }
+.about-live .about-col { display:grid; grid-template-rows:subgrid; grid-row:1 / span 4; min-width:0; }
+.about-live .about-col:first-child { padding-right:32px; }
+.about-live .about-col + .about-col { padding-left:32px; border-left:1px solid var(--dim); }
+.about-live .label-h { justify-self:start; align-self:start; margin:0 0 16px; padding:6px 12px 7px; background:var(--forest); color:#fff; font:700 18px/1.1 'Inter Tight',sans-serif; letter-spacing:-.02em; }
+.about-live .about-head { font:700 clamp(24px,3vw,34px)/1.05 'Inter Tight',sans-serif; letter-spacing:-.035em; margin:0 0 16px; text-wrap:balance; }
+.about-live .about-body > p { font:400 15px/1.7 'Inter',sans-serif; margin:0 0 14px; max-width:60ch; }
+.about-live .about-body > p.pull { font-weight:600; }
+.about-live .about-actions { display:flex; flex-wrap:wrap; gap:10px; padding-top:10px; }
+.about-live .al-btn { display:inline-block; padding:11px 16px; border:1px solid var(--fg); color:var(--fg); text-decoration:none; font:500 12px/1 'IBM Plex Mono',monospace; letter-spacing:.05em; text-transform:uppercase; }
+.about-live .al-btn.al-p { background:var(--forest); border-color:var(--forest); color:#fff; }
+.about-live .al-btn:hover { background:var(--fg); color:var(--bg); border-color:var(--fg); }
+.about-live .al-btn.al-p:hover { background:#1A2FC9; color:#fff; border-color:#1A2FC9; }
+@media (max-width:760px){ .about-live .about-grid{grid-template-columns:minmax(0,1fr);grid-template-rows:none;gap:32px;} .about-live .about-col{display:block;grid-row:auto;} .about-live .about-col:first-child{padding-right:0;} .about-live .about-col+.about-col{padding-left:0;border-left:0;border-top:1px solid var(--dim);padding-top:28px;} }
+#about-admin-edit { display:none !important; }
+#modal-about { max-height:92vh; overflow-y:auto; }
+.about-live .about-head { font-size:clamp(22px,2.6vw,30px) !important; }
+.about-live .about-body > p { font-size:14px !important; line-height:1.6 !important; }
+/* sidebar type: match category-label font, bigger */
+.filt-label { font-family:'Inter Tight',sans-serif !important; font-size:13px !important; font-weight:700 !important; letter-spacing:-.005em !important; text-transform:none !important; color:var(--fg) !important; margin-bottom:12px !important; }
+.filt-reset, .filt-val { font-family:'Inter',sans-serif !important; font-size:13px !important; font-weight:500 !important; letter-spacing:0 !important; opacity:1 !important; }
+.filt-cat-label { font-size:13px !important; font-weight:500 !important; }
+.filt-year-label, .filt-year-count { font-family:'Inter',sans-serif !important; font-size:13px !important; font-weight:500 !important; color:var(--fg) !important; width:auto !important; min-width:36px; }
+.filt-impact-scale { font-family:'Inter',sans-serif !important; font-size:12px !important; font-weight:500; }
+.filt-text, .filt-text::placeholder { font-size:14px !important; }
+.rec-btn { font-family:'Inter',sans-serif !important; font-size:13px !important; font-weight:600 !important; padding:9px 0 !important; border-color:var(--fg) !important; color:var(--fg) !important; letter-spacing:0 !important; }
+.rec-btn.active { background:var(--forest) !important; color:#fff !important; border-color:var(--forest) !important; }
+#filt-active-badge { font-family:'Inter',sans-serif !important; font-size:13px !important; text-transform:none !important; letter-spacing:0 !important; color:var(--fg) !important; }
+#filt-clear-all { font-family:'Inter Tight',sans-serif !important; font-size:14px !important; font-weight:700 !important; padding:10px 12px !important; border-color:var(--fg) !important; color:var(--fg) !important; }
+#filters .btn, #filters button:not(#btn-arc-sb):not(#btn-fc-sb):not(#btn-patterns-sb) { font-family:'Inter Tight',sans-serif; font-size:14px; font-weight:700; }
+#btn-timeline-mode { pointer-events:all !important; font-family:'Inter Tight',sans-serif !important; font-size:14px !important; font-weight:700 !important; letter-spacing:-.005em !important; text-transform:none !important; color:var(--fg) !important; border:1px solid var(--fg) !important; padding:7px 14px !important; margin-right:8px; }
+#btn-timeline-mode.active { background:var(--forest) !important; color:#fff !important; border-color:var(--forest) !important; }
+/* How To Navigate: black on light cobalt tint */
+.hn-btn-nav, body.light .hn-btn-nav { color:#0A0B0D !important; background:#D9DFFF !important; border-right:none !important; }
+.hn-btn-nav:hover { color:#0A0B0D !important; background:#BFC9FF !important; }
 </style>
 </head>
 <body>
@@ -1252,11 +1286,11 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
         </div>
         <div>
           <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:10px;">node colors</div>
-          <div style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;gap:10px;"><span style="width:12px;height:12px;border-radius:50%;background:var(--cat-platform);display:inline-block;flex-shrink:0;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.06em;color:var(--fg);">Platform</span></div>
-<div style="display:flex;align-items:center;gap:10px;"><span style="width:12px;height:12px;border-radius:50%;background:#656C75;display:inline-block;flex-shrink:0;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.06em;color:var(--fg);">Media</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;gap:10px;"><span style="width:12px;height:12px;border-radius:50%;background:#F2A900;display:inline-block;flex-shrink:0;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.06em;color:var(--fg);">Platform</span></div>
+<div style="display:flex;align-items:center;gap:10px;"><span style="width:12px;height:12px;border-radius:50%;background:#0AA5B5;display:inline-block;flex-shrink:0;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.06em;color:var(--fg);">Media</span></div>
 <div style="display:flex;align-items:center;gap:10px;"><span style="width:12px;height:12px;border-radius:50%;background:#F0368C;display:inline-block;flex-shrink:0;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.06em;color:var(--fg);">Cultural</span></div>
 <div style="display:flex;align-items:center;gap:10px;"><span style="width:12px;height:12px;border-radius:50%;background:#2F4BFF;display:inline-block;flex-shrink:0;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.06em;color:var(--fg);">Legislation</span></div>
-<div style="display:flex;align-items:center;gap:10px;"><span style="width:12px;height:12px;border-radius:50%;background:#12A150;display:inline-block;flex-shrink:0;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.06em;color:var(--fg);">Research</span></div>
+<div style="display:flex;align-items:center;gap:10px;"><span style="width:12px;height:12px;border-radius:50%;background:#8B5CF6;display:inline-block;flex-shrink:0;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.06em;color:var(--fg);">Research</span></div>
 <div style="display:flex;align-items:center;gap:10px;"><span style="width:12px;height:12px;border-radius:50%;background:#FF4B2B;display:inline-block;flex-shrink:0;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.06em;color:var(--fg);">Societal</span></div></div>
         </div>
       </div>
@@ -1292,11 +1326,11 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
       <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:14px;">Page 3 of 5</div>
       <h2 style="font-family:'Inter Tight',sans-serif; font-weight:600;font-size:clamp(26px,4vw,44px);letter-spacing:-.025em;line-height:.92;margin-bottom:16px;"><span style="color:var(--fg)">six categories,</span> <span style="color:var(--lime)">one pattern</span></h2>
       <p style="font-family:'Inter',sans-serif;font-size:14px;line-height:1.75;color:var(--fg);font-size:15px;max-width:600px;margin-bottom:20px;">The color of each node tells you what kind of moment it is. Use the filters to focus. The categories are distinct but they’re not separate — a platform decision becomes a cultural moment becomes a legal precedent. The galaxy tracks the whole chain.</p>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;"><div class="guide-cat-card" style="--cc:var(--cat-platform)"><div class="gcc-dot"></div><div class="gcc-name" id="gp3-cat1-name">Platform</div><div class="gcc-desc" id="gp3-cat1-desc">Social networks, recommendation systems, hosting decisions</div></div>
-<div class="guide-cat-card" style="--cc:#656C75"><div class="gcc-dot"></div><div class="gcc-name" id="gp3-cat2-name">Media</div><div class="gcc-desc" id="gp3-cat2-desc">News, publishing, journalism, broadcast</div></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;"><div class="guide-cat-card" style="--cc:#F2A900"><div class="gcc-dot"></div><div class="gcc-name" id="gp3-cat1-name">Platform</div><div class="gcc-desc" id="gp3-cat1-desc">Social networks, recommendation systems, hosting decisions</div></div>
+<div class="guide-cat-card" style="--cc:#0AA5B5"><div class="gcc-dot"></div><div class="gcc-name" id="gp3-cat2-name">Media</div><div class="gcc-desc" id="gp3-cat2-desc">News, publishing, journalism, broadcast</div></div>
 <div class="guide-cat-card" style="--cc:#F0368C"><div class="gcc-dot"></div><div class="gcc-name" id="gp3-cat3-name">Cultural</div><div class="gcc-desc" id="gp3-cat3-desc">Art, music, entertainment, public behavior</div></div>
 <div class="guide-cat-card" style="--cc:#2F4BFF"><div class="gcc-dot"></div><div class="gcc-name" id="gp3-cat4-name">Legislation</div><div class="gcc-desc" id="gp3-cat4-desc">Laws, rulings, policy, regulatory action</div></div>
-<div class="guide-cat-card" style="--cc:#12A150"><div class="gcc-dot"></div><div class="gcc-name" id="gp3-cat5-name">Research</div><div class="gcc-desc" id="gp3-cat5-desc">Studies, findings, academic and institutional reports</div></div>
+<div class="guide-cat-card" style="--cc:#8B5CF6"><div class="gcc-dot"></div><div class="gcc-name" id="gp3-cat5-name">Research</div><div class="gcc-desc" id="gp3-cat5-desc">Studies, findings, academic and institutional reports</div></div>
 <div class="guide-cat-card" style="--cc:#FF4B2B"><div class="gcc-dot"></div><div class="gcc-name" id="gp3-cat6-name">Societal</div><div class="gcc-desc" id="gp3-cat6-desc">The human consequences that don’t fit neatly elsewhere</div></div></div>
     </div>
 
@@ -1360,7 +1394,7 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
   <!-- Inline About panel — swaps in place of guide pages -->
   <div id="guide-about-inline" style="display:none;flex:1;overflow-y:auto;padding:28px 40px 24px;position:relative;">
     <button onclick="closeGuideAbout()" style="display:flex;align-items:center;gap:6px;background:none;border:none;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;color:var(--sub-color);cursor:pointer;margin-bottom:20px;padding:0;text-transform:uppercase;">← BACK TO GUIDE</button>
-    <h2 style="font-family:'Inter Tight',sans-serif; font-weight:600;font-size:clamp(28px,4vw,40px);letter-spacing:.04em;line-height:1;margin-bottom:16px;">ABOUT <span style="color:var(--lime)">THE SLOP GALAXY</span></h2>
+    <div id="about-live-2" class="about-live"></div><div style="display:none">
     <div style="font-family:'Inter',sans-serif;font-size:13px;line-height:1.85;color:var(--fg);">
       <p>I started noticing slop in small, innocent ways. A family member shared an image that was...off. Then my social media feed grew increasingly hollow. Wherever I looked, the Internet was flooded with content mimicking humanity but lacking its soul and imperfections.</p>
       <p style="margin-top:12px;">The Slop Galaxy tracks the moments when AI-generated content crosses a threshold: When it entered a courtroom, a newsroom, a presidential feed, a child's video stream. Some of these moments are about the slop itself: the fake images, articles, or personas. Others are about the Spill: the legislation, the lawsuits, the cultural reckonings that follow. Together they are a record of how a technology is rewriting the terms of what we trust, consume, and tolerate.</p>
@@ -1374,7 +1408,7 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
         <a href="https://www.linkedin.com/in/elenadamashek/" target="_blank" style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--lime);text-decoration:none;letter-spacing:.06em;border-bottom:1px solid rgba(47,75,255,0.3);padding-bottom:1px;">LinkedIn ↗</a>
         <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--sub-color);letter-spacing:.06em;">© 2026 Ellie Damashek</span>
       </div>
-    </div>
+    </div></div>
     <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--dim);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
       <p style="font-family:'Inter',sans-serif;font-size:12px;line-height:1.6;color:var(--sub-color);margin:0;max-width:380px;">Spotted something that belongs here? Submit a moment — Ellie reviews every submission and approved nodes carry your name.</p>
       <a href="https://sloptilyoudrop.com#submit" target="_blank" style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;background:var(--lime);color:#fff;padding:9px 18px;text-decoration:none;white-space:nowrap;flex-shrink:0;">SUBMIT SOME SLOP →</a>
@@ -1452,27 +1486,28 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
 <div id="crawl-badge">⬤ CRAWLING</div>
 <div id="crawl-info"><button id="btn-crawl-info">AUTO-CRAWL ▾</button></div>
 
+<div id="view-exit" style="display:none;position:fixed;top:166px;left:196px;z-index:200;gap:8px;flex-direction:column;"></div>
 <div id="filters">
   <!-- VIEW BUTTONS IN SIDEBAR -->
-  <div style="padding:8px 10px 6px;">
-    <button id="btn-patterns-sb" onclick="document.getElementById('btn-patterns').click()" style="width:100%;background:var(--forest);color:var(--lime);border:1.5px solid rgba(47,75,255,0.4);font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:9px 12px;cursor:pointer;text-align:left;transition:all .15s;">◈ Patterns</button>
-  </div>
   <div style="padding:0 10px 6px;">
-    <button id="btn-arc-sb" onclick="toggleArcFromSidebar()" style="width:100%;background:none;color:var(--sub-color);border:1px solid var(--sidebar-border);font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;padding:7px 12px;cursor:pointer;text-align:left;transition:all .15s;" title="Show the through-line: two arcs connecting the defining moments of slop and spills">&#x25c7; Through-Line</button>
+    <button id="btn-arc-sb" onclick="toggleArcFromSidebar()" style="width:100%;background:none;color:var(--fg);border:1px solid var(--fg);font-family:'Inter Tight',sans-serif;font-size:15px;letter-spacing:-.01em;text-transform:none;padding:12px 14px;font-weight:700;cursor:pointer;text-align:left;transition:all .15s;" title="Show the through-line: two arcs connecting the defining moments of slop and spills">&#x25c7; Through-Line</button>
   </div>
   <div style="padding:0 10px 8px;">
-    <button id="btn-fc-sb" onclick="toggleFullCircle()" style="width:100%;background:none;color:var(--sub-color);border:1px solid var(--sidebar-border);font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;padding:7px 12px;cursor:pointer;text-align:left;transition:all .15s;" title="Show full circle moments: pairs where a specific slop directly produced its institutional consequence">&#x25ce; Full Circle</button>
+    <button id="btn-fc-sb" onclick="toggleFullCircle()" style="width:100%;background:none;color:var(--fg);border:1px solid var(--fg);font-family:'Inter Tight',sans-serif;font-size:15px;letter-spacing:-.01em;text-transform:none;padding:12px 14px;font-weight:700;cursor:pointer;text-align:left;transition:all .15s;" title="Show full circle moments: pairs where a specific slop directly produced its institutional consequence">&#x25ce; Full Circle</button>
+  </div>
+  <div style="padding:8px 10px 6px;">
+    <button id="btn-patterns-sb" onclick="document.getElementById('btn-patterns').click()" style="width:100%;background:none;color:var(--fg);border:1px solid var(--fg);font-family:'Inter Tight',sans-serif;font-size:15px;letter-spacing:-.01em;text-transform:none;padding:12px 14px;cursor:pointer;text-align:left;font-weight:700;transition:all .15s;">◈ Patterns</button>
   </div>
   <div style="height:1px;background:var(--sidebar-border);margin:2px 0 6px;"></div>
   <!-- CATEGORY TOGGLES -->
   <div class="filt-section">
     <div class="filt-label">Filter by type <span id="filt-cat-reset" class="filt-reset">reset</span></div>
     <div class="filt-cats">
-      <div class="filt-cat active" data-cat="platform"   style="--cc:#0A0B0D"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-platform">Platform Policy</span></div>
-      <div class="filt-cat active" data-cat="media"      style="--cc:#656C75"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-media">Media / Journalism</span></div>
+      <div class="filt-cat active" data-cat="platform"   style="--cc:#F2A900"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-platform">Platform Policy</span></div>
+      <div class="filt-cat active" data-cat="media"      style="--cc:#0AA5B5"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-media">Media / Journalism</span></div>
       <div class="filt-cat active" data-cat="cultural"   style="--cc:#F0368C"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-cultural">Cultural Moment</span></div>
       <div class="filt-cat active" data-cat="legislation" style="--cc:#2F4BFF"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-legislation">Legislation / Policy</span></div>
-      <div class="filt-cat active" data-cat="research"   style="--cc:#12A150"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-research">Research / Data</span></div>
+      <div class="filt-cat active" data-cat="research"   style="--cc:#8B5CF6"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-research">Research / Data</span></div>
       <div class="filt-cat active" data-cat="societal"   style="--cc:#FF4B2B"><span class="filt-dot"></span><span class="filt-cat-label" id="leg-societal">Societal Impact</span></div>
     </div>
   </div>
@@ -1613,13 +1648,14 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
 <!-- ANALYTICS OVERLAY -->
 <div id="analytics">
   <div id="analytics-header">
+    <button id="analytics-close">✕ Exit Patterns</button>
     <h2 style="font-family:'Inter Tight',sans-serif;font-size:22px;letter-spacing:-.02em;font-weight:normal;">slop patterns <span style="color:var(--lime)">+ trends</span></h2>
     <div style="display:flex;align-items:center;gap:12px">
       <button id="arc-editor-btn" style="display:none;" onclick="showArcEditor()" style="display:none;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em;text-transform:uppercase;background:rgba(10,11,13,0.15);color:var(--lime);border:1px solid rgba(47,75,255,0.3);padding:4px 10px;cursor:pointer;">&#x25c7; Edit Narration</button>
       <span style="font-size:9px;color:var(--sub-color);letter-spacing:.08em">NODES ANALYSED: <span id="an-total" style="color:var(--lime)">0</span></span>
       
       <button id="btn-view-galaxy" style="background:rgba(47,75,255,0.12);border:1px solid var(--accent2);color:var(--lime);font-family:'IBM Plex Mono',monospace;font-size:9px;padding:5px 12px;cursor:pointer;letter-spacing:.07em;transition:all .18s;">◈ VIEW IN GALAXY</button>
-      <button id="analytics-close">✕</button>
+      
     </div>
   </div>
 
@@ -1647,11 +1683,11 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
 
       <div class="aside-section">
         <div class="aside-label">Categories</div>
-        <div class="aside-check"><input type="checkbox" id="ac-platform" checked><div class="aside-swatch" style="background:var(--cat-platform)"></div><label for="ac-platform">Platform Policy</label></div>
-        <div class="aside-check"><input type="checkbox" id="ac-media" checked><div class="aside-swatch" style="background:#656C75"></div><label for="ac-media">Media / Journalism</label></div>
+        <div class="aside-check"><input type="checkbox" id="ac-platform" checked><div class="aside-swatch" style="background:#F2A900"></div><label for="ac-platform">Platform Policy</label></div>
+        <div class="aside-check"><input type="checkbox" id="ac-media" checked><div class="aside-swatch" style="background:#0AA5B5"></div><label for="ac-media">Media / Journalism</label></div>
         <div class="aside-check"><input type="checkbox" id="ac-cultural" checked><div class="aside-swatch" style="background:#F0368C"></div><label for="ac-cultural">Cultural Moment</label></div>
         <div class="aside-check"><input type="checkbox" id="ac-legislation" checked><div class="aside-swatch" style="background:#2F4BFF"></div><label for="ac-legislation">Legislation</label></div>
-        <div class="aside-check"><input type="checkbox" id="ac-research" checked><div class="aside-swatch" style="background:#12A150"></div><label for="ac-research">Research / Data</label></div>
+        <div class="aside-check"><input type="checkbox" id="ac-research" checked><div class="aside-swatch" style="background:#8B5CF6"></div><label for="ac-research">Research / Data</label></div>
         <div class="aside-check"><input type="checkbox" id="ac-societal" checked><div class="aside-swatch" style="background:#FF4B2B"></div><label for="ac-societal">Societal Impact</label></div>
       </div>
 
@@ -1724,12 +1760,14 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
 </div>
 
 <!-- ABOUT MODAL -->
-<div class="modal" id="modal-about" style="max-width:560px">
+<div class="modal" id="modal-about" style="max-width:980px;width:94vw">
   <button class="modal-close" id="btn-close-about" onclick="closeModal('modal-about')">✕</button>
   <div style="margin-bottom:20px">
     <h2 style="margin:0">ABOUT <span style="color:var(--lime)">THE SLOP GALAXY</span></h2>
   </div>
 
+  <div id="about-live" class="about-live"></div>
+  <div style="display:none">
   <div id="about-body" style="font-family:'Inter',sans-serif;font-size:13px;line-height:1.85;color:var(--fg)">
     <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;line-height:1.7;color:var(--sub-color);border-left:2px solid var(--accent);padding-left:10px;margin-bottom:18px;"><strong style="color:var(--fg)">slop</strong>, <em>n.</em> — digital content of low quality that is produced usually in quantity by means of artificial intelligence. <a href="javascript:void(0)" onclick="document.querySelectorAll('.modal.open').forEach(m=>m.classList.remove('open'));document.getElementById('overlay').classList.remove('open');setTimeout(()=>openNodeByTitle('merriam-webster'),350);" style="color:var(--accent2);text-decoration:none;border-bottom:1px solid rgba(47,75,255,0.3);">Merriam-Webster Word of the Year, 2025 ↗</a></p>
     <p id="about-p1">I started noticing slop in small, innocent ways. A family member shared an image that was...off. Then my social media feed grew increasingly hollow. Wherever I looked, the Internet was flooded with content mimicking humanity but lacking its soul and imperfections.</p>
@@ -1748,6 +1786,7 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
     </div>
   </div>
 
+  </div>
   <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--dim);display:flex;justify-content:flex-end">
     <button id="btn-show-intro" style="background:var(--fg);border:none;padding:4px 12px;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.06em;color:var(--bg);cursor:pointer;border-radius:2px;white-space:nowrap;opacity:0.85;transition:opacity .2s;pointer-events:all">HOW TO NAVIGATE ↗</button>
   </div>
@@ -2011,11 +2050,11 @@ window.addEventListener('unhandledrejection', function(e) {
 
 // ═══════════════════════════════════════════════════════════ CONSTANTS
 const CATS = {
-  platform:    { color:'#0A0B0D', label:'Platform Policy' },
-  media:       { color:'#656C75', label:'Media / Journalism' },
+  platform:    { color:'#F2A900', label:'Platform Policy' },
+  media:       { color:'#0AA5B5', label:'Media / Journalism' },
   cultural:    { color:'#F0368C', label:'Cultural Moment' },
   legislation: { color:'#2F4BFF', label:'Legislation / Policy' },
-  research:    { color:'#12A150', label:'Research / Data' },
+  research:    { color:'#8B5CF6', label:'Research / Data' },
   societal:    { color:'#FF4B2B', label:'Societal Impact' },
 };
 
@@ -2528,10 +2567,12 @@ function getVisible() {
     const days = activeFilters.recency === '7d' ? 7 : activeFilters.recency === '30d' ? 30 : 90;
     const cutoff = Date.now() - days * 86400000;
     result = result.filter(n => {
-      const da = n.date_added;
-      if (!da) return false;
-      // Handle both Unix timestamp (number) and 'YYYY-MM-DD' string
-      const ts = typeof da === 'number' ? da : new Date(da).getTime();
+      // Recency = when the EVENT happened (end of its month), not when it was logged
+      const M={january:0,february:1,march:2,april:3,may:4,june:5,july:6,august:7,september:8,october:9,november:10,december:11};
+      const mm=[...String(n.date||'').toLowerCase().matchAll(/(january|february|march|april|may|june|july|august|september|october|november|december)/g)];
+      const yy=[...String(n.date||'').matchAll(/(20\d\d)/g)];
+      const yr=yy.length?+yy[yy.length-1][1]:n.year; const mo=mm.length?M[mm[mm.length-1][1]]:0;
+      const ts=new Date(yr,mo+1,0,23,59).getTime();
       return ts >= cutoff;
     });
   }
@@ -2780,7 +2821,6 @@ function nodeR(impact){ return Math.max(2.5, (3 + Math.pow(impact, 1.9) * 0.48) 
 const WORLD_X_MIN = 2021.8, WORLD_X_MAX = 2027.0, WORLD_WIDTH = 3600;
 
 function drawTimeline(vis) {
-  if (!vis.length) return;
   const isLight = document.body.classList.contains('light');
   const years = [2022, 2023, 2024, 2025, 2026];
 
@@ -3158,7 +3198,7 @@ function draw() {
   drawTimeline(vis);
   drawConnections(vis);
   if (typeof drawStartHerePulse === 'function') drawStartHerePulse();
-  if (typeof drawFeaturedArc === 'function') drawFeaturedArc(); // arc: featured nodes through-line
+  if (vis.length && typeof drawFeaturedArc === 'function') drawFeaturedArc(); // arc: featured nodes through-line
   if (typeof drawFullCircleConnectors === 'function') drawFullCircleConnectors();
   vis.forEach(n => drawNode(n));   // pass 1: all nodes
   // Pass 2: labels — reset collision registry, sort high-impact first
@@ -3177,6 +3217,11 @@ function draw() {
     if (n.id !== hoveredId && n.id !== selectedId) drawLabel(n, false);
   });
   vis.forEach(n => drawEditorNode(n)); // pass 3: editor note indicators
+  if (!vis.length) {
+    ctx.save(); ctx.textAlign='center'; ctx.fillStyle=document.body.classList.contains('light')?'#0A0B0D':'#E8EAED';
+    ctx.font="700 26px 'Inter Tight',sans-serif"; ctx.fillText('Nothing matches these filters.',W/2,H/2-8);
+    ctx.font="500 12px 'IBM Plex Mono',monospace"; ctx.fillText('RESET OR LOOSEN A FILTER TO SEE MORE',W/2,H/2+18); ctx.restore();
+  }
   updateYearLabels();              // update fixed HTML year labels
   tick++; requestAnimationFrame(draw);
 }
@@ -5042,8 +5087,6 @@ function updateCount(){
 // ── theme toggle
 function applyTheme(light) {
   document.body.classList.toggle('light', light);
-  CATS.platform.color = light ? '#0A0B0D' : '#E8EAED';
-  var _pf = document.querySelector('.filt-cat[data-cat="platform"]'); if (_pf) _pf.style.setProperty('--cc', CATS.platform.color);
   document.getElementById('btn-theme').textContent = light ? '☽' : '☼';
   try { localStorage.setItem('slop_theme', light ? 'light' : 'dark'); } catch(e){}
 }
@@ -5275,6 +5318,7 @@ function saveAboutContent(content) {
 }
 
 function renderAboutContent() {
+  return;
   const c = loadAboutContent();
   document.getElementById('about-p1').textContent = c.p1;
   document.getElementById('about-p2').textContent = c.p2;
@@ -5306,7 +5350,22 @@ function openAboutModal() {
   openModal('modal-about');
 }
 
-document.getElementById('btn-about').onclick = openAboutModal;
+
+const HOME_ABOUT_SNAPSHOT = "<div class=\"about-grid\">\n    <div class=\"about-col\">\n      <h2 class=\"label-h\">About the project</h2>\n      <p class=\"about-head\">Get in loser, we're going slopping.</p>\n      <div class=\"about-body\">\n        <p>In a slop-saturated world, meaning, information, and values are transforming before our eyes. What started as irreverent, goofy, AI-generated content has seeped into everyday life: wedding invitations, restaurant menus, holiday cards, and the far more meaningful places we once reserved for human hands.</p>\n        <p class=\"pull\">It\u2019s easy to find frustration and anger at AI. It's harder to quantify or diagnose what exactly is being lost.</p>\n        <p>This project tracks the sociocultural cost of AI slop. As AI is granted authorship in spaces that used to be human, new questions swirl: What\u2019s acceptable once AI artifacts are indistinguishable from human work? What is the cost of using tools that mimic humanity but lack its randomness, patina, and imperfections? What\u2019s eroding?</p>\n        <p>The Slop Galaxy is a living map of the moments AI-generated content crossed a line and changed our norms.</p>\n        <p>So grab your popcorn, your pen, and your slop-hunting boots. View the Slop Galaxy to see what\u2019s been tracked to date or submit some slop in the form below.</p>\n      </div>\n      <div class=\"about-actions\">\n        <a href=\"#\" onclick=\"closeModal('modal-about');return false;\" class=\"al-btn al-p\">View the Slop Galaxy \u2192</a>\n        <a href=\"https://sloptilyoudrop.com/#submit\" target=\"_blank\" rel=\"noopener\" class=\"al-btn\">Submit some slop \u2193</a>\n      </div>\n    </div>\n    <div class=\"about-col\">\n      <h2 class=\"label-h\">About the editor</h2>\n      <p class=\"about-head\">Ellie Damashek</p>\n      <div class=\"about-body\">\n        <p>Ellie is a strategist and researcher specializing in organizational change and emerging technology, helping large, complex organizations diagnose disruption, build institutional responses, and communicate through uncertainty, in work that spans sectors, scales, and cultures.</p>\n        <p>Before this, a decade in consumer research and product development meant translating emerging trends into market-ready products and campaigns. Living and working across the US, Japan, Europe, and China shaped a sensitivity to cultural shifts and patterns.</p>\n      </div>\n      <div class=\"about-actions\">\n        <a href=\"https://www.linkedin.com/in/elenadamashek/\" target=\"_blank\" rel=\"noopener\" class=\"al-btn\">LinkedIn \u2197</a>\n        <a href=\"mailto:ellie@sloptilyoudrop.com\" class=\"al-btn\">Email</a>\n      </div>\n    </div>\n  </div>";
+function sanitizeAbout(html){
+  const d=new DOMParser().parseFromString(html,'text/html'); const g=d.querySelector('#about .about-grid'); if(!g) return null;
+  g.querySelectorAll('script,iframe,style').forEach(e=>e.remove());
+  g.querySelectorAll('a').forEach(a=>{const h=a.getAttribute('href')||'';
+    if(h.startsWith('#submit')){a.href='https://sloptilyoudrop.com/#submit';a.target='_blank';a.rel='noopener';}
+    else if(/galaxy\.sloptilyoudrop\.com/.test(h)){a.setAttribute('href','#');a.setAttribute('onclick',"closeModal('modal-about');return false;");a.removeAttribute('target');}
+    a.classList.remove('btn');a.classList.add('al-btn'); if(/galaxy|View the Slop/i.test(a.textContent)) a.classList.add('al-p');});
+  return g.outerHTML;
+}
+function paintAbout(html){['about-live','about-live-2'].forEach(id=>{const el=document.getElementById(id); if(el) el.innerHTML=html;});}
+paintAbout(HOME_ABOUT_SNAPSHOT);
+fetch('https://sloptilyoudrop.com/',{cache:'no-cache'}).then(r=>r.ok?r.text():Promise.reject()).then(t=>{const h=sanitizeAbout(t); if(h) paintAbout(h);}).catch(()=>{});
+
+document.getElementById('btn-about').onclick = ()=>openModal('modal-about');
 
 // Concepts modal
 document.getElementById('btn-concepts').onclick = function() {
@@ -5605,9 +5664,9 @@ resize();
 // Load from localStorage or use seed
 try {
   const layoutVer = localStorage.getItem('slop_layout_ver');
-  if (layoutVer !== '37i') {
+  if (layoutVer !== '42i') {
     localStorage.removeItem('slop_positions');
-    localStorage.setItem('slop_layout_ver', '37i');
+    localStorage.setItem('slop_layout_ver', '42i');
     // v33 migration: force reload from SEED so all new nodes appear
     // (editor notes from SEED are preserved via the merge below)
     localStorage.removeItem('slop_nodes');
@@ -6539,6 +6598,13 @@ function drawStartHerePulse() {
 
 // ── TIMELINE MODE TOGGLE ─────────────────────────────────────────────────────
 
+function syncViewExit(){
+  const w=document.getElementById('view-exit'); if(!w) return; w.innerHTML='';
+  const mk=(t,fn)=>{const b=document.createElement('button');b.textContent=t;b.onclick=fn;b.style.cssText="background:#2F4BFF;color:#fff;border:1px solid #2F4BFF;font:700 14px 'Inter Tight',sans-serif;padding:10px 16px;cursor:pointer;text-align:left;";w.appendChild(b);};
+  if(_arcVisible) mk('✕ Exit Through-Line',()=>toggleArcFromSidebar());
+  if(_fcVisible) mk('✕ Exit Full Circle',()=>toggleFullCircle());
+  w.style.display=w.children.length?'flex':'none';
+}
 function toggleArcFromSidebar() {
   _arcVisible = !_arcVisible;
   if (_arcVisible && typeof preloadFeaturedImages === 'function') preloadFeaturedImages();
@@ -6546,13 +6612,14 @@ function toggleArcFromSidebar() {
   const arcBtn = document.getElementById('btn-arc');
   if (btn) {
     btn.style.background = _arcVisible ? 'var(--forest)' : 'none';
-    btn.style.color = _arcVisible ? 'var(--lime)' : 'var(--sub-color)';
-    btn.style.borderColor = _arcVisible ? 'rgba(47,75,255,0.4)' : 'var(--sidebar-border)';
+    btn.style.color = _arcVisible ? '#fff' : 'var(--fg)';
+    btn.style.borderColor = _arcVisible ? 'var(--forest)' : 'var(--fg)';
   }
   if (arcBtn) {
-    arcBtn.style.color = _arcVisible ? 'var(--lime)' : '';
-    arcBtn.style.background = _arcVisible ? 'rgba(10,11,13,0.3)' : '';
+    arcBtn.style.color = _arcVisible ? 'var(--forest)' : '';
+    arcBtn.style.background = _arcVisible ? 'rgba(47,75,255,0.1)' : '';
   }
+  syncViewExit();
 }
 
 // ── FULL CIRCLE CONNECTORS ────────────────────────────────────────────────────
@@ -6621,10 +6688,11 @@ function toggleFullCircle() {
   _fcVisible = !_fcVisible;
   const btn = document.getElementById('btn-fc-sb');
   if (btn) {
-    btn.style.background = _fcVisible ? 'rgba(47,75,255,0.12)' : 'none';
-    btn.style.color      = _fcVisible ? 'rgba(47,75,255,1)' : 'var(--sub-color)';
-    btn.style.borderColor= _fcVisible ? 'rgba(47,75,255,0.4)' : 'var(--sidebar-border)';
+    btn.style.background = _fcVisible ? 'var(--forest)' : 'none';
+    btn.style.color      = _fcVisible ? '#fff' : 'var(--fg)';
+    btn.style.borderColor= _fcVisible ? 'var(--forest)' : 'var(--fg)';
   }
+  syncViewExit();
 }
 
 function renderFullCircle(el, filtered) {
@@ -7138,7 +7206,7 @@ function applyArcNarration() {
     </div>
   </div>
   <div style="display:flex;gap:8px;">
-    <button onclick="applyArcNarration()" style="background:var(--forest);color:var(--lime);border:1px solid rgba(47,75,255,0.4);font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;padding:7px 16px;cursor:pointer;">Apply &#x26; Save</button>
+    <button onclick="applyArcNarration()" style="background:var(--forest);color:#fff;border:1px solid rgba(47,75,255,0.4);font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;padding:7px 16px;cursor:pointer;">Apply &#x26; Save</button>
     <button onclick="document.getElementById('arc-narration-editor').style.display='none'" style="background:none;color:var(--sub-color);border:1px solid var(--dim);font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;cursor:pointer;">Close</button>
   </div>
 </div>
@@ -7194,5 +7262,10 @@ function applyArcNarration() {
   </div>
 </div>
 
+<script>
+(function(){const a=document.getElementById('analytics'),b=document.getElementById('btn-patterns-sb');
+function sync(){const o=a.classList.contains('open');b.style.background=o?'var(--forest)':'none';b.style.color=o?'#fff':'var(--fg)';b.style.borderColor=o?'var(--forest)':'var(--fg)';}
+new MutationObserver(sync).observe(a,{attributes:true,attributeFilter:['class']});sync();})();
+</script>
 </body>
 </html>
