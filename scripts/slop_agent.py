@@ -26,6 +26,7 @@ MAX_NEW_NODES     = 12         # cap per run to avoid noise floods
 GALAXY_FILE       = "index.html"  # path in repo root
 MODEL             = os.environ.get("SLOP_MODEL", "claude-sonnet-5-5")
 MAX_EVENT_AGE_DAYS = 90        # reject stories whose event is older than this
+BLOCKED_DOMAINS = ["foxnews.com", "foxbusiness.com", "nypost.com", "dailywire.com", "breitbart.com"]  # never use as sources
 MIN_HEALTHY_SOURCES = 3        # fail the run loudly if fewer sources return items
 TODAY = datetime.date.today()
 HEALTH = {"sources_ok": 0, "sources_failed": [], "web_search_ok": None}
@@ -294,7 +295,7 @@ def discover_with_web_search(topic):
     )
     payload = json.dumps({
         "model": MODEL, "max_tokens": 3000,
-        "tools": [{"type": "web_search_20250305", "name": "web_search", "max_uses": 4}],
+        "tools": [{"type": "web_search_20250305", "name": "web_search", "max_uses": 4, "blocked_domains": BLOCKED_DOMAINS}],
         "messages": [{"role": "user", "content": prompt}],
     }).encode()
     req = urllib.request.Request(
@@ -702,6 +703,7 @@ def main():
     def _prio(it):
         src = it["source"]
         return 0 if src == "Web search" else 2 if src.startswith("arXiv") else 1
+    deduped = [i for i in deduped if not any(d in i["link"].lower() for d in BLOCKED_DOMAINS)]
     filtered = sorted((item for item in deduped if keyword_filter(item)), key=_prio)
     print(f"After keyword filter: {len(filtered)} candidates\n")
 
