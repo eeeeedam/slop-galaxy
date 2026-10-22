@@ -5736,9 +5736,9 @@ resize();
 // Load from localStorage or use seed
 try {
   const layoutVer = localStorage.getItem('slop_layout_ver');
-  if (layoutVer !== '42i') {
+  if (layoutVer !== '43i') {
     localStorage.removeItem('slop_positions');
-    localStorage.setItem('slop_layout_ver', '42i');
+    localStorage.setItem('slop_layout_ver', '43i');
     // v33 migration: force reload from SEED so all new nodes appear
     // (editor notes from SEED are preserved via the merge below)
     localStorage.removeItem('slop_nodes');
@@ -5767,6 +5767,10 @@ if(saved && saved.length>0){
   nodes=SEED.map(n=>({...n}));
   save();
 }
+// Agent-added nodes (auto:true) are always refreshed from SEED so corrections reach every browser
+{ const sm={}; SEED.forEach(s=>{sm[s.id]=s;}); let ch=false;
+  nodes.forEach(n=>{ const s=sm[n.id]; if(s&&s.auto){ ['title','source','link','description','significance','image','image_credit','date','year','category','impact','slop_spill'].forEach(k=>{ if(JSON.stringify(n[k])!==JSON.stringify(s[k])){ if(s[k]===undefined) delete n[k]; else n[k]=s[k]; ch=true; } }); } });
+  if(ch) save(); }
 // Always sync resistance + date_added + featured from SEED (never user-edited)
 { const sm={}; SEED.forEach(s=>{sm[s.id]=s;}); let changed=false; nodes.forEach(n=>{ const r=sm[n.id]?.resistance===true; if(n.resistance!==r){n.resistance=r;changed=true;} const da=sm[n.id]?.date_added; if(da && n.date_added!==da){n.date_added=da;changed=true;} const f=sm[n.id]?.featured; if(f !== undefined && n.featured !== f){n.featured=f;changed=true;} }); if(changed) save(); }
 nodes.forEach(n=>assignPosition(n));
