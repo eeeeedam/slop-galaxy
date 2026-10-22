@@ -175,7 +175,8 @@ def call_claude(prompt, max_tokens=1200):
     try:
         with urllib.request.urlopen(req, timeout=30) as resp:
             data = json.loads(resp.read())
-            return data["content"][0]["text"]
+            return "".join(b.get("text", "") for b in data.get("content", [])
+                           if b.get("type") == "text") or None
     except Exception as e:
         print(f"    CLAUDE ERROR: {e}")
         return None
@@ -336,6 +337,20 @@ def fetch_article_text(url, limit=6000):
     text = re.sub(r"(?s)<[^>]+>", " ", html)
     text = re.sub(r"\s+", " ", text)
     return text[:limit]
+
+
+def same_story(node, titles):
+    """Ask Claude whether `node` covers the same real-world event as any title in `titles`."""
+    if not titles:
+        return False
+    listing = "\n".join(f"{i}. {t}" for i, t in enumerate(titles))
+    prompt = (f"NEW ITEM: {node.get('title','')} — {node.get('description','')[:300]}\n\n"
+              f"EXISTING ITEMS:\n{listing}\n\n"
+              "Does the new item cover the SAME real-world event or announcement as any existing item "
+              "(different outlets reporting one event count as the same)? "
+              'Reply with only the number of the matching item, or "none".')
+    r = call_claude(prompt, max_tokens=20)
+    return bool(r) and bool(re.match(r"\s*\d+", r))
 
 
 # ── FILTERING ─────────────────────────────────────────────────────────────────
@@ -627,7 +642,7 @@ def main():
         time.sleep(1)
 
     # Google CSE (optional legacy source; the API shuts down 2027-01-01)
-    if GOOGLE_API_KEY and GOOGLE_CSE_ID:
+    if os.environ.get("USE_GOOGLE_CSE") == "1" and GOOGLE_API_KEY and GOOGLE_CSE_ID:
         print()
         for query in GOOGLE_QUERIES:
             items = fetch_google_news(query)
@@ -684,7 +699,10 @@ def main():
     print(f"After dedup: {len(deduped)} candidates\n")
 
     # ── KEYWORD PRE-FILTER ─────────────────────────────────────────────────────
-    filtered = [item for item in deduped if keyword_filter(item)]
+    def _prio(it):
+        src = it["source"]
+        return 0 if src == "Web search" else 2 if src.startswith("arXiv") else 1
+    filtered = sorted((item for item in deduped if keyword_filter(item)), key=_prio)
     print(f"After keyword filter: {len(filtered)} candidates\n")
 
     # ── SCORE WITH CLAUDE ──────────────────────────────────────────────────────
@@ -699,6 +717,9 @@ def main():
         node = score_candidate(item)
         time.sleep(1.5)  # rate limit
 
+        if node and same_story(node, sorted(existing_titles) + [a["title"] for a in approved]):
+            print("    ✗ duplicate of an existing/approved story")
+            node = None
         if node:
             node["link"] = item["link"]  # ensure original link preserved
             approved.append(node)
