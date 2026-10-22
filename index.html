@@ -1204,6 +1204,47 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
 /* How To Navigate: black on light cobalt tint */
 .hn-btn-nav, body.light .hn-btn-nav { color:#0A0B0D !important; background:#D9DFFF !important; border-right:none !important; }
 .hn-btn-nav:hover { color:#0A0B0D !important; background:#BFC9FF !important; }
+
+#threads-panel { display:none; position:fixed; right:16px; width:350px; max-height:calc(100vh - 250px); overflow-y:auto; z-index:150; background:var(--bg); color:var(--fg); border:2px solid var(--fg); padding:14px 16px 16px; font-family:'Inter',sans-serif; }
+#threads-panel .tp-head { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px; }
+#threads-panel .tp-head b { font:700 20px 'Inter Tight',sans-serif; letter-spacing:-.02em; }
+#threads-panel .tp-x { background:var(--forest); color:#fff; border:1px solid var(--forest); font:700 13px 'Inter Tight',sans-serif; padding:7px 12px; cursor:pointer; }
+#threads-panel .tp-lede { font-size:13px; line-height:1.5; color:var(--sub-color); margin:0 0 10px; }
+#threads-panel .tp-chips { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; }
+#threads-panel .tp-chip { background:none; color:var(--fg); border:1px solid var(--fg); font:700 13px 'Inter Tight',sans-serif; padding:7px 11px; cursor:pointer; }
+#threads-panel .tp-chip.on { background:var(--forest); color:#fff; border-color:var(--forest); }
+#threads-panel .tp-q { font:700 16px/1.3 'Inter Tight',sans-serif; letter-spacing:-.01em; margin:0 0 10px; }
+#threads-panel .tp-steps { list-style:none; margin:0 0 12px; padding:0; display:flex; flex-direction:column; gap:2px; }
+#threads-panel .tp-steps button { display:flex; gap:10px; align-items:flex-start; width:100%; text-align:left; background:none; border:0; border-top:1px solid var(--dim); padding:8px 0; cursor:pointer; color:var(--fg); font:400 13px/1.45 'Inter',sans-serif; }
+#threads-panel .tp-steps button:hover { background:rgba(47,75,255,.08); }
+#threads-panel .tp-n { flex:none; width:22px; height:22px; border-radius:50%; background:var(--forest); color:#fff; display:grid; place-items:center; font:700 12px 'Inter Tight',sans-serif; }
+#threads-panel .tp-steps em { font-style:normal; font:600 11px 'IBM Plex Mono',monospace; color:var(--sub-color); margin-right:4px; }
+#threads-panel .tp-note { font-size:12px; color:var(--sub-color); margin:0 0 10px; }
+#threads-panel .tp-so { border-left:4px solid var(--forest); padding:4px 0 4px 12px; font-size:13px; line-height:1.55; }
+#threads-panel .tp-so b { display:block; font:700 11px 'IBM Plex Mono',monospace; letter-spacing:.08em; text-transform:uppercase; color:var(--forest); margin-bottom:4px; }
+#threads-panel.tp-collapsed > :not(.tp-head) { display:none; }
+#threads-panel .tp-fold { background:none; color:var(--fg); border:1px solid var(--fg); font:700 13px 'Inter Tight',sans-serif; padding:7px 10px; cursor:pointer; margin-right:6px; }
+@media (max-width:760px){ #threads-panel { left:8px; right:8px; width:auto; top:auto !important; bottom:8px; max-height:48vh; } }
+/* guide modal buttons match the rest */
+#guide-prev, #guide-next, #btn-about-intro, #btn-show-intro { font-family:'Inter Tight',sans-serif !important; font-size:14px !important; font-weight:700 !important; letter-spacing:0 !important; text-transform:none !important; padding:10px 18px !important; border-radius:0 !important; opacity:1 !important; }
+#guide-prev { background:none !important; color:var(--fg) !important; border:1px solid var(--fg) !important; }
+#guide-prev:disabled { opacity:.35 !important; }
+#guide-next, #btn-about-intro { background:var(--forest) !important; color:#fff !important; border:1px solid var(--forest) !important; }
+#btn-show-intro { background:var(--forest) !important; color:#fff !important; border:1px solid var(--forest) !important; }
+/* ── type-size floor: nothing under 11px ── */
+[style*="font-size:7px"],[style*="font-size: 7px"],[style*="font-size:7.5px"],[style*="font-size: 7.5px"],[style*="font-size:8px"],[style*="font-size: 8px"],[style*="font-size:8.5px"],[style*="font-size: 8.5px"]{ font-size:11px !important; }
+[style*="font-size:9px"],[style*="font-size: 9px"],[style*="font-size:9.5px"],[style*="font-size: 9.5px"],[style*="font-size:10px"],[style*="font-size: 10px"]{ font-size:12px !important; }
+#ticker-bar a, #ticker-inner a, .tick-item a { font-size:11.5px !important; }
+#site-sub, #axis-x, .ay-sub, #hint, #hint-admin, #edit-hint, #site-footer, #site-footer a, #dp-node-id, .legend-label, #axis-label-spill, #axis-label-slop, #mobile-yaxis, .ss-labels span, #start-here-overlay { font-size:11.5px !important; }
+#panel .plabel, .modal label, .modal p, #modal-concepts div, .gcc-name { font-size:12px !important; }
+#guide-chrome div, #guide-chrome span { font-size:11.5px !important; }
+.about-live .al-btn { font-size:12px !important; }
+
+#analytics .atab, #analytics .mtbtn { font-size:12px !important; font-weight:600 !important; padding:8px 14px !important; }
+#analytics .aside-label, #analytics .sc-label, #analytics .sc-sub, #analytics .chart-title, #analytics .tr-label, #analytics .tr-note, #analytics .tr-note p, #analytics .cat-lbl-t, #analytics .cat-cnt-t, #analytics .tn-meta, #analytics .rec-date, #analytics .ss-blabel, #analytics .hist-lbl, #analytics .vel-qlabel, #analytics .tn-dot { font-size:11.5px !important; }
+#analytics label, #analytics .insight, #analytics .ss-stat, #analytics strong { font-size:12.5px !important; }
+#analytics .mtbtn { padding:8px 6px !important; letter-spacing:0 !important; flex:1 1 auto; }
+#analytics .mtbtn, #analytics .atab { white-space:nowrap; }
 </style>
 </head>
 <body>
@@ -1229,10 +1270,9 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
       <button id="btn-about" class="hn-btn">About</button>
       <button id="btn-concepts" class="hn-btn">Concepts</button>
       <button id="btn-ticker-show" class="hn-btn" style="display:none" title="Show ticker">◆ TICKER</button>
-      <button id="btn-arc" class="hn-btn" style="display:none;" title="Two through-lines connect the defining moments: slop (the artifacts) in cobalt, spills (the consequences) in fuchsia. The shaded gap between them shows how far accountability lags behind the content." style="color:var(--sub-color);background:none;opacity:0.6;">◆ THROUGH-LINE</button>
+      <button id="btn-arc" class="hn-btn" style="display:none;" title="Follow five recurring questions through the map" style="color:var(--sub-color);background:none;opacity:0.6;">◆ THROUGH-LINE</button>
     </div>
     <div id="header-subnav-right" style="display:flex;gap:0;align-items:center;margin-left:auto;">
-      <button id="btn-timeline-mode" title="Toggle linear timeline view">⟶ TIMELINE</button>
       <button id="btn-reset-hdr" class="hn-btn" onclick="document.getElementById('btn-reset').click()" title="Reset map view">↺ RESET</button>
       <button id="btn-theme-hdr" class="hn-btn" onclick="document.getElementById('btn-theme').click()" title="Toggle light/dark mode">☼</button>
       <button id="btn-bookmarklet" class="hn-btn" style="display:none" title="Get the bookmarklet">⊕ BOOKMARKLET</button>
@@ -1301,18 +1341,14 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
     <!-- TOOLS CALLOUT in gp-2 -->
     <div id="gp-2-tools" style="display:block;padding:0 40px 28px;">
       <div style="border:1px solid var(--dim);background:rgba(255,255,255,0.02);padding:16px 20px;display:flex;flex-direction:column;gap:12px;">
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:2px;">Three tools that deepen the map</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub-color);margin-bottom:2px;">Tools that deepen the map</div>
         <div style="display:flex;gap:10px;align-items:baseline;">
           <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--lime);flex-shrink:0;">&#x25c7; Through-Line</span>
-          <span style="font-family:'Inter',sans-serif;font-size:12px;line-height:1.6;color:var(--sub-color);">Two annotated arcs connect the defining slop and spill moments. The gap between them is the argument. Toggle from the sidebar.</span>
+          <span style="font-family:'Inter',sans-serif;font-size:12px;line-height:1.6;color:var(--sub-color);">Five recurring questions, followed one at a time through the map: who checks, whose work, who pays, who says what&rsquo;s real, who writes the rules. Toggle from the sidebar.</span>
         </div>
         <div style="display:flex;gap:10px;align-items:baseline;">
           <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:rgba(47,75,255,1);flex-shrink:0;">&#x25ce; Full Circle</span>
           <span style="font-family:'Inter',sans-serif;font-size:12px;line-height:1.6;color:var(--sub-color);">Links pairs where a specific slop directly produced its institutional consequence. Amber connectors on the map.</span>
-        </div>
-        <div style="display:flex;gap:10px;align-items:baseline;">
-          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--sub-color);flex-shrink:0;">&#x27f6; Timeline</span>
-          <span style="font-family:'Inter',sans-serif;font-size:12px;line-height:1.6;color:var(--sub-color);">Collapses the map to strict chronological order. Removes the slop/spill axis. Good for reading the story linearly.</span>
         </div>
         <div style="display:flex;gap:10px;align-items:baseline;">
           <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--lime);flex-shrink:0;">&#x25c8; Patterns</span>
@@ -1364,7 +1400,7 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
       <h2 style="font-family:'Inter Tight',sans-serif; font-weight:600;font-size:clamp(26px,4vw,44px);letter-spacing:-.025em;line-height:.92;margin-bottom:10px;"><span style="color:var(--fg)">every node tells</span> <span style="color:var(--lav)">a story</span></h2>
       <p style="font-family:'Inter',sans-serif;font-size:14px;line-height:1.75;color:var(--fg);font-size:14px;max-width:600px;margin-bottom:12px;">Click on the nodes to read what happened, what threshold it crossed, and where to go deeper. Select nodes carry an editor’s note — Ellie’s read on why this one matters beyond the headline.</p>
       <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;line-height:1.65;color:var(--sub-color);max-width:580px;margin-bottom:10px;">The galaxy is a living document. New nodes are added as events unfold. The pattern is still forming.</p>
-      <div style="padding:10px 14px;border:1px solid rgba(101,108,117,0.2);background:rgba(101,108,117,0.04);max-width:580px;margin-bottom:16px;"><span style="font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.08em;color:var(--sub-color);">◇ THROUGH-LINE —</span><span style="font-family:'Inter',sans-serif;font-size:11px;line-height:1.6;color:var(--sub-color);"> two arcs connect the defining moments: <span style="color:#2F4BFF;">slop</span> (the artifacts) and <span style="color:#F0368C;">spills</span> (the consequences). The shaded band between them shows the gap. When it widens, accountability is falling behind. Click ◇ THROUGH-LINE in the top nav.</span></div>
+      <div style="padding:10px 14px;border:1px solid rgba(101,108,117,0.2);background:rgba(101,108,117,0.04);max-width:580px;margin-bottom:16px;"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--sub-color);">◇ THROUGH-LINE —</span><span style="font-family:'Inter',sans-serif;font-size:12px;line-height:1.6;color:var(--sub-color);"> five recurring questions about who checks, whose work, who pays, who says what&rsquo;s real, and who writes the rules. Pick one in the sidebar and its moments are numbered in order across the map.</span></div>
       <div style="display:grid;grid-template-columns:270px 1fr;gap:20px;align-items:start;">
         <div style="background:var(--panel);border:1px solid var(--dim);padding:14px 16px;border-radius:2px;">
           <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;color:var(--lav);margin-bottom:4px;">Cultural</div>
@@ -1490,7 +1526,7 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
 <div id="filters">
   <!-- VIEW BUTTONS IN SIDEBAR -->
   <div style="padding:0 10px 6px;">
-    <button id="btn-arc-sb" onclick="toggleArcFromSidebar()" style="width:100%;background:none;color:var(--fg);border:1px solid var(--fg);font-family:'Inter Tight',sans-serif;font-size:15px;letter-spacing:-.01em;text-transform:none;padding:12px 14px;font-weight:700;cursor:pointer;text-align:left;transition:all .15s;" title="Show the through-line: two arcs connecting the defining moments of slop and spills">&#x25c7; Through-Line</button>
+    <button id="btn-arc-sb" onclick="toggleArcFromSidebar()" style="width:100%;background:none;color:var(--fg);border:1px solid var(--fg);font-family:'Inter Tight',sans-serif;font-size:15px;letter-spacing:-.01em;text-transform:none;padding:12px 14px;font-weight:700;cursor:pointer;text-align:left;transition:all .15s;" title="Follow five recurring questions through the map">&#x25c7; Through-Line</button>
   </div>
   <div style="padding:0 10px 8px;">
     <button id="btn-fc-sb" onclick="toggleFullCircle()" style="width:100%;background:none;color:var(--fg);border:1px solid var(--fg);font-family:'Inter Tight',sans-serif;font-size:15px;letter-spacing:-.01em;text-transform:none;padding:12px 14px;font-weight:700;cursor:pointer;text-align:left;transition:all .15s;" title="Show full circle moments: pairs where a specific slop directly produced its institutional consequence">&#x25ce; Full Circle</button>
@@ -1600,7 +1636,7 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
 </div>
 
 <!-- COPYRIGHT FOOTER -->
-<div id="site-footer">© 2026 Ellie Damashek &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/elenadamashek/" target="_blank">LinkedIn ↗</a> &nbsp;·&nbsp; <a href="/cdn-cgi/l/email-protection#93f6fffffaf6d3e0fffce3e7faffeafce6f7e1fce3bdf0fcfe"><span class="__cf_email__" data-cfemail="4b2e2727222e0b3827243b3f222732243e2f39243b65282426">[email&#160;protected]</span></a> &nbsp;·&nbsp; <a id="footer-contact" href="https://sloptilyoudrop.com" target="_blank">sloptilyoudrop.com ↗</a></div>
+<div id="site-footer">© 2026 Ellie Damashek &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/elenadamashek/" target="_blank">LinkedIn ↗</a> &nbsp;·&nbsp; <a id="footer-email" href="#" rel="noopener">Email</a> &nbsp;·&nbsp; <a id="footer-contact" href="https://sloptilyoudrop.com" target="_blank">sloptilyoudrop.com ↗</a></div>
 
 <!-- LIST / GRID VIEW OVERLAY -->
 <div id="listview">
@@ -1781,7 +1817,7 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
     <p id="about-bio" style="font-family:'Inter',sans-serif;font-size:12px;line-height:1.75;color:var(--fg);font-style:italic">Ellie Damashek is a strategist and researcher specializing in change management and emerging technology. She has spent her career helping organizations understand and navigate disruption before it becomes a crisis. The Slop Galaxy is her attempt to apply that same instinct to the cultural moment we're all living through.</p>
     <div style="margin-top:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
       <a href="https://www.linkedin.com/in/elenadamashek/" target="_blank" style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--accent2);text-decoration:none;letter-spacing:.06em;border-bottom:1px solid rgba(47,75,255,0.3);padding-bottom:1px">LinkedIn ↗</a>
-      <a href="/cdn-cgi/l/email-protection#b5d0d9d9dcd0f5c6d9dac5c1dcd9ccdac0d1c7dac59bd6dad8" style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--accent2);text-decoration:none;letter-spacing:.06em;border-bottom:1px solid rgba(47,75,255,0.3);padding-bottom:1px"><span class="__cf_email__" data-cfemail="2d48414144486d5e41425d594441544258495f425d034e4240">[email&#160;protected]</span></a>
+      <a href="#" style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--accent2);text-decoration:none;letter-spacing:.06em;border-bottom:1px solid rgba(47,75,255,0.3);padding-bottom:1px"><span class="__cf_email__" data-cfemail="2d48414144486d5e41425d594441544258495f425d034e4240">[email&#160;protected]</span></a>
       <span id="about-copyright" style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--sub-color);letter-spacing:.06em">© 2026 Ellie Damashek</span>
     </div>
   </div>
@@ -3047,7 +3083,7 @@ function drawNode(node) {
   if (sel) { ctx.strokeStyle = isLight ? 'rgba(10,11,13,0.7)' : '#fff'; ctx.lineWidth=1.5; ctx.stroke(); }
 
   // Portrait thumbnail for featured (through-line) nodes when arc is visible
-  if (_arcVisible && node.featured && r > 8) {
+  if (false && node.featured && r > 8) {
     const img = _imgCache[node.id];
     if (img && img.complete && img.naturalWidth > 0) {
       ctx.save();
@@ -3262,7 +3298,9 @@ function drawEditorNode(node) {
   ctx.restore();
 }
 
+var _tpSig='';
 function draw() {
+  if(typeof THREADS!=='undefined' && _arcVisible){ const sig=_threadIdx+':'+getVisible().length; if(sig!==_tpSig){ _tpSig=sig; try{renderThreadPanel();}catch(e){} } }
   ctx.clearRect(0,0,W,H);
   drawBg(); drawStars();
   const vis = getVisible();
@@ -3272,10 +3310,11 @@ function draw() {
   if (typeof drawStartHerePulse === 'function') drawStartHerePulse();
   if (vis.length && typeof drawFeaturedArc === 'function') drawFeaturedArc(); // arc: featured nodes through-line
   if (typeof drawFullCircleConnectors === 'function') drawFullCircleConnectors();
-  vis.forEach(n => drawNode(n));   // pass 1: all nodes
+  _threadSet = (typeof THREADS!=='undefined' && _arcVisible && THREADS[_threadIdx]) ? new Set(THREADS[_threadIdx].steps.map(x=>x[0])) : null;
+  vis.forEach(n => { if (_threadSet && !_threadSet.has(n.id)) { ctx.globalAlpha=.16; drawNode(n); ctx.globalAlpha=1; } else drawNode(n); });   // pass 1: all nodes
   // Pass 2: labels — reset collision registry, sort high-impact first
   _labelRects = [];
-  const labelOrder = [...vis].sort((a, b) => {
+  const labelOrder = [...vis].filter(n => !_threadSet || _threadSet.has(n.id) || n.id===hoveredId || n.id===selectedId).sort((a, b) => {
     if (b.id === hoveredId || b.id === selectedId) return 1;
     if (a.id === hoveredId || a.id === selectedId) return -1;
     return b.impact - a.impact;
@@ -3289,6 +3328,7 @@ function draw() {
     if (n.id !== hoveredId && n.id !== selectedId) drawLabel(n, false);
   });
   vis.forEach(n => drawEditorNode(n)); // pass 3: editor note indicators
+  if (typeof drawThreadBadges==='function') drawThreadBadges();
   if (!vis.length) {
     ctx.save(); ctx.textAlign='center'; ctx.fillStyle=document.body.classList.contains('light')?'#0A0B0D':'#E8EAED';
     ctx.font="700 26px 'Inter Tight',sans-serif"; ctx.fillText('Nothing matches these filters.',W/2,H/2-8);
@@ -4571,26 +4611,28 @@ function renderOverview(el, filtered) {
     <div class="insight">${generateInsight(filtered)}</div>
     <div style="margin-top:14px;padding:14px 16px;border-left:3px solid rgba(240,54,140,0.4);background:rgba(240,54,140,0.05);">
       <div style="font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--lav);margin-bottom:8px;">&#x25c7; About the through-line</div>
-      <div style="font-family:'Inter',sans-serif;font-size:13px;line-height:1.75;color:var(--sub-color);">The through-line draws two arcs across the galaxy &mdash; one tracing the defining <span style="color:#2F4BFF;">slop</span> moments (the content that crossed a line), one tracing the defining <span style="color:var(--lav);">spill</span> moments (the consequences that followed). The shaded band between them measures the gap: when slop accelerates faster than institutions can respond, the band widens. Each arc is annotated with a one-line description of what moved the story forward. Toggle it using <strong style="color:var(--fg);">&#x25c7; Through-Line</strong> in the left sidebar.</div>
+      <div style="font-family:'Inter',sans-serif;font-size:13px;line-height:1.75;color:var(--sub-color);">The through-line follows five recurring questions across the galaxy: who checks, whose work, who pays, who says what&rsquo;s real, and who writes the rules. Pick one and its moments are numbered in order, with everything else dimmed. Toggle it with <strong style="color:var(--fg);">&#x25c7; Through-Line</strong> in the left sidebar.</div>
     </div>
     <div id="so-what-panel" style="display:block;margin-top:16px;border:1px solid var(--accent2);background:rgba(47,75,255,0.07);padding:18px 20px;">
       <div style="font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent2);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;">
         <span>✦ SO WHAT — SYNTHESIS</span>
-        <span id="so-what-date" contenteditable="true" style="opacity:.7;cursor:text;border-bottom:1px dashed rgba(47,75,255,0.4);padding:0 2px;outline:none;min-width:60px;display:inline-block;" title="Click to edit date">Apr 15, 2026</span>
+        <span id="so-what-date" contenteditable="true" style="opacity:.7;cursor:text;border-bottom:1px dashed rgba(47,75,255,0.4);padding:0 2px;outline:none;min-width:60px;display:inline-block;" title="Click to edit date">Oct 22, 2026</span>
       </div>
-      <div id="so-what-text" contenteditable="true" style="font-family:'Inter',sans-serif;font-size:14px;line-height:1.75;color:var(--fg);white-space:pre-wrap;outline:none;cursor:text;">The galaxy now documents 64 moments — and the shape they make is not random.
+      <div id="so-what-text" contenteditable="true" style="font-family:'Inter',sans-serif;font-size:14px;line-height:1.75;color:var(--fg);white-space:pre-wrap;outline:none;cursor:text;">The galaxy now holds ${nodes.length} moments. Read together, they point to a gap that may or may not hold: the harm of AI-generated content tends to land first on readers, editors, teachers, artists, local schools and individual victims, while accountability tends to arrive later, if at all, and mostly through courts, disclosure rules and platform labels. The companies that build and deploy the tools seem less often to be the first asked to answer for it. It is too early to say whether that is a temporary lag or a lasting design.
 
-What the research makes clear is that slop isn’t a bug. It’s what happens when any system optimizes for volume over substance. Scholars at Oxford and Cambridge are tracking the same pattern: AI trained on AI-generated content begins to degrade, producing what researchers call model collapse — a recursive loop where the signal steadily loses coherence. The galaxy is, among other things, a record of the input phase of that loop. What you’re looking at may be the last high-water mark before the degradation becomes structural.
+<b>Who checks?</b> In the newsroom, journal and court cases here, the catch usually came from someone outside the institution, or after publication. Systems built to catch bad writers may not be built to catch fluent fabrication at volume.
 
-The more urgent shift is institutional. Early nodes in this galaxy were consumer-facing absurdities — Shrimp Jesus, AI puppies, sushi parrots. The recent ones are different: a New York Times critic plagiarizing via AI, a Wikipedia ban, courtroom evidence disputes, a scientific preprint crisis. The slop has found the places civilization uses to verify what’s true. That’s a different category of consequence.
+<b>Whose work?</b> Protections for writers, artists and musicians have come from union contracts, platform policies and individual lawsuits rather than general rules. Credit and consent are being settled case by case.
 
-What’s missing is governance that matches the speed. Platforms are responding with labeling policies designed for spam, not for generative content. Legislation is arriving years after the threshold was crossed. The galaxy documents this lag explicitly — you can watch the spills pile up in 2025 and 2026 as the slop from 2022 and 2023 works its way through institutions that weren’t built to handle it.
+<b>Who pays?</b> Disaster responders, school districts, teachers and victims of deepfakes appear to absorb much of the cost, while remedies keep stalling in court or arriving one case at a time.
 
-Watch for the first major legal ruling that treats AI-generated content as a distinct evidentiary category — not spam, not misinformation, but a new class of artifact with its own standards of provenance. That’s the threshold that reorganizes everything downstream.
+<b>Who says what's real?</b> Political AI imagery has moved from fringe posts to official accounts and paid campaign ads. With no federal rule, the line between satire, advertising and deception is being drawn mostly by disclosure.
 
-One tool worth using: click ◇ Through-Line in the left sidebar to reveal two arcs running through the map — one tracing the defining slop moments (the content), one tracing the defining spills (the consequences). The shaded band between them is the gap between what AI is producing and what the world is doing about it. When that band widens, accountability is falling behind. Right now, it’s widening.
+<b>Who writes the rules?</b> Rules are arriving, but several have been delayed, challenged or limited to labeling. Whether labeling alone moves responsibility toward the people who build these tools is an open question.
 
-One tool worth using: click ◇ Through-Line in the left sidebar to reveal two arcs running through the map — one tracing the defining slop moments (the content), one tracing the defining spills (the consequences). The shaded band between them is the gap between what AI is producing and what the world is doing about it. When that band widens, accountability is falling behind. Right now, it’s widening.</div>
+What to watch: the EU's December 2 deadlines for marking synthetic content and banning non-consensual deepfakes; the appeal over Minnesota's nudification law; the unsealing of the Third Circuit's ROSS opinion; and how labeled AI ads fare around the November 3 US midterms.
+
+To follow any of these through the map, click <b>◇ Through-Line</b> in the left sidebar and pick a question. Each one numbers the moments in order, so you can read the thread from start to finish.</div>
     </div>
     <div class="chart-block" style="margin-top:20px">
       <div class="chart-title">EVENTS PER YEAR <span>— count</span></div>
@@ -5736,9 +5778,9 @@ resize();
 // Load from localStorage or use seed
 try {
   const layoutVer = localStorage.getItem('slop_layout_ver');
-  if (layoutVer !== '43i') {
+  if (layoutVer !== '45i') {
     localStorage.removeItem('slop_positions');
-    localStorage.setItem('slop_layout_ver', '43i');
+    localStorage.setItem('slop_layout_ver', '45i');
     // v33 migration: force reload from SEED so all new nodes appear
     // (editor notes from SEED are preserved via the merge below)
     localStorage.removeItem('slop_nodes');
@@ -5796,7 +5838,7 @@ const GUIDE_CONTENT = {
   'gp2-p2': "Color tells you the category: platform, media, cultural, legislation, research, or societal.",
   'gp2-p3': "Left to right is earlier to more recent. Pan with one finger, pinch to zoom in and out.",
   'gp2-p4': "Expand any node to read the full story: what happened, what it means, and sometimes a note from Ellie.",
-  'gp2-p5': "Three tools deepen the map: the \u25c7 Through-Line draws two annotated arcs connecting the defining slop and spill moments. \u25ce Full Circle links the pairs where a specific slop directly produced its consequence. \u27f6 Timeline flattens the map into strict chronological order.",
+  'gp2-p5': "Two tools deepen the map: the \u25c7 Through-Line follows five recurring questions (who checks, whose work, who pays, who says what\u2019s real, who writes the rules) through numbered moments. \u25ce Full Circle links the pairs where a specific slop directly produced its consequence.",
   'gp2-p6': "The Patterns panel (\u25c8 Patterns) gives you charts, trends, and a synthesis of what the data shows. The Concepts modal explains the academic frameworks behind the curation." ,
   'gp3-intro': "The vertical position of each node shows whether this moment is SLOP (the content itself) or a SPILL (the AI-enabled consequences).",
   'gp3-spill': "The consequences. Legislation, lawsuits, platform policies, cultural reckonings that AI content triggered.",
@@ -6674,10 +6716,9 @@ function drawStartHerePulse() {
 
 // ── TIMELINE MODE TOGGLE ─────────────────────────────────────────────────────
 
-function syncViewExit(){
+function syncViewExit(){ try{renderThreadPanel();}catch(e){}
   const w=document.getElementById('view-exit'); if(!w) return; w.innerHTML='';
   const mk=(t,fn)=>{const b=document.createElement('button');b.textContent=t;b.onclick=fn;b.style.cssText="background:#2F4BFF;color:#fff;border:1px solid #2F4BFF;font:700 14px 'Inter Tight',sans-serif;padding:10px 16px;cursor:pointer;text-align:left;";w.appendChild(b);};
-  if(_arcVisible) mk('✕ Exit Through-Line',()=>toggleArcFromSidebar());
   if(_fcVisible) mk('✕ Exit Full Circle',()=>toggleFullCircle());
   w.style.display=w.children.length?'flex':'none';
 }
@@ -6940,7 +6981,6 @@ function toggleTimelineMode() {
   });
   requestAnimationFrame(draw);
 }
-try { document.getElementById('btn-timeline-mode').onclick = toggleTimelineMode; } catch(e) { console.error('timeline-mode wire error:', e); }
 
 </script>
 
@@ -6993,7 +7033,45 @@ arcNarration = {
   ]
 };
 
-function drawFeaturedArc() {
+
+// ═══ THROUGH-LINE: named threads (replaces the two-arc view) ═══
+var THREADS = [{"id": "check", "name": "Who checks?", "q": "When fabricated text reaches editors, journals and courts, who is the check, and does it hold?", "so": "In most of these cases the catch came from someone outside the institution, or after publication. It may be that editorial, peer-review and court systems were built to catch bad writers, not fluent fabrication at volume.", "steps": [[3, "CNET is found to have quietly published AI-written articles."], [20, "A fake freelancer, “Margaux Blanchard,” gets published at real outlets."], [22, "Reporting documents AI fraud inside peer-reviewed journals."], [54, "An NYT book critic’s AI-assisted review plagiarizes another critic."], [49, "Wikipedia bans AI-generated content."], [72, "Federal courts report a flood of AI-generated lawsuits."], [98, "An Iranian operation places about 100 ChatGPT-written articles under fake bylines."]]}, {"id": "work", "name": "Whose work?", "q": "As AI is granted authorship, whose labor and credit is it drawing on?", "so": "Protections so far have come from union contracts, platform policies and individual lawsuits rather than general rules. Credit and consent are being settled case by case, which may favor people with lawyers and unions.", "steps": [[34, "Visual artists sue Stability AI, Midjourney and DeviantArt."], [33, "The WGA strike wins the first AI protections in Hollywood contracts."], [18, "A fully AI-generated band, Velvet Sundown, passes a million Spotify plays."], [40, "Hachette pulls a novel over AI use, a first for a major publisher."], [105, "Spotify says it will badge “AI Persona” artists and drop them from recommendations."], [92, "The Third Circuit affirms a ruling against AI firm ROSS over Westlaw headnotes."]]}, {"id": "pays", "name": "Who pays?", "q": "When the harm lands, who absorbs it, and what remedies exist?", "so": "Disaster responders, school districts, teachers and victims appear to carry much of the cost, while remedies that would shift it keep stalling in court or arriving one case at a time. It is too early to say whether that is a temporary lag.", "steps": [[15, "AI flood images are used as political attack during Hurricane Helene."], [61, "Fake Artemis II photos flood social media during a real mission."], [103, "AI fakes follow the Nepal-Tibet floods."], [108, "“Cat in the Hat” threat videos trigger school lockdowns across several states."], [106, "A federal appeals ruling suggests private possession of AI-generated abuse imagery may be protected speech."], [101, "A Korean court orders a former student to pay a teacher damages over deepfake nudes."], [111, "An appeals court pauses Minnesota’s AI “nudification” ban."]]}, {"id": "real", "name": "Who says what’s real?", "q": "As AI imagery enters official and paid political speech, who decides what counts as real?", "so": "Political AI imagery has moved from fringe posts to official accounts and paid campaign ads. With 31 states requiring labels and no federal rule, the line between satire, advertising and deception is being drawn mostly by disclosure.", "steps": [[14, "Trump posts AI “Swifties for Trump” images."], [19, "A national network airs AI-generated Sora videos as real footage."], [23, "An AI Pope image appears on an official government account."], [51, "AI propaganda becomes a tool of war."], [55, "Trump posts an AI image of himself as Jesus, then deletes it."], [110, "Deepfake ads become a staple of the midterm campaigns."]]}, {"id": "rules", "name": "Who writes the rules?", "q": "Who is writing the rules for AI-generated content, and who are they written for?", "so": "Rules are arriving, but several have been delayed, challenged or limited to disclosure. Whether disclosure alone shifts responsibility onto the people who build and deploy these tools is an open question.", "steps": [[12, "The EU AI Act enters into force."], [66, "OpenAI backs an Illinois bill to limit AI firms’ liability."], [67, "Anthropic breaks ranks and opposes the Illinois liability shield."], [104, "EU transparency rules take effect, with key pieces delayed."], [91, "A House bill would require labels on AI-generated campaign content."]]}];
+var _threadIdx = 0, _threadSet = null;
+function _threadNodes(){ const t=THREADS[_threadIdx]; if(!t) return []; const vis=new Set(getVisible().map(n=>n.id)); return t.steps.map((st,i)=>({n:nodes.find(x=>x.id===st[0]),i:i+1,beat:st[1]})).filter(o=>o.n&&vis.has(o.n.id)); }
+function drawFeaturedArc(){
+  if(!_arcVisible) return; const pts=[];
+  _threadNodes().forEach(o=>{const pos=positions[o.n.id]; if(!pos) return; const p=ws(pos.x,pos.y); pts.push({x:p.x,y:p.y,i:o.i});});
+  if(pts.length<2) return;
+  ctx.save(); ctx.strokeStyle='#2F4BFF'; ctx.lineWidth=2.5; ctx.lineJoin='round'; ctx.setLineDash([]); ctx.globalAlpha=.85;
+  ctx.beginPath(); pts.forEach((p,k)=>k?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)); ctx.stroke(); ctx.restore();
+}
+function drawThreadBadges(){
+  if(!_arcVisible) return; ctx.save();
+  _threadNodes().forEach(o=>{const pos=positions[o.n.id]; if(!pos) return; const p=ws(pos.x,pos.y);
+    ctx.beginPath(); ctx.arc(p.x,p.y,12,0,Math.PI*2); ctx.fillStyle='#2F4BFF'; ctx.fill(); ctx.lineWidth=2; ctx.strokeStyle='#fff'; ctx.stroke();
+    ctx.fillStyle='#fff'; ctx.font="700 13px 'Inter Tight',sans-serif"; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(String(o.i),p.x,p.y+.5);});
+  ctx.restore();
+}
+function renderThreadPanel(){
+  let el=document.getElementById('threads-panel');
+  if(!_arcVisible){ if(el) el.style.display='none'; return; }
+  if(!el){ el=document.createElement('div'); el.id='threads-panel'; document.body.appendChild(el); }
+  const t=THREADS[_threadIdx]; const items=_threadNodes();
+  el.style.display='block';
+  el.style.top='164px';
+  el.innerHTML='<div class="tp-head"><b>Through-Line</b><span><button class="tp-fold" onclick="toggleThreadList()">Hide list</button><button class="tp-x" onclick="toggleArcFromSidebar()">✕ Exit</button></span></div>'
+   +'<p class="tp-lede">Five questions the record keeps raising. Pick one to follow it through the map.</p>'
+   +'<div class="tp-chips">'+THREADS.map((x,i)=>'<button class="tp-chip'+(i===_threadIdx?' on':'')+'" onclick="setThread('+i+')">'+x.name+'</button>').join('')+'</div>'
+   +'<p class="tp-q">'+t.q+'</p>'
+   +'<ol class="tp-steps">'+items.map(o=>'<li><button onclick="openThreadNode('+o.n.id+')"><span class="tp-n">'+o.i+'</span><span><em>'+(o.n.date||'')+'</em> '+o.beat+'</span></button></li>').join('')+'</ol>'
+   +(items.length<t.steps.length?'<p class="tp-note">Some steps are hidden by your current filters.</p>':'')
+   +'<div class="tp-so"><b>So what</b>'+t.so+'</div>';
+}
+function toggleThreadList(){ var e=document.getElementById('threads-panel'); if(e) e.classList.toggle('tp-collapsed'); }
+function setThread(i){ _threadIdx=i; renderThreadPanel(); }
+function openThreadNode(id){ const n=nodes.find(x=>x.id===id); if(n){ selectedId=id; if(typeof openPanel==='function') openPanel(n); } }
+
+function _legacyDrawFeaturedArc() {
   if (!_arcVisible) return;
 
   const isLight = document.body.classList.contains('light');
@@ -7343,5 +7421,6 @@ function applyArcNarration() {
 function sync(){const o=a.classList.contains('open');b.style.background=o?'var(--forest)':'none';b.style.color=o?'#fff':'var(--fg)';b.style.borderColor=o?'var(--forest)':'var(--fg)';}
 new MutationObserver(sync).observe(a,{attributes:true,attributeFilter:['class']});sync();})();
 </script>
+<script>(function(){var u=['ellie','sloptilyoudrop.com'];function go(){document.querySelectorAll('#footer-email').forEach(function(a){a.href='mail'+'to:'+u.join('@');});}go();})();</script>
 </body>
 </html>
