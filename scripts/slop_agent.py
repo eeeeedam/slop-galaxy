@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Slop Galaxy Weekly Agent
-Fetches new AI slop/spill stories from RSS, Google News, Reddit, arXiv,
+Fetches new AI slop/spill stories from RSS, Claude web search, arXiv,
 scores them with Claude, and patches new nodes into the galaxy HTML.
 """
 
@@ -24,6 +24,11 @@ GOOGLE_CSE_ID     = os.environ.get("GOOGLE_CSE_ID", "")
 IMPACT_THRESHOLD  = 6          # minimum impact score to add a node
 MAX_NEW_NODES     = 12         # cap per run to avoid noise floods
 GALAXY_FILE       = "index.html"  # path in repo root
+MODEL             = os.environ.get("SLOP_MODEL", "claude-sonnet-5-5")
+MAX_EVENT_AGE_DAYS = 90        # reject stories whose event is older than this
+MIN_HEALTHY_SOURCES = 3        # fail the run loudly if fewer sources return items
+TODAY = datetime.date.today()
+HEALTH = {"sources_ok": 0, "sources_failed": [], "web_search_ok": None}
 
 RSS_FEEDS = [
     # Wired removed — blocks GitHub Actions IPs (use Google News queries instead)
@@ -34,10 +39,6 @@ RSS_FEEDS = [
     ("arXiv cs.AI",             "https://rss.arxiv.org/rss/cs.AI"),
     ("arXiv cs.CY",             "https://rss.arxiv.org/rss/cs.CY"),
     ("arXiv cs.IR",             "https://rss.arxiv.org/rss/cs.IR"),   # info retrieval
-    ("Reddit r/artificial",     "https://www.reddit.com/r/artificial/.rss"),
-    ("Reddit r/MediaSynthesis", "https://www.reddit.com/r/MediaSynthesis/.rss"),
-    ("Reddit r/law",            "https://www.reddit.com/r/law/search.rss?q=AI+generated&sort=new"),
-    ("Reddit r/Journalism",     "https://www.reddit.com/r/Journalism/search.rss?q=AI&sort=new"),
 ]
 
 GOOGLE_QUERIES = [
@@ -155,9 +156,9 @@ def fetch_og_image(url):
     return None
 
 def call_claude(prompt, max_tokens=1200):
-    """Call Claude claude-sonnet-4-20250514 and return text response."""
+    """Call Claude and return text response."""
     payload = json.dumps({
-        "model": "claude-sonnet-4-6",
+        "model": MODEL,
         "max_tokens": max_tokens,
         "messages": [{"role": "user", "content": prompt}]
     }).encode()
@@ -206,6 +207,7 @@ def fetch_rss(name, url):
     items = []
     text = fetch_url(url)
     if not text:
+        HEALTH["sources_failed"].append(name)
         return items
     try:
         root = ET.fromstring(text)
@@ -228,6 +230,10 @@ def fetch_rss(name, url):
     except Exception as e:
         print(f"    RSS PARSE ERROR {name}: {e}")
     print(f"  RSS {name}: {len(items)} items")
+    if items:
+        HEALTH["sources_ok"] += 1
+    else:
+        HEALTH["sources_failed"].append(name)
     return items
 
 
@@ -264,6 +270,74 @@ def fetch_google_news(query):
         return []
 
 
+WEB_SEARCH_TOPICS = [
+    "AI-generated content ban OR lawsuit OR ruling OR legislation",
+    "AI slop platform policy label OR removal OR demonetization",
+    "deepfake OR AI-generated misinformation during election OR disaster OR news event",
+    "AI-written articles OR fake bylines OR fabricated sources newsroom OR publisher",
+    "AI-generated research papers OR peer review fraud OR preprint flood",
+    "AI-generated music OR art OR books streaming platform OR marketplace policy",
+    "AI copyright lawsuit OR settlement OR court ruling training data",
+    "AI-generated content children OR schools OR courts consequences",
+]
+
+
+def discover_with_web_search(topic):
+    """Use Claude's server-side web search tool to find recent, real stories."""
+    since = (TODAY - datetime.timedelta(days=21)).isoformat()
+    prompt = (
+        f"Today is {TODAY.isoformat()}. Use web search to find news from the last 3 weeks (since {since}) "
+        f"about: {topic}. Return ONLY a JSON array (max 8 items) of objects with keys "
+        '"title", "url", "summary" (1-2 factual sentences), "published" (YYYY-MM-DD if known). '
+        "Only include items you actually found in search results; never invent URLs. No markdown."
+    )
+    payload = json.dumps({
+        "model": MODEL, "max_tokens": 3000,
+        "tools": [{"type": "web_search_20250305", "name": "web_search", "max_uses": 4}],
+        "messages": [{"role": "user", "content": prompt}],
+    }).encode()
+    req = urllib.request.Request(
+        "https://api.anthropic.com/v1/messages", data=payload, method="POST",
+        headers={"Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY,
+                 "anthropic-version": "2023-06-01"})
+    try:
+        with urllib.request.urlopen(req, timeout=120) as resp:
+            data = json.loads(resp.read())
+    except Exception as e:
+        print(f"    WEB SEARCH ERROR ({topic[:40]}): {e}")
+        HEALTH["web_search_ok"] = False
+        return []
+    text = "".join(b.get("text", "") for b in data.get("content", []) if b.get("type") == "text")
+    m = re.search(r"\[.*\]", text, re.DOTALL)
+    if not m:
+        return []
+    try:
+        arr = json.loads(m.group())
+    except json.JSONDecodeError:
+        return []
+    items = []
+    for it in arr:
+        if isinstance(it, dict) and it.get("title") and str(it.get("url", "")).startswith("http"):
+            items.append({"title": it["title"].strip(), "link": it["url"].strip(),
+                          "summary": str(it.get("summary", ""))[:400], "source": "Web search",
+                          "published": str(it.get("published", ""))})
+    if HEALTH["web_search_ok"] is None:
+        HEALTH["web_search_ok"] = True
+    print(f"  Web search '{topic[:45]}': {len(items)} results")
+    return items
+
+
+def fetch_article_text(url, limit=6000):
+    """Fetch an article and return plain text (best effort) so scoring uses real content."""
+    html = fetch_url(url, timeout=15)
+    if not html:
+        return ""
+    html = re.sub(r"(?is)<(script|style|nav|header|footer|aside)[^>]*>.*?</\1>", " ", html)
+    text = re.sub(r"(?s)<[^>]+>", " ", html)
+    text = re.sub(r"\s+", " ", text)
+    return text[:limit]
+
+
 # ── FILTERING ─────────────────────────────────────────────────────────────────
 
 SLOP_KEYWORDS = [
@@ -292,13 +366,20 @@ def score_candidate(item):
     4. Draft the full node object
     Returns a node dict or None.
     """
+    article_text = fetch_article_text(item["link"])
     prompt = f"""You are the curator of the Slop Galaxy — a living record of moments when AI-generated content crossed an institutional line.
+
+TODAY'S DATE: {TODAY.isoformat()}. Use it. Never assume the current year is earlier than this.
 
 ARTICLE:
 Title: {item['title']}
 Source: {item['source']}
 URL: {item['link']}
+Published (if known): {item.get('published', 'unknown')}
 Summary: {item['summary']}
+Article text (may be partial): {article_text or '[could not be fetched - rely on the summary only and keep claims minimal]'}
+
+FACT RULES: State only facts present in the article text or summary. Do not infer names, numbers, or dates. If the date of the EVENT (not the article) is unclear, set "event_date" to null.
 
 STEP 1 — QUALIFICATION
 {QUALIFIER_PROMPT}
@@ -314,8 +395,9 @@ STEP 3 — Return ONLY valid JSON (no markdown, no backticks, no explanation):
 {{
   "qualify": true,
   "title": "concise headline title (max 80 chars)",
-  "date": "Month YYYY",
-  "year": 2026,
+  "event_date": "YYYY-MM-DD (date the EVENT happened, or null if unknown)",
+  "date": "Month YYYY (month of the event)",
+  "year": {TODAY.year},
   "source": "Publication Name",
   "category": "platform|media|cultural|legislation|research|societal",
   "impact": 7,
@@ -354,6 +436,19 @@ Return only the JSON object, nothing else."""
     impact = int(data.get("impact", 0))
     if impact < IMPACT_THRESHOLD:
         return None
+
+    # Event-date gate: no undated or stale events
+    ev = data.get("event_date")
+    try:
+        ev_d = datetime.date.fromisoformat(str(ev)[:10])
+    except (ValueError, TypeError):
+        print("    ✗ no usable event_date — skipped")
+        return None
+    if (TODAY - ev_d).days > MAX_EVENT_AGE_DAYS or ev_d > TODAY + datetime.timedelta(days=1):
+        print(f"    ✗ event_date {ev_d} outside window — skipped")
+        return None
+    data["date"] = ev_d.strftime("%B %Y")
+    data["year"] = ev_d.year
 
     # Fetch og:image from article
     if not data.get("image") and item.get("link"):
@@ -408,7 +503,7 @@ def node_to_js(node, node_id):
         f'    description:"{description}",\n'
         f'    significance:"{significance}",\n'
         f'    link:"{link}",{image_fields}\n'
-        f'    date_added:"{today}" }}'
+        f'    date_added:"{today}", auto:true }}'
     )
 
 
@@ -525,8 +620,14 @@ def main():
         candidates.extend(items)
         time.sleep(0.5)
 
-    # Google News
-    if GOOGLE_API_KEY:
+    # Claude web search (primary discovery; replaces the retiring Google CSE API)
+    print()
+    for topic in WEB_SEARCH_TOPICS:
+        candidates.extend(discover_with_web_search(topic))
+        time.sleep(1)
+
+    # Google CSE (optional legacy source; the API shuts down 2027-01-01)
+    if GOOGLE_API_KEY and GOOGLE_CSE_ID:
         print()
         for query in GOOGLE_QUERIES:
             items = fetch_google_news(query)
@@ -534,6 +635,8 @@ def main():
             time.sleep(1)  # respect rate limits
 
     print(f"\nTotal raw candidates: {len(candidates)}")
+    print(f"Source health: {HEALTH}")
+    health_problem = (HEALTH["sources_ok"] < MIN_HEALTHY_SOURCES) or (HEALTH["web_search_ok"] is False)
 
     # ── DEDUP ──────────────────────────────────────────────────────────────────
     def title_words(t):
@@ -609,7 +712,10 @@ def main():
         print("No new nodes this week. Galaxy unchanged.")
         # Write a run log
         with open("agent_run_log.txt", "a") as f:
-            f.write(f"{datetime.date.today()}: 0 new nodes added (from {len(filtered)} candidates)\n")
+            f.write(f"{datetime.date.today()}: 0 new nodes added (from {len(filtered)} candidates)"
+                    f"{' [HEALTH WARNING: ' + str(HEALTH) + ']' if health_problem else ''}\n")
+        if health_problem:
+            raise SystemExit(f"Source health check failed: {HEALTH}")
         return
 
     # ── SERIALIZE & PATCH ──────────────────────────────────────────────────────
@@ -624,14 +730,14 @@ def main():
 
     # Sanity check — count nodes in patched file
     new_count = len(re.findall(r'\{ id:\d+,', patched_html))
-    expected  = len(existing_titles) + len(approved)
-    if abs(new_count - expected) > 2:
+    expected  = len(re.findall(r'\{ id:\d+,', html)) + len(approved)
+    if new_count != expected:
         raise ValueError(f"Node count sanity check failed: got {new_count}, expected ~{expected}")
 
     with open(GALAXY_FILE, "w", encoding="utf-8") as f:
         f.write(patched_html)
 
-    print(f"\n✓ Galaxy updated: {len(approved)} new nodes added ({len(existing_titles)} → {new_count})")
+    print(f"\n✓ Galaxy updated: {len(approved)} new nodes added ({new_count - len(approved)} → {new_count})")
 
     # Write run log
     log_lines = [f"{datetime.date.today()}: {len(approved)} new nodes added"]
@@ -642,6 +748,8 @@ def main():
         f.write("\n".join(log_lines) + "\n")
 
     print("\nRun log written to agent_run_log.txt")
+    if health_problem:
+        raise SystemExit(f"Nodes were added, but source health check failed: {HEALTH}")
     print("Done.")
 
 
