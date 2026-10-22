@@ -1700,7 +1700,6 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
     <button class="atab" data-tab="trends">TRENDS</button>
     <button class="atab" data-tab="categories">CATEGORIES</button>
     <button class="atab" data-tab="waves">WAVES</button>
-    <button class="atab" data-tab="impact">IMPACT</button>
     <button class="atab" data-tab="timeline">TIMELINE</button>
     <button class="atab" data-tab="fullcircle">&#x25ce; FULL CIRCLE</button>
   </div>
@@ -4426,7 +4425,7 @@ function barChart(canvas, labels, datasets, opts={}) {
   // grid lines
   const isLight = document.body.classList.contains('light');
   const gridColor = isLight ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.04)';
-  const labelColor = isLight ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.18)';
+  const labelColor = isLight ? 'rgba(0,0,0,0.65)' : 'rgba(255,255,255,0.5)';
   const steps = 4;
   ctx.strokeStyle = gridColor;
   ctx.lineWidth = 1;
@@ -4434,7 +4433,7 @@ function barChart(canvas, labels, datasets, opts={}) {
     const y = pad.top + ch - (i/steps)*ch;
     ctx.beginPath(); ctx.moveTo(pad.left,y); ctx.lineTo(pad.left+cw,y); ctx.stroke();
     ctx.fillStyle=labelColor;
-    ctx.font='8px IBM Plex Mono, monospace'; ctx.textAlign='right';
+    ctx.font='11px IBM Plex Mono, monospace'; ctx.textAlign='right';
     const label = opts.isFloat ? ((i/steps)*maxVal).toFixed(1) : Math.round((i/steps)*maxVal);
     ctx.fillText(label, pad.left-4, y+3);
   }
@@ -4493,13 +4492,13 @@ function lineChart(canvas, labels, datasets, opts={}) {
   for(let i=0;i<=4;i++){
     const y = pad.top + ch - (i/4)*ch;
     ctx.beginPath(); ctx.moveTo(pad.left,y); ctx.lineTo(pad.left+cw,y); ctx.stroke();
-    ctx.fillStyle='rgba(255,255,255,0.18)'; ctx.font='8px IBM Plex Mono, monospace'; ctx.textAlign='right';
+    ctx.fillStyle='rgba(255,255,255,0.18)'; ctx.font='11px IBM Plex Mono, monospace'; ctx.textAlign='right';
     ctx.fillText(Math.round((i/4)*maxVal), pad.left-4, y+3);
   }
 
   // x labels — show subset to avoid crowding
   const step = Math.ceil(n/10);
-  ctx.fillStyle='rgba(255,255,255,0.3)'; ctx.font='8px IBM Plex Mono, monospace'; ctx.textAlign='center';
+  ctx.fillStyle='rgba(255,255,255,0.3)'; ctx.font='11px IBM Plex Mono, monospace'; ctx.textAlign='center';
   labels.forEach((lbl,i) => {
     if(i%step!==0 && i!==n-1) return;
     const x = pad.left + (i/(n-1||1))*cw;
@@ -4555,13 +4554,13 @@ function heatMap(canvas, rowLabels, colLabels, data, colorFn) {
       ctx.fillStyle = colorFn(val);
       ctx.fillRect(x+1,y+1,cellW-2,cellH-2);
       if(val>0 && cellH>14){
-        ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.font='8px IBM Plex Mono,monospace'; ctx.textAlign='center';
+        ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.font='11px IBM Plex Mono,monospace'; ctx.textAlign='center';
         ctx.fillText(val, x+cellW/2, y+cellH/2+3);
       }
     });
   });
 
-  ctx.fillStyle='rgba(255,255,255,0.25)'; ctx.font='8px IBM Plex Mono,monospace';
+  ctx.fillStyle='rgba(255,255,255,0.25)'; ctx.font='11px IBM Plex Mono,monospace';
   colLabels.forEach((lbl,i) => { ctx.textAlign='center'; ctx.fillText(lbl, padL+i*cellW+cellW/2, padT+ch+16); });
   rowLabels.forEach((lbl,i) => { ctx.textAlign='right'; ctx.fillText(lbl, padL-4, padT+i*cellH+cellH/2+3); });
 }
@@ -4675,8 +4674,8 @@ To follow any of these through the map, click <b>◇ Through-Line</b> in the lef
         const grad=ctx2.createLinearGradient(0,y,0,y+barH);
         grad.addColorStop(0,catColor+'ee'); grad.addColorStop(1,catColor+'44');
         ctx2.fillStyle=grad; ctx2.fillRect(x,y,barW,barH);
-        if(barH>14){ ctx2.fillStyle='rgba(255,255,255,0.6)'; ctx2.font='8px IBM Plex Mono,monospace'; ctx2.textAlign='center'; ctx2.fillText(val,x+barW/2,y-3); }
-        ctx2.fillStyle='rgba(255,255,255,0.3)'; ctx2.font='8px IBM Plex Mono,monospace'; ctx2.textAlign='center';
+        if(barH>14){ ctx2.fillStyle='rgba(255,255,255,0.6)'; ctx2.font='11px IBM Plex Mono,monospace'; ctx2.textAlign='center'; ctx2.fillText(val,x+barW/2,y-3); }
+        ctx2.fillStyle='rgba(255,255,255,0.3)'; ctx2.font='11px IBM Plex Mono,monospace'; ctx2.textAlign='center';
         ctx2.fillText((CATS[cat]||CATS.cultural).label.split(' ')[0], x+barW/2, pad.top+ch+16);
       });
     }
@@ -4724,7 +4723,7 @@ function renderTimeline(el, filtered) {
     const c=document.getElementById('chart-tl');
     if(!c) return; c.width=getChartW(c);
     if(metric==='count'){
-      barChart(c,sparseLabels,[{data,color:'#8A919A'}]);
+      barChart(c,sparseLabels,[{data,color:'#2F4BFF'}]);
     } else {
       lineChart(c,sparseLabels,[{data,color:metric==='cumulative'?'#2F4BFF':'#F0368C'}],{isFloat:metric==='impact'});
     }
@@ -4743,7 +4742,7 @@ function renderCategories(el, filtered) {
       <canvas class="chart-canvas" id="chart-cat-time" height="200"></canvas>
     </div>
     <div class="chart-block" style="margin-top:24px">
-      <div class="chart-title">CATEGORY SHARE PER YEAR <span>— stacked count</span></div>
+      <div class="chart-title">CATEGORY SHARE PER YEAR <span>— each bar is a year, split by category</span></div>
       <canvas class="chart-canvas" id="chart-cat-stack" height="180"></canvas>
     </div>
   `;
@@ -4779,11 +4778,11 @@ function renderImpact(el, filtered) {
 
   el.innerHTML=`
     <div class="chart-block">
-      <div class="chart-title">IMPACT LEVEL DISTRIBUTION <span>— all time</span></div>
+      <div class="chart-title">IMPACT LEVEL DISTRIBUTION <span>— how many moments sit at each score (1 = minor, 10 = defining)</span></div>
       <canvas class="chart-canvas" id="chart-imp-dist" height="160"></canvas>
     </div>
     <div class="chart-block" style="margin-top:24px">
-      <div class="chart-title">IMPACT × YEAR HEATMAP <span>— event count per cell</span></div>
+      <div class="chart-title">IMPACT × YEAR HEATMAP <span>— darker = more moments at that score in that year</span></div>
       <canvas class="chart-canvas" id="chart-imp-heat" height="200"></canvas>
     </div>
   `;
@@ -4814,51 +4813,113 @@ function renderWaves(el, filtered) {
   const buckets=[]; const labels=[];
   for(let y=yrFrom;y<=yrTo;y++){
     for(let m=0;m<12;m++){
-      buckets.push({y,m,count:0,totalImpact:0});
+      buckets.push({y,m,count:0,totalImpact:0,sl:0,sp:0});
       labels.push(`${['J','F','M','A','M','J','J','A','S','O','N','D'][m]}'${String(y).slice(2)}`);
     }
   }
   filtered.forEach(n=>{
     const mIdx=MONTHS.indexOf((n.date||'').toLowerCase().split(' ')[0]);
     const bi=(n.year-yrFrom)*12+(mIdx>=0?mIdx:0);
-    if(bi>=0&&bi<buckets.length){ buckets[bi].count++; buckets[bi].totalImpact+=n.impact; }
+    if(bi>=0&&bi<buckets.length){ buckets[bi].count++; buckets[bi].totalImpact+=n.impact; ((n.slop_spill||5.5)>5?buckets[bi].sp++:buckets[bi].sl++); }
   });
+  { let _s=buckets.findIndex(b=>b.count>0); if(_s<0)_s=0;
+    const _n=new Date(); let _e=buckets.length-1; const _ni=(_n.getFullYear()-yrFrom)*12+_n.getMonth(); if(_ni>=0&&_ni<buckets.length)_e=_ni;
+    buckets.splice(_e+1); labels.splice(_e+1); buckets.splice(0,_s); labels.splice(0,_s); }
 
   // 3-month rolling average
   const rolling=buckets.map((_,i)=>{
     const window=buckets.slice(Math.max(0,i-2),i+1);
     return parseFloat((window.reduce((s,b)=>s+b.count,0)/window.length).toFixed(2));
   });
+  let _lastImp=0;
   const rollingImpact=buckets.map((_,i)=>{
     const window=buckets.slice(Math.max(0,i-2),i+1).filter(b=>b.count>0);
-    if(!window.length) return 0;
-    return parseFloat((window.reduce((s,b)=>s+b.totalImpact,0)/window.reduce((s,b)=>s+b.count,0)).toFixed(2));
+    if(!window.length) return _lastImp;
+    return (_lastImp=parseFloat((window.reduce((s,b)=>s+b.totalImpact,0)/window.reduce((s,b)=>s+b.count,0)).toFixed(2)));
   });
   const cumulative=buckets.map((_,i)=>buckets.slice(0,i+1).reduce((s,b)=>s+b.count,0));
+  const roll=k=>buckets.map((_,i)=>{const w=buckets.slice(Math.max(0,i-2),i+1);return parseFloat((w.reduce((s,b)=>s+b[k],0)/w.length).toFixed(2));});
+  const cum=k=>buckets.map((_,i)=>buckets.slice(0,i+1).reduce((s,b)=>s+b[k],0));
+  const SLOPC='#2F4BFF', SPILLC='#F0368C';
 
   el.innerHTML=`
     <div class="chart-block">
-      <div class="chart-title">CUMULATIVE EVENTS OVER TIME <span>— showing acceleration</span></div>
+      <div class="chart-title">CUMULATIVE EVENTS OVER TIME <span>— <b style="color:#2F4BFF">slop</b> vs <b style="color:#F0368C">spill</b>, running total. Steeper = faster pace</span></div>
       <canvas class="chart-canvas" id="chart-wave-cum" height="180"></canvas>
     </div>
     <div class="chart-block" style="margin-top:24px">
-      <div class="chart-title">3-MONTH ROLLING AVERAGE <span>— event frequency</span></div>
+      <div class="chart-title">3-MONTH ROLLING AVERAGE <span>— <b style="color:#2F4BFF">slop</b> vs <b style="color:#F0368C">spill</b>, moments per month, smoothed</span></div>
       <canvas class="chart-canvas" id="chart-wave-roll" height="150"></canvas>
-    </div>
-    <div class="chart-block" style="margin-top:24px">
-      <div class="chart-title">ROLLING AVG IMPACT <span>— is slop getting worse?</span></div>
-      <canvas class="chart-canvas" id="chart-wave-imp" height="150"></canvas>
     </div>
   `;
   // render charts
     const c1=document.getElementById('chart-wave-cum');
-    if(c1){ c1.width=getChartW(c1); lineChart(c1,labels,[{data:cumulative,color:'#8A919A'}]); }
+    if(c1){ c1.width=getChartW(c1); lineChart(c1,labels,[{data:cum('sl'),color:SLOPC,label:'Slop'},{data:cum('sp'),color:SPILLC,label:'Spill'}]); }
     const c2=document.getElementById('chart-wave-roll');
-    if(c2){ c2.width=getChartW(c2); lineChart(c2,labels,[{data:rolling,color:'#8A919A'}],{isFloat:true}); }
-    const c3=document.getElementById('chart-wave-imp');
-    if(c3){ c3.width=getChartW(c3); lineChart(c3,labels,[{data:rollingImpact,color:'#8A919A'}],{isFloat:true}); }
+    if(c2){ c2.width=getChartW(c2); lineChart(c2,labels,[{data:roll('sl'),color:SLOPC,label:'Slop'},{data:roll('sp'),color:SPILLC,label:'Spill'}],{isFloat:true}); }
 }
 
+function ssBucket(f){ let sl=0,sp=0; f.forEach(n=>((n.slop_spill||5.5)>5?sp++:sl++)); return {sl,sp,n:sl+sp,pct:(sl+sp)?Math.round(sp/(sl+sp)*100):0}; }
+function ssRows(f){
+  const yrs=[...new Set(f.map(n=>n.year))].sort();
+  const row=(lab,b)=>`<div style="display:flex;align-items:center;gap:12px;margin:7px 0"><div style="width:64px;font:700 13px 'Inter Tight',sans-serif;flex-shrink:0">${lab}</div><div style="flex:1;display:flex;height:24px;overflow:hidden;min-width:0"><div class="ss-slop" style="width:${100-b.pct}%"></div><div class="ss-spill" style="flex:1"></div></div><div style="width:210px;white-space:nowrap;font:500 12px 'IBM Plex Mono',monospace;flex-shrink:0">${b.pct}% spill · ${b.n} moment${b.n===1?'':'s'}</div></div>`;
+  let h=`<div style="display:flex;gap:18px;font:700 12px 'Inter Tight',sans-serif;margin:2px 0 8px"><span><i style="display:inline-block;width:12px;height:12px;background:rgba(47,75,255,0.55);margin-right:6px"></i>Slop</span><span><i style="display:inline-block;width:12px;height:12px;background:rgba(240,54,140,0.45);margin-right:6px"></i>Spill</span></div>`+yrs.filter(y=>f.filter(n=>n.year===y).length>=5).map(y=>row(y,ssBucket(f.filter(n=>n.year===y)))).join('');
+  const now=new Date(), cq=now.getFullYear()*4+Math.floor(now.getMonth()/3);
+  const q=n=>n.year*4+Math.floor(_mi(n)/3);
+  let qh='';
+  for(let k=cq-5;k<=cq;k++){ const b=ssBucket(f.filter(n=>q(n)===k)); if(b.n) qh+=row('Q'+(k%4+1)+" '"+String(Math.floor(k/4)).slice(2),b); }
+  return h+(qh?`<div style="font:700 11px 'Inter Tight',sans-serif;letter-spacing:.14em;color:var(--sub-color);margin:18px 0 4px">RECENT QUARTERS</div>`+qh:'');
+}
+function catName(k){ const c=CATS[k]; return `<strong style="color:${c.color}">${c.label.split(' / ')[0]}</strong>`; }
+
+function takeaway(h, body) {
+  return `<div class="takeaway" style="margin:16px;padding:18px 22px;border-left:5px solid #2F4BFF;background:rgba(47,75,255,0.07)"><div style="font:800 11px/1 'Inter Tight',sans-serif;letter-spacing:.14em;color:#2F4BFF;margin-bottom:10px">WHAT THIS SHOWS</div><div style="font:800 22px/1.25 'Inter Tight',sans-serif;color:var(--fg);margin-bottom:8px;max-width:70ch">${h}</div><div style="font:400 15px/1.6 'Inter',sans-serif;color:var(--fg);max-width:70ch;opacity:.85">${body}</div></div>`;
+}
+function _mi(n){ const m=MONTHS.indexOf((n.date||'').toLowerCase().split(' ')[0]); return m<0?0:m; }
+function buildTakeaway(tab, f) {
+  if (!f.length) return takeaway('Nothing matches these filters.', 'Loosen a filter to see what the pattern looks like.');
+  const CN={platform:'platform policy',media:'media',cultural:'cultural',legislation:'legislation',research:'research',societal:'societal'};
+  const pct=(a,b)=>b?Math.round(a/b*100):0;
+  const avg=a=>a.length?a.reduce((s,n)=>s+(n.impact||0),0)/a.length:0;
+  const years=[...new Set(f.map(n=>n.year))].sort();
+  if (tab==='trends') {
+    const yrs=years.filter(y=>f.filter(n=>n.year===y).length>=5);
+    const sh=yrs.map(y=>({y,...ssBucket(f.filter(n=>n.year===y))}));
+    if (sh.length<2) return takeaway('Not enough moments in this range to show a trend.','Widen the year range to compare slop and spill over time.');
+    const F=sh[0], L=sh[sh.length-1];
+    const cross=sh.find(x=>x.pct>50);
+    const h = L.pct>F.pct+5 ? `Spill has grown from ${F.pct}% of moments in ${F.y} to ${L.pct}% in ${L.y}.` : L.pct<F.pct-5 ? `Spill has fallen from ${F.pct}% of moments in ${F.y} to ${L.pct}% in ${L.y}.` : `Spill has held near ${L.pct}% of moments from ${F.y} to ${L.y}.`;
+    const body = (cross?`It first passed an even split in ${cross.y}. `:'It has stayed below an even split. ')+`It has never been all slop or all spill: every year has had both. If the trend holds, harm is increasingly showing up beyond the feed, though with this few moments a single quarter can swing either way.`;
+    return takeaway(h, body);
+  }
+  if (tab==='categories') {
+    const ys=years.filter(y=>f.filter(n=>n.year===y).length>=8);
+    if (ys.length<2) return takeaway('Not enough moments in this range to compare categories over time.','Widen the year range to see how the mix changes.');
+    const first=ys[0], last=ys[ys.length-1], K=Object.keys(CN);
+    const breadth=y=>K.filter(k=>f.filter(n=>n.year===y&&n.category===k).length>=3).length;
+    const L=f.filter(n=>n.year===last), P=f.filter(n=>n.year===ys[ys.length-2]);
+    const d=k=>pct(L.filter(n=>n.category===k).length,L.length)-pct(P.filter(n=>n.category===k).length,P.length);
+    const sorted=[...K].sort((a,b)=>d(b)-d(a)); const up=sorted[0], dn=sorted[sorted.length-1];
+    const part=last===new Date().getFullYear()?' so far':'';
+    const h=`In ${last}, ${breadth(last)} of 6 categories have 3 or more moments${part}, up from ${breadth(first)} in ${first}. Slop is showing up in more places.`;
+    const body=`The biggest gain in share is ${catName(up)} (+${d(up)} points vs ${ys[ys.length-2]}), while ${catName(dn)} is a smaller slice (${d(dn)} points). One reading: attention is moving from what platforms and publishers produce toward how institutions and everyday life respond. It may also just reflect where the tracker has been looking.`;
+    return takeaway(h, body);
+  }
+  if (tab==='waves') {
+    const m={}; f.forEach(n=>{ const k=n.year+'-'+_mi(n); m[k]=(m[k]||0)+1; });
+    const best=Object.entries(m).sort((a,b)=>b[1]-a[1])[0]; const [by,bm]=best[0].split('-').map(Number);
+    const MN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const nowI=new Date().getFullYear()*12+new Date().getMonth();
+    const cnt=(lo,hi)=>f.filter(n=>{const i=n.year*12+_mi(n);return i>lo&&i<=hi;}).length;
+    const r12=cnt(nowI-12,nowI), p12=cnt(nowI-24,nowI-12);
+    const busy=(lo,hi)=>{let c=0;for(let i=lo+1;i<=hi;i++){const y=Math.floor(i/12),mo=i%12; if((m[y+'-'+mo]||0)>=3)c++;}return c;};
+    const b1=busy(nowI-12,nowI), b0=busy(nowI-24,nowI-12);
+    const grow=p12?Math.round((r12/p12-1)*100):0; const h=`The busiest month so far is ${MN[bm]} ${by} (${best[1]} moments). ${grow>15?'The overall pace is still climbing.':grow<-15?'The overall pace has cooled since.':'The overall pace has held steady since.'}`;
+    const body=`The last 12 months added ${r12} moments versus ${p12} in the 12 before${grow?` (${grow>0?'+':''}${grow}%)`:''}. ${b1} of the last 12 months had 3 or more moments, versus ${b0} of the 12 before. A spike usually follows one big story with many knock-ons, so a sustained run matters more than a single peak. Counts also depend on what this tracker has found.`;
+    return takeaway(h, body);
+  }
+  return '';
+}
 function renderAnalytics() {
   const filtered=anFiltered();
   document.getElementById('an-total').textContent=filtered.length;
@@ -4867,10 +4928,10 @@ function renderAnalytics() {
   if(anTab==='overview')    renderOverview(el,filtered);
   else if(anTab==='timeline')   renderTimeline(el,filtered);
   else if(anTab==='categories') renderCategories(el,filtered);
-  else if(anTab==='impact')     renderImpact(el,filtered);
   else if(anTab==='waves')      renderWaves(el,filtered);
   else if(anTab==='trends')     renderTrends(el,filtered);
   else if(anTab==='fullcircle') renderFullCircle(el,filtered);
+  if(['trends','categories','waves'].includes(anTab)) el.insertAdjacentHTML('afterbegin', buildTakeaway(anTab,filtered));
 }
 
 // ── wire analytics controls
@@ -4896,7 +4957,7 @@ function renderTrends(el, filtered) {
   const maxBucket = Math.max(...impBuckets, 1);
 
   // quarterly velocity — derive from node date strings
-  const quarters = ['Q1\'22','Q2\'22','Q3\'22','Q4\'22','Q1\'23','Q2\'23','Q3\'23','Q4\'23','Q1\'24','Q2\'24','Q3\'24','Q4\'24','Q1\'25','Q2\'25','Q3\'25','Q4\'25','Q1\'26'];
+  const quarters = (() => { const out=[]; const now=new Date(); const lastQ=now.getFullYear()*4+Math.floor(now.getMonth()/3); for(let k=2022*4;k<=lastQ;k++){ out.push('Q'+(k%4+1)+"'"+String(Math.floor(k/4)).slice(2)); } return out; })();
   const qMap = {};
   quarters.forEach(q => qMap[q] = 0);
   filtered.forEach(n => {
@@ -4982,18 +5043,11 @@ function renderTrends(el, filtered) {
 
   <div class="tr-grid">
 
-    <!-- SLOP / SPILL SPLIT -->
-    <div class="tr-card">
-      <div class="tr-label">SLOP vs <strong>SPILL</strong></div>
-      <div class="ss-splitbar">
-        <div class="ss-slop" style="width:${slopPct}%"><span class="ss-blabel">SLOP</span></div>
-        <div class="ss-spill" style="flex:1"><span class="ss-blabel">SPILL</span></div>
-      </div>
-      <div class="ss-stats">
-        <div class="ss-stat" style="color:var(--lime)"><span>${slop.length}</span>slop moments</div>
-        <div class="ss-stat" style="color:var(--spill);text-align:right"><span>${spill.length}</span>spill events</div>
-      </div>
-      <p class="tr-note">${spillPct > slopPct ? '↑ Spill events outnumber slop — consequences are catching up to content.' : '↑ Slop moments dominate this period — content is outpacing consequence.'}</p>
+    <!-- SLOP / SPILL OVER TIME -->
+    <div class="tr-card full">
+      <div class="tr-label">SLOP vs <strong>SPILL</strong> <span style="text-transform:none;letter-spacing:0">— share of moments each year</span></div>
+      ${ssRows(filtered)}
+      <p class="tr-note">Slop = low-quality content on a screen. Spill = harm in the real world. A year with only a handful of moments can swing sharply.</p>
     </div>
 
     <!-- CATEGORIES -->
@@ -5082,7 +5136,7 @@ function renderTrends(el, filtered) {
         : recent.map(n => {
             const isNew = n.date_added && n.date_added > thirtyDaysAgo;
             const daysAgo = n.date_added ? Math.floor((Date.now()-n.date_added)/86400000) : null;
-            const dateLabel = daysAgo === null ? '—' : daysAgo === 0 ? 'Today' : daysAgo === 1 ? 'Yesterday' : daysAgo + 'd ago';
+            const dateLabel = daysAgo === null ? '—' : daysAgo === 0 ? 'Today' : daysAgo === 1 ? 'Yesterday' : daysAgo < 60 ? daysAgo + 'd ago' : 'Added ' + new Date(n.date_added).toLocaleDateString('en-US',{month:'short',year:'numeric'});
             return `<div class="rec-row">
               ${isNew ? '<span class="rec-new">NEW</span>' : '<span class="rec-spacer"></span>'}
               <span class="rec-title">${n.title}</span>
@@ -6082,13 +6136,24 @@ renderGuideContent();
 
 // Don't show intro if opening a deep-linked node
 const _deepLinkParam = (() => { try { return new URLSearchParams(location.search).get('node'); } catch(e) { return null; } })();
+const _viewParam = (() => { try { return new URLSearchParams(location.search).get('view'); } catch(e) { return null; } })();
 const _addUrlParam  = (() => { try { return new URLSearchParams(location.search).get('addurl'); } catch(e) { return null; } })();
 try {
   var _hasAddUrl = !!(new URLSearchParams(location.search).get('addurl'));
-  if (!_deepLinkParam && !_hasAddUrl && !localStorage.getItem('slop_intro_dismissed')) openModal('intro');
-} catch(e) { if (!_deepLinkParam && !_addUrlParam) openModal('intro'); }
+  if (!_deepLinkParam && !_viewParam && !_hasAddUrl && !localStorage.getItem('slop_intro_dismissed')) openModal('intro');
+} catch(e) { if (!_deepLinkParam && !_viewParam && !_addUrlParam) openModal('intro'); }
 
 
+// ── DEEP LINK — ?view=synthesis opens Patterns > Overview at the So What
+if (_viewParam === 'synthesis' || _viewParam === 'patterns') {
+  setTimeout(() => {
+    try {
+      document.getElementById('btn-patterns').click();
+      const ov = document.querySelector('.atab[data-tab=overview]'); if (ov) ov.click();
+      setTimeout(() => { const t = document.getElementById('so-what-text'); if (t) t.scrollIntoView({block:'start'}); }, 400);
+    } catch(e) {}
+  }, 600);
+}
 // ── DEEP LINK — open node from URL ?node= param ───────────────────────────────
 if (_deepLinkParam) {
   const tryOpen = (attempts) => {
