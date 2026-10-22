@@ -56,3 +56,17 @@
   - [7/ss:5] Nikon Disqualifies AI-Generated Winner from Small World in Motion
 
 2026-10-19: 0 new nodes added (from 5 candidates)
+2026-10-22: 12 new nodes added
+  - [6/ss:9] Rep. Shontel Brown reintroduces bill to label AI-generated campaign content
+  - [8/ss:9] Third Circuit Affirms Westlaw Headnotes Copyrightable in Thomson Reuters v. ROSS
+  - [7/ss:8] Spotify Reports Removing 50 Million AI Slop Tracks From Recommendations in 2026
+  - [7/ss:8] Spotify says it pulled 50M 'slop and spam' tracks from recommendations in 2026
+  - [7/ss:8] Spotify says 50M+ AI 'slop' tracks removed from recommendations
+  - [6/ss:8] YouTube Music begins labeling AI-generated songs on player pages
+  - [7/ss:8] YouTube begins labeling AI-generated songs on YouTube Music
+  - [7/ss:5] Iran-linked campaign placed ~100 ChatGPT-written articles in US outlets
+  - [6/ss:5] Springer Journal Retracts AI Review Over Undeclared Generative AI Use
+  - [6/ss:8] YouTube Music adds AI labels as AI tracks flood streaming platforms
+  - [7/ss:9] Korean Court Orders Ex-Student to Pay Teacher Damages Over Deepfake Nudes
+  - [7/ss:8] S.D.N.Y. judge issues case-terminating sanction over repeated fake AI citations
+
