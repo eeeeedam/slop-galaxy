@@ -1201,7 +1201,7 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
 #filters .btn, #filters button:not(#btn-arc-sb):not(#btn-fc-sb):not(#btn-patterns-sb) { font-family:'Inter Tight',sans-serif; font-size:14px; font-weight:700; }
 #btn-timeline-mode { pointer-events:all !important; font-family:'Inter Tight',sans-serif !important; font-size:14px !important; font-weight:700 !important; letter-spacing:-.005em !important; text-transform:none !important; color:var(--fg) !important; border:1px solid var(--fg) !important; padding:7px 14px !important; margin-right:8px; }
 #btn-timeline-mode.active { background:var(--forest) !important; color:#fff !important; border-color:var(--forest) !important; }
-/* How To Navigate: black on light cobalt tint */
+/* How It Works: black on light cobalt tint */
 .hn-btn-nav, body.light .hn-btn-nav { color:#0A0B0D !important; background:#D9DFFF !important; border-right:none !important; }
 .hn-btn-nav:hover { color:#0A0B0D !important; background:#BFC9FF !important; }
 
@@ -1266,7 +1266,7 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
   <div id="header-subnav">
     <div id="header-subnav-left">
       <a href="https://sloptilyoudrop.com" class="hn-btn" style="text-decoration:none;" title="Slop 'Til You Drop">← Home</a>
-      <button id="btn-nav" class="hn-btn hn-btn-nav">How To Navigate</button>
+      <button id="btn-nav" class="hn-btn hn-btn-nav">How It Works</button>
       <button id="btn-about" class="hn-btn">About</button>
       <button id="btn-concepts" class="hn-btn">Concepts</button>
       <button id="btn-ticker-show" class="hn-btn" style="display:none" title="Show ticker">◆ TICKER</button>
@@ -1281,12 +1281,12 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
   </div>
 </div>
 
-<!-- HOW TO NAVIGATE — PAGINATED GUIDE MODAL -->
+<!-- HOW IT WORKS — PAGINATED GUIDE MODAL -->
 <div id="intro" class="modal" style="width:min(900px,96vw);max-width:96vw;padding:0;overflow:hidden;max-height:96vh;flex-direction:column;">
 
   <!-- Modal chrome -->
   <div id="guide-chrome" style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid rgba(47,75,255,0.2);flex-shrink:0;background:var(--forest);">
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;color:rgba(47,75,255,.6);text-transform:uppercase;">HOW TO NAVIGATE <span style="color:var(--lime)">THE SLOP GALAXY</span></div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;color:rgba(47,75,255,.6);text-transform:uppercase;">HOW IT WORKS <span style="color:var(--lime)">THE SLOP GALAXY</span></div>
     <div style="display:flex;align-items:center;gap:8px;">
       <button id="btn-guide-edit" title="Edit this page's text" style="display:none;background:none;border:1px solid var(--dim);color:var(--lime);font-family:'IBM Plex Mono',monospace;font-size:9px;padding:3px 8px;cursor:pointer;border-radius:2px;letter-spacing:.06em;">✎ EDIT</button>
       <button class="modal-close" onclick="closeIntro()">✕</button>
@@ -1823,7 +1823,7 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
 
   </div>
   <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--dim);display:flex;justify-content:flex-end">
-    <button id="btn-show-intro" style="background:var(--fg);border:none;padding:4px 12px;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.06em;color:var(--bg);cursor:pointer;border-radius:2px;white-space:nowrap;opacity:0.85;transition:opacity .2s;pointer-events:all">HOW TO NAVIGATE ↗</button>
+    <button id="btn-show-intro" style="background:var(--fg);border:none;padding:4px 12px;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.06em;color:var(--bg);cursor:pointer;border-radius:2px;white-space:nowrap;opacity:0.85;transition:opacity .2s;pointer-events:all">HOW IT WORKS ↗</button>
   </div>
 
   <!-- Admin edit controls — only visible in admin mode -->
@@ -5879,15 +5879,15 @@ loadSiteText();
 initCrawl();
 initTicker();
 
-// ── HOW TO NAVIGATE GUIDE ────────────────────────────────────────────────────
+// ── HOW IT WORKS GUIDE ────────────────────────────────────────────────────
 let guidePage = 1;
 const GUIDE_TOTAL = 5;
 
 const GUIDE_CONTENT = {
-  'gp1-p1': "This is a real-time record of every moment AI-generated content crossed a line — into a courtroom, a newsroom, a child’s video feed, a scientific journal.",
-  'gp1-p2': "Each node on this map is a documented moment when AI-generated content crossed a threshold or changed a human norm. The nodes include platform failures, legal reckonings, scandals, and cultural shifts.",
+  'gp1-p1': "This is a map of real moments when AI-generated content crossed a line: into a courtroom, a newsroom, a child’s video feed, a scientific journal.",
+  'gp1-p2': "Each dot is one documented moment: a platform failure, a legal reckoning, a scandal or a cultural shift. Dots are called nodes here. Every one has a date, a source and a short write-up.",
   'gp1-p3': "Take about 90 seconds with these five pages. They will make the map make sense.",
-  'gp2-intro': "Every node is a real, documented event. Here is how to read what you are looking at.",
+  'gp2-intro': "Every node is one real moment, sourced and dated. Here is what the shapes and colors mean.",
   'gp2-p1': "The size of the node reflects the size of its impact on the world, scored 1 to 10.",
   'gp2-p2': "Color tells you the category: platform, media, cultural, legislation, research, or societal.",
   'gp2-p3': "Left to right is earlier to more recent. Pan with one finger, pinch to zoom in and out.",
@@ -5906,7 +5906,7 @@ const GUIDE_CONTENT = {
   'gp4-cat5-name':'Research','gp4-cat5-desc':'Studies, findings, academic and industry reports',
   'gp4-cat6-name':'Societal','gp4-cat6-desc':'Behavior shifts, norms, trust, public psychology',
   'gp5-intro': "Click on the nodes to read what happened, what it tells us, the source, and in some instances an editor's note from Ellie.",
-  'gp5-transition': "Now that you know how to read the map: throughout the site, nodes are also called nodes. Same thing, more precise. You will see it in the filters, the counter, and the admin tools.",
+  'gp5-transition': "One word to know: a dot, a moment and a node all mean the same thing. \u201cNode\u201d is the term you will see in the filters and the counter.",
   'gp5-a1': "Category and source: where it lands and where to read more.",
   'gp5-a2': "What Happened: the documented fact. No editorializing.",
   'gp5-a3': "What It Tells Us: why this moment matters beyond the headline.",
