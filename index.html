@@ -396,7 +396,7 @@ body.light .filt-year-count { color:#8A919A; }
   margin-top:3px;
 }
 
-/* Search input — matches mockup "ACCESSION NO." field */
+/* Search input */
 .filt-text {
   width:100%; background:transparent;
   border:1px solid var(--dim);
@@ -1175,6 +1175,8 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
 .about-live .about-col:first-child { padding-right:32px; }
 .about-live .about-col + .about-col { padding-left:32px; border-left:1px solid var(--dim); }
 .about-live .label-h { justify-self:start; align-self:start; margin:0 0 16px; padding:6px 12px 7px; background:var(--forest); color:#fff; font:700 18px/1.1 'Inter Tight',sans-serif; letter-spacing:-.02em; }
+.about-live .about-cite { display:block; font:500 12px/1.4 'IBM Plex Mono',monospace; margin:8px 0 0; letter-spacing:0; color:var(--sub-color); }
+.about-live .about-cite a { color:inherit; text-decoration:underline; }
 .about-live .about-head { font:700 clamp(24px,3vw,34px)/1.05 'Inter Tight',sans-serif; letter-spacing:-.035em; margin:0 0 16px; text-wrap:balance; }
 .about-live .about-body > p { font:400 15px/1.7 'Inter',sans-serif; margin:0 0 14px; max-width:60ch; }
 .about-live .about-body > p.pull { font-weight:600; }
@@ -1509,8 +1511,8 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
 
   <!-- SEARCH -->
   <div class="filt-section">
-    <div class="filt-label">Accession No.</div>
-    <input type="text" id="filt-search" placeholder="Search collection…" class="filt-text">
+    <div class="filt-label">Search</div>
+    <input type="text" id="filt-search" placeholder="Search moments…" class="filt-text">
   </div>
 
   <!-- RECENTLY ADDED -->
@@ -5460,13 +5462,14 @@ function openAboutModal() {
 }
 
 
-const HOME_ABOUT_SNAPSHOT = "<div class=\"about-grid\">\n    <div class=\"about-col\">\n      <h2 class=\"label-h\">About the project</h2>\n      <p class=\"about-head\">Get in loser, we're going slopping.</p>\n      <div class=\"about-body\">\n        <p>In a slop-saturated world, meaning, information, and values are transforming before our eyes. What started as irreverent, goofy, AI-generated content has seeped into everyday life: wedding invitations, restaurant menus, holiday cards, and the far more meaningful places we once reserved for human hands.</p>\n        <p class=\"pull\">It\u2019s easy to find frustration and anger at AI. It's harder to quantify or diagnose what exactly is being lost.</p>\n        <p>This project tracks the sociocultural cost of AI slop. As AI is granted authorship in spaces that used to be human, new questions swirl: What\u2019s acceptable once AI artifacts are indistinguishable from human work? What is the cost of using tools that mimic humanity but lack its randomness, patina, and imperfections? What\u2019s eroding?</p>\n        <p>The Slop Galaxy is a living map of the moments AI-generated content crossed a line and changed our norms.</p>\n        <p>So grab your popcorn, your pen, and your slop-hunting boots. View the Slop Galaxy to see what\u2019s been tracked to date or submit some slop in the form below.</p>\n      </div>\n      <div class=\"about-actions\">\n        <a href=\"#\" onclick=\"closeModal('modal-about');return false;\" class=\"al-btn al-p\">View the Slop Galaxy \u2192</a>\n        <a href=\"https://sloptilyoudrop.com/#submit\" target=\"_blank\" rel=\"noopener\" class=\"al-btn\">Submit some slop \u2193</a>\n      </div>\n    </div>\n    <div class=\"about-col\">\n      <h2 class=\"label-h\">About the editor</h2>\n      <p class=\"about-head\">Ellie Damashek</p>\n      <div class=\"about-body\">\n        <p>Ellie is a strategist and researcher specializing in organizational change and emerging technology, helping large, complex organizations diagnose disruption, build institutional responses, and communicate through uncertainty, in work that spans sectors, scales, and cultures.</p>\n        <p>Before this, a decade in consumer research and product development meant translating emerging trends into market-ready products and campaigns. Living and working across the US, Japan, Europe, and China shaped a sensitivity to cultural shifts and patterns.</p>\n      </div>\n      <div class=\"about-actions\">\n        <a href=\"https://www.linkedin.com/in/elenadamashek/\" target=\"_blank\" rel=\"noopener\" class=\"al-btn\">LinkedIn \u2197</a>\n        <a href=\"mailto:ellie@sloptilyoudrop.com\" class=\"al-btn\">Email</a>\n      </div>\n    </div>\n  </div>";
+const HOME_ABOUT_SNAPSHOT = "<div class=\"about-grid\">\n    <div class=\"about-col\">\n      <h2 class=\"label-h\">About the project</h2>\n      <p class=\"about-head\">Get in loser, we're going slopping.<span class=\"about-cite\"><a class=\"cite\" href=\"https://knowyourmeme.com/memes/get-in-loser-were-going-shopping\" target=\"_blank\" rel=\"noopener\">Know Your Meme</a></span></p>\n      <div class=\"about-body\">\n        <p>In a slop-saturated world, meaning, information, and values are transforming before our eyes. What started as irreverent, goofy, AI-generated content has seeped into everyday life: wedding invitations, restaurant menus, holiday cards, and the far more meaningful places we once reserved for human hands.</p>\n        <p class=\"pull\">It\u2019s easy to find frustration and anger at AI. It's harder to quantify or diagnose what exactly is being lost.</p>\n        <p>This project tracks the sociocultural cost of AI slop. As AI is granted authorship in spaces that used to be human, new questions swirl: What\u2019s acceptable once AI artifacts are indistinguishable from human work? What is the cost of using tools that mimic humanity but lack its randomness, patina, and imperfections? What\u2019s eroding?</p>\n        <p>The Slop Galaxy is a living map of the moments AI-generated content crossed a line and changed our norms.</p>\n        <p>So grab your popcorn, your pen, and your slop-hunting boots. View the Slop Galaxy to see what\u2019s been tracked to date or submit some slop in the form below.</p>\n      </div>\n      <div class=\"about-actions\">\n        <a href=\"#\" onclick=\"closeModal('modal-about');return false;\" class=\"al-btn al-p\">View the Slop Galaxy \u2192</a>\n        <a href=\"https://sloptilyoudrop.com/#submit\" target=\"_blank\" rel=\"noopener\" class=\"al-btn\">Submit some slop \u2193</a>\n      </div>\n    </div>\n    <div class=\"about-col\">\n      <h2 class=\"label-h\">About the editor</h2>\n      <p class=\"about-head\">Ellie Damashek</p>\n      <div class=\"about-body\">\n        <p>Ellie is a strategist and researcher specializing in organizational change and emerging technology, helping large, complex organizations diagnose disruption, build institutional responses, and communicate through uncertainty, in work that spans sectors, scales, and cultures.</p>\n        <p>Before this, a decade in consumer research and product development meant translating emerging trends into market-ready products and campaigns. Living and working across the US, Japan, Europe, and China shaped a sensitivity to cultural shifts and patterns.</p>\n      </div>\n      <div class=\"about-actions\">\n        <a href=\"https://www.linkedin.com/in/elenadamashek/\" target=\"_blank\" rel=\"noopener\" class=\"al-btn\">LinkedIn \u2197</a>\n        <a href=\"mailto:ellie@sloptilyoudrop.com\" class=\"al-btn\">Email</a>\n      </div>\n    </div>\n  </div>";
 function sanitizeAbout(html){
   const d=new DOMParser().parseFromString(html,'text/html'); const g=d.querySelector('#about .about-grid'); if(!g) return null;
   g.querySelectorAll('script,iframe,style').forEach(e=>e.remove());
   g.querySelectorAll('a').forEach(a=>{const h=a.getAttribute('href')||'';
     if(h.startsWith('#submit')){a.href='https://sloptilyoudrop.com/#submit';a.target='_blank';a.rel='noopener';}
     else if(/galaxy\.sloptilyoudrop\.com/.test(h)){a.setAttribute('href','#');a.setAttribute('onclick',"closeModal('modal-about');return false;");a.removeAttribute('target');}
+    if(a.classList.contains('cite')){a.target='_blank';a.rel='noopener';return;}
     a.classList.remove('btn');a.classList.add('al-btn'); if(/galaxy|View the Slop/i.test(a.textContent)) a.classList.add('al-p');});
   return g.outerHTML;
 }
