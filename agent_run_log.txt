@@ -70,3 +70,9 @@
   - [7/ss:9] Korean Court Orders Ex-Student to Pay Teacher Damages Over Deepfake Nudes
   - [7/ss:8] S.D.N.Y. judge issues case-terminating sanction over repeated fake AI citations
 
+2026-10-26: 4 new nodes added
+  - [6/ss:9] Pakistan's ECP proposes AI deepfake ban and disclosure rules for campaigns
+  - [7/ss:8] Etsy bans bot-generated listings and restricts AI-made patterns and recipes
+  - [6/ss:8] Deezer announces toggle to remove fully AI-generated music from search
+  - [7/ss:5] Russian Storm-1516 deepfake falsely accuses Texas Senate candidate Talarico
+
