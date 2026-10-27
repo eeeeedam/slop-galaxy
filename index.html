@@ -1567,7 +1567,6 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
       <button id="btn-export-baked" onclick="exportWithLocalStorage()" style="display:none;" title="Export HTML with all local edits baked in — ready to upload to repo">&#x21E9; Export + Edits</button>
   <button class="btn" id="btn-data-read" style="display:none;border-color:rgba(47,75,255,0.5);color:var(--lime);">⊞ DATA VIEW</button>
   <button class="btn" id="btn-data-edit" style="display:none;border-color:rgba(47,75,255,0.5);color:var(--lime);">✎ DATA EDIT</button>
-  <button class="btn" id="btn-admin-toggle" onclick="promptAdminToggle()" title="" style="font-size:10px;padding:2px 8px;opacity:0.15;font-size:0;width:16px;height:16px;border-radius:50%;padding:0;min-width:0;border-color:rgba(255,255,255,0.08);">⚙</button>
   <button class="btn" id="btn-theme" title="Toggle light/dark mode" style="display:none;">☼</button>
   <button class="btn active-style" id="btn-patterns" style="display:none;">◈ PATTERNS</button>
   <button class="btn active-style" id="btn-listview" style="display:none;">≡ LIST</button>
@@ -1785,7 +1784,6 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
 <div id="overlay"></div>
 
 <!-- CORNER ADMIN BUTTON -->
-<button id="btn-admin" title="Admin"></button>
 
 <!-- ADMIN PASSWORD MODAL -->
 
@@ -1808,19 +1806,6 @@ body.light #axis-y-spill .ay-word{color:#E02A80}body.light #axis-y-spill .ay-sub
   </div>
 </div>
 
-<div class="modal" id="modal-admin-pw" style="max-width:360px">
-  <h2>ADMIN ACCESS</h2>
-  <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--sub-color);margin-bottom:16px;line-height:1.7">Enter the admin password to enable editing.</p>
-  <div class="ff">
-    <label>Password</label>
-    <input id="admin-pw-input" type="password" autocomplete="off" placeholder="••••••••">
-  </div>
-  <div id="admin-pw-error" style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--lime);margin-top:8px;min-height:14px"></div>
-  <div class="factions" style="margin-top:16px">
-    <button class="btn-primary" id="admin-pw-submit">UNLOCK</button>
-    <button class="btn-cancel" id="admin-pw-cancel">CANCEL</button>
-  </div>
-</div>
 
 <!-- ADD / EDIT MODAL -->
 <div class="modal" id="modal-add">
@@ -2580,12 +2565,11 @@ const SEED = [
     image:"https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/rockcms/2026-10/261023-etsy-ch-1008-63d9a4.jpg",
     image_credit:"NBC News",
     date_added:"2026-10-26", auto:true },
-  { id:115, year:2026, title:"Deezer announces toggle to remove fully AI-generated music from search", date:"October 2026", source:"Best of High End", category:"platform", impact:6, slop_spill:8,
+  { id:115, year:2026, title:"Deezer announces toggle to remove fully AI-generated music from search", date:"October 2026", source:"Music Business Worldwide", category:"platform", impact:6, slop_spill:8,
     description:"On 13 October 2026 Deezer announced an on/off toggle that removes fully AI-generated tracks, albums and their artists from search results, due to roll out globally before the end of 2026. Deezer says it has excluded more than 42 million AI-generated tracks from recommendations between January 2025 and August 2026 and has tagged over 14 million albums since it began labeling AI music in June 2025. It also says it receives nearly 90,000 fully AI-generated tracks a day, which is more than half of daily uploads on peak days.",
     significance:"A major streaming platform is moving from labeling and demoting AI music to letting users exclude it entirely, in response to an upload flood that makes up only 1 to 3 percent of streams. Deezer also reports that up to 85 percent of streams on those tracks were fraudulent in 2025, which points to the scale of AI music as a streaming-fraud and catalog-pollution problem.",
-    link:"https://bestofhighend.com/deezer-ai-music-toggle",
-    image:"https://bestofhighend.com/wp-content/uploads/2026/10/deezer-ai-toggle-featured-v2.jpg",
-    image_credit:"Best of High End",
+    link:"https://www.musicbusinessworldwide.com/deezer-to-let-users-block-ai-generated-music-from-search-results/",
+    image_credit:"Deezer",
     date_added:"2026-10-26", auto:true },
   { id:116, year:2026, title:"Russian Storm-1516 deepfake falsely accuses Texas Senate candidate Talarico", date:"October 2026", source:"PolitiFact", category:"societal", impact:7, slop_spill:5,
     description:"An AI-generated video impersonating a real former student of James Talarico falsely accused the Texas Democratic Senate candidate of sexual misconduct. Researchers at Clemson, NewsGuard and Graphika linked it to the Russian campaign Storm-1516. PolitiFact rated the claim \'Pants on Fire\', and X suspended the originating account, which was created in September with Romania as its signup country, though other accounts continued sharing the video.",
@@ -2593,7 +2577,12 @@ const SEED = [
     link:"https://politifact.com/factchecks/2026/oct/22/tweets/russian-disinformation-group-targets-james-talarico-with-baseless-claim-in-ai-generated-video/",
     image:"https://politifact.com/wp-content/uploads/2026/10/talaricoplano101826.jpeg",
     image_credit:"PolitiFact",
-    date_added:"2026-10-26", auto:true }
+    date_added:"2026-10-26", auto:true },
+  { id:117, year:2026, title:"Netanyahu Posts AI Image of a Nuclear Blast Over Tel Aviv Two Days Before the Election", date:"October 2026", source:"The Guardian", category:"societal", impact:8, slop_spill:5,
+    description:"On Oct 25, 2026, two days before Israel's election, Prime Minister Benjamin Netanyahu shared an AI-generated image on X showing a mushroom cloud rising over a city resembling Tel Aviv. He paired it with a commentator's message calling Iran an existential threat and warned that voting for anyone other than him could expose Israel to a 'second Holocaust.' Opposition figures including Yair Golan and Gadi Eisenkot condemned the post. Reports did not include a statement from Netanyahu on how the image was made.",
+    significance:"A head of government personally posting synthetic imagery of a nuclear attack on his own capital moves AI-generated fear from fringe accounts into the closing argument of a national campaign. Whether voters can tell what is generated, and whether anything holds candidates to a standard, are open questions here: the post sits in the gap between platform labels and election law.",
+    link:"https://www.theguardian.com/world/2026/oct/26/netanyahu-reportedly-pressured-israel-military-attack-iran-runup-to-election",
+    date_added:"2026-10-27" }
 ];
 
 // ═══════════════════════════════════════════════════════════ STATE
@@ -3671,91 +3660,13 @@ document.getElementById('dp-del').onclick=()=>{
 };
 
 // ═══════════════════════════════════════════════════════════ ADMIN
-const ADMIN_HASH = 'b7c2400b0bb0bfb951ab48fa284453cf985f1ea3';
+// Edit mode removed.
 
-async function sha1(str) {
-  try {
-    const buf = await crypto.subtle.digest('SHA-1', new TextEncoder().encode(str));
-    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-  } catch(e) {
-    // Fallback: simple hash for non-HTTPS preview contexts
-    let h = 0;
-    for (let i = 0; i < str.length; i++) h = Math.imul(31, h) + str.charCodeAt(i) | 0;
-    return 'fallback_' + Math.abs(h).toString(16).padStart(8,'0');
-  }
-}
+function enableAdminMode() {}
 
-function enableAdminMode() {
-  adminMode = true;
-  document.getElementById('btn-admin').classList.add('active');
-  document.getElementById('btn-add').style.display = 'inline-block';
-  document.getElementById('btn-bulk').style.display = 'inline-block';
-  document.getElementById('btn-export').style.display = 'inline-block';
-  document.getElementById('btn-data-read').style.display = 'inline-block';
-  const bkBtn = document.getElementById('btn-bookmarklet');
-  if (bkBtn) bkBtn.style.display = 'inline-block';
-  const subBtn = document.getElementById('btn-submissions');
-  if (subBtn) subBtn.style.display = 'inline-block';
-  checkPendingSubmissions();
-  document.getElementById('btn-data-edit').style.display = 'inline-block';
-  document.getElementById('crawl-info').style.display = 'block';
-  document.getElementById('btn-guide-edit').style.display = 'inline-block';
-  const adminActions = document.getElementById('dp-admin-actions');
-  if (adminActions) adminActions.style.display = 'flex';
-  enableInlineEditing();
-  updateUndoBtn();
-}
+function disableAdminMode() {}
 
-function disableAdminMode() {
-  adminMode = false;
-  document.getElementById('btn-admin').classList.remove('active');
-  document.getElementById('btn-add').style.display = 'none';
-  document.getElementById('btn-bulk').style.display = 'none';
-  document.getElementById('btn-export').style.display = 'none';
-  document.getElementById('btn-data-read').style.display = 'none';
-  const bkBtn2 = document.getElementById('btn-bookmarklet');
-  if (bkBtn2) bkBtn2.style.display = 'none';
-  const subBtn2 = document.getElementById('btn-submissions');
-  if (subBtn2) subBtn2.style.display = 'none';
-  document.getElementById('btn-data-edit').style.display = 'none';
-  document.getElementById('crawl-info').style.display = 'none';
-  document.getElementById('crawl-badge').style.display = 'none';
-  document.getElementById('btn-guide-edit').style.display = 'none';
-  const adminActions = document.getElementById('dp-admin-actions');
-  if (adminActions) adminActions.style.display = 'none';
-  disableInlineEditing();
-  updateUndoBtn();
-}
 
-document.getElementById('btn-admin').onclick = () => {
-  if (adminMode) { disableAdminMode(); return; }
-  // Show password modal
-  document.getElementById('admin-pw-input').value = '';
-  document.getElementById('admin-pw-error').textContent = '';
-  openModal('modal-admin-pw');
-  setTimeout(() => document.getElementById('admin-pw-input').focus(), 80);
-};
-
-document.getElementById('admin-pw-cancel').onclick = () => closeModal('modal-admin-pw');
-
-async function submitAdminPassword() {
-  const pw = document.getElementById('admin-pw-input').value;
-  if (!pw) return;
-  const hash = await sha1(pw);
-  if (hash !== ADMIN_HASH) {
-    document.getElementById('admin-pw-error').textContent = '✗ Incorrect password';
-    document.getElementById('admin-pw-input').value = '';
-    document.getElementById('admin-pw-input').focus();
-    return;
-  }
-  closeModal('modal-admin-pw');
-  enableAdminMode();
-}
-
-document.getElementById('admin-pw-submit').onclick = submitAdminPassword;
-document.getElementById('admin-pw-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') submitAdminPassword();
-});
 
 // ═══════════════════════════════════════════════════════════ ADD / EDIT MODAL
 function openAddModal(nodeToEdit=null){
@@ -5804,9 +5715,9 @@ resize();
 // Load from localStorage or use seed
 try {
   const layoutVer = localStorage.getItem('slop_layout_ver');
-  if (layoutVer !== '46i') {
+  if (layoutVer !== '48i') {
     localStorage.removeItem('slop_positions');
-    localStorage.setItem('slop_layout_ver', '46i');
+    localStorage.setItem('slop_layout_ver', '48i');
     // v33 migration: force reload from SEED so all new nodes appear
     // (editor notes from SEED are preserved via the merge below)
     localStorage.removeItem('slop_nodes');
@@ -6140,28 +6051,7 @@ if (_deepLinkParam) {
 // ── BOOKMARKLET HANDLER ──────────────────────────────────────────────────────
 // Called either from ?addurl= param on load, or directly by the bookmarklet
 // via window.slopAddUrl() if the galaxy tab is already open
-function slopAddUrl(url) {
-  if (!url) return;
-  function proceed() {
-    if (!adminMode) {
-      var pw = prompt('Enter admin password to add this article:');
-      if (!pw) return;
-      sha1(pw).then(function(hash) {
-        if (hash !== ADMIN_HASH) { alert('Incorrect password.'); return; }
-        enableAdminMode();
-        _openBulkWithUrl(url);
-      });
-    } else {
-      _openBulkWithUrl(url);
-    }
-  }
-  // Wait for DOM to be ready
-  if (document.getElementById('modal-bulk')) {
-    proceed();
-  } else {
-    setTimeout(proceed, 800);
-  }
-}
+function slopAddUrl() {}
 window.slopAddUrl = slopAddUrl;
 
 function _openBulkWithUrl(url) {
@@ -6176,184 +6066,11 @@ function _openBulkWithUrl(url) {
   try { history.replaceState(null, '', location.pathname); } catch(e) {}
 }
 
-// Handle ?addurl= on page load (fresh tab from bookmarklet)
-(function() {
-  try {
-    var param = new URLSearchParams(location.search).get('addurl');
-    if (!param) return;
-    var decoded = decodeURIComponent(param);
-    // Skip intro modal
-    try { localStorage.setItem('slop_intro_dismissed','1'); } catch(e) {}
-    // Wait for full init then trigger
-    var attempts = 0;
-    var check = setInterval(function() {
-      attempts++;
-      if (document.getElementById('modal-bulk') && typeof openModal === 'function') {
-        clearInterval(check);
-        slopAddUrl(decoded);
-      }
-      if (attempts > 30) clearInterval(check);
-    }, 300);
-  } catch(e) { console.warn('addurl param error', e); }
-})();
 
 
-// ── SUBMISSIONS REVIEW PANEL ──────────────────────────────────────────────────
-const SUBMISSIONS_URL = 'https://script.google.com/macros/s/AKfycbwHMmWocCZJ-p6uwDGf6SBDwzifh10LY5ZyEE3mVyoXrUV6xNfqRfxAVCKCzkBom5od/exec';
-
-document.getElementById('btn-submissions').onclick = () => {
-  loadSubmissions();
-  openModal('modal-submissions');
-};
-
-function checkPendingSubmissions() {
-  fetch(SUBMISSIONS_URL + '?action=pending')
-    .then(r => r.json())
-    .then(data => {
-      if (!data.success) return;
-      const count = data.pending.length;
-      const badge = document.getElementById('sub-badge');
-      const btn   = document.getElementById('btn-submissions');
-      if (badge) {
-        badge.textContent = count;
-        badge.style.display = count > 0 ? 'inline' : 'none';
-      }
-    })
-    .catch(() => {});
-}
-
-function loadSubmissions() {
-  const list    = document.getElementById('sub-list');
-  const empty   = document.getElementById('sub-empty');
-  const counter = document.getElementById('sub-modal-count');
-  if (!list) return;
-  list.innerHTML = '<div style="font-family:var(--mono);font-size:9px;color:var(--sub-color);padding:12px 0;">Loading…</div>';
-
-  fetch(SUBMISSIONS_URL + '?action=pending')
-    .then(r => r.json())
-    .then(data => {
-      if (!data.success) { list.innerHTML = '<div style="color:var(--lime)">Error loading submissions.</div>'; return; }
-      const items = data.pending || [];
-      if (counter) counter.textContent = '(' + items.length + ' pending)';
-      if (!items.length) {
-        list.innerHTML = '';
-        if (empty) empty.style.display = 'block';
-        return;
-      }
-      if (empty) empty.style.display = 'none';
-      list.innerHTML = '';
-      items.forEach(item => {
-        const card = document.createElement('div');
-        card.id = 'sub-card-' + item.row;
-        card.style.cssText = 'border:1px solid var(--dim);padding:16px 20px;margin-bottom:12px;';
-        const date = item.timestamp ? new Date(item.timestamp).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '';
-        var safeUrl  = (item.url  || '').replace(/&/g,'&amp;');
-        var safeName = (item.name || 'Anonymous');
-        var safeNote = (item.note || '');
-        var approveArgs = item.row + ',"' + (item.url||'').replace(/"/g,'&quot;') + '","' + (item.name||'').replace(/"/g,'&quot;') + '","' + (item.email||'').replace(/"/g,'&quot;') + '"';
-        card.innerHTML = [
-          '<div style="margin-bottom:10px">',
-          '<div style="font-size:14px;font-weight:600;color:var(--fg)">' + safeName + '</div>',
-          '<div style="font-size:8px;color:var(--sub-color);font-family:var(--mono)">' + (item.email||'') + ' · ' + date + '</div>',
-          '</div>',
-          '<div style="font-size:9px;margin-bottom:8px;font-family:var(--mono)">',
-          '<a href="' + safeUrl + '" target="_blank" style="color:var(--accent2);word-break:break-all">' + safeUrl + '</a>',
-          '</div>',
-          safeNote ? '<div style="font-size:13px;color:var(--sub-color);font-style:italic;margin-bottom:14px;border-left:2px solid var(--dim);padding-left:10px">&ldquo;' + safeNote + '&rdquo;</div>' : '',
-          '<div style="display:flex;gap:8px">',
-          '<button onclick="approveSubmission(' + approveArgs + ')" style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;font-family:var(--mono);background:var(--forest);color:#fff;border:none;padding:8px 16px;cursor:pointer">✓ APPROVE</button>',
-          '<button onclick="passSubmission(' + item.row + ')" style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;font-family:var(--mono);background:none;border:1px solid var(--dim);color:var(--sub-color);padding:8px 16px;cursor:pointer">✕ PASS</button>',
-          '</div>'
-        ].join('');
-        list.appendChild(card);
-      });
-    })
-    .catch(err => {
-      list.innerHTML = '<div style="color:var(--lime);font-family:var(--mono);font-size:9px;">Could not reach submissions endpoint.</div>';
-    });
-}
-
-function approveSubmission(row, url, contributorName, contributorEmail) {
-  const card = document.getElementById('sub-card-' + row);
-  if (card) card.style.opacity = '0.4';
-
-  // Run through bulk import processor
-  const apiKey = getSavedKey ? getSavedKey() : (localStorage.getItem('slop_apikey')||'');
-  if (!apiKey) {
-    alert('API key needed to process this URL. Open Bulk Import, enter your key, then try again.');
-    if (card) card.style.opacity = '1';
-    return;
-  }
-
-  fetchAndClassifyUrl(url, apiKey).then(node => {
-    if (!node) {
-      alert('Could not extract content from this URL. You can add it manually via Add Node.');
-      if (card) card.style.opacity = '1';
-      return;
-    }
-    // Attach contributor info
-    node.id          = Date.now() + Math.floor(Math.random() * 10000);
-    node.date_added  = Date.now();
-    node.contributor = { name: contributorName, email: contributorEmail };
-    node.short_label = node.short_label || node.title.slice(0, 40);
-
-    pushUndo('contributor node: ' + node.title.slice(0,30));
-    nodes.push(node);
-    assignPosition(node);
-    save();
-    updateCount();
-
-    // Mark approved in sheet and email contributor
-    fetch(SUBMISSIONS_URL + '?action=approve&row=' + row + '&nodeId=' + node.id)
-      .catch(() => {});
-
-    if (card) {
-      card.style.opacity   = '1';
-      card.style.background = 'rgba(18,161,80,0.06)';
-      card.style.borderColor = '#12A150';
-      card.innerHTML = '<div style="font-family:var(--mono);font-size:9px;color:#12A150;padding:8px 0;">✓ Added as node — contributor notified.</div>';
-    }
-    checkPendingSubmissions();
-  }).catch(err => {
-    alert('Error: ' + err.message);
-    if (card) card.style.opacity = '1';
-  });
-}
-
-function passSubmission(row) {
-  if (!confirm('Pass on this submission? The contributor will not be notified.')) return;
-  fetch(SUBMISSIONS_URL + '?action=pass&row=' + row).catch(() => {});
-  const card = document.getElementById('sub-card-' + row);
-  if (card) {
-    card.style.opacity = '0.3';
-    setTimeout(() => card.remove(), 400);
-  }
-  checkPendingSubmissions();
-}
-
-// Check on load if ?review=1 param present (from notification email link)
-(function() {
-  try {
-    if (new URLSearchParams(location.search).get('review') === '1') {
-      setTimeout(() => {
-        if (adminMode) {
-          loadSubmissions();
-          openModal('modal-submissions');
-        } else {
-          const pw = prompt('Enter admin password to review submissions:');
-          if (!pw) return;
-          sha1(pw).then(hash => {
-            if (hash !== ADMIN_HASH) { alert('Incorrect password.'); return; }
-            enableAdminMode();
-            loadSubmissions();
-            openModal('modal-submissions');
-          });
-        }
-        try { history.replaceState(null,'',location.pathname); } catch(e) {}
-      }, 1000);
-    }
-  } catch(e) {}
-})();
+// Submissions review removed.
+function checkPendingSubmissions() {}
+function loadSubmissions() {}
 
 // ── CONTACT LINK ──────────────────────────────────────────────────────────────
 const CONTACT_STORAGE_KEY = 'slop_contact_url';
@@ -7072,7 +6789,7 @@ arcNarration = {
 
 
 // ═══ THROUGH-LINE: named threads (replaces the two-arc view) ═══
-var THREADS = [{"id": "check", "name": "Who checks?", "q": "When fabricated text reaches editors, journals and courts, who is the check, and does it hold?", "so": "In most of these cases the catch came from someone outside the institution, or after publication. It may be that editorial, peer-review and court systems were built to catch bad writers, not fluent fabrication at volume.", "steps": [[3, "CNET is found to have quietly published AI-written articles."], [20, "A fake freelancer, “Margaux Blanchard,” gets published at real outlets."], [22, "Reporting documents AI fraud inside peer-reviewed journals."], [54, "An NYT book critic’s AI-assisted review plagiarizes another critic."], [49, "Wikipedia bans AI-generated content."], [72, "Federal courts report a flood of AI-generated lawsuits."], [98, "An Iranian operation places about 100 ChatGPT-written articles under fake bylines."]]}, {"id": "work", "name": "Whose work?", "q": "As AI is granted authorship, whose labor and credit is it drawing on?", "so": "Protections so far have come from union contracts, platform policies and individual lawsuits rather than general rules. Credit and consent are being settled case by case, which may favor people with lawyers and unions.", "steps": [[34, "Visual artists sue Stability AI, Midjourney and DeviantArt."], [33, "The WGA strike wins the first AI protections in Hollywood contracts."], [18, "A fully AI-generated band, Velvet Sundown, passes a million Spotify plays."], [40, "Hachette pulls a novel over AI use, a first for a major publisher."], [105, "Spotify says it will badge “AI Persona” artists and drop them from recommendations."], [92, "The Third Circuit affirms a ruling against AI firm ROSS over Westlaw headnotes."]]}, {"id": "pays", "name": "Who pays?", "q": "When the harm lands, who absorbs it, and what remedies exist?", "so": "Disaster responders, school districts, teachers and victims appear to carry much of the cost, while remedies that would shift it keep stalling in court or arriving one case at a time. It is too early to say whether that is a temporary lag.", "steps": [[15, "AI flood images are used as political attack during Hurricane Helene."], [61, "Fake Artemis II photos flood social media during a real mission."], [103, "AI fakes follow the Nepal-Tibet floods."], [108, "“Cat in the Hat” threat videos trigger school lockdowns across several states."], [106, "A federal appeals ruling suggests private possession of AI-generated abuse imagery may be protected speech."], [101, "A Korean court orders a former student to pay a teacher damages over deepfake nudes."], [111, "An appeals court pauses Minnesota’s AI “nudification” ban."]]}, {"id": "real", "name": "Who says what’s real?", "q": "As AI imagery enters official and paid political speech, who decides what counts as real?", "so": "Political AI imagery has moved from fringe posts to official accounts and paid campaign ads. With 31 states requiring labels and no federal rule, the line between satire, advertising and deception is being drawn mostly by disclosure.", "steps": [[14, "Trump posts AI “Swifties for Trump” images."], [19, "A national network airs AI-generated Sora videos as real footage."], [23, "An AI Pope image appears on an official government account."], [51, "AI propaganda becomes a tool of war."], [55, "Trump posts an AI image of himself as Jesus, then deletes it."], [110, "Deepfake ads become a staple of the midterm campaigns."], [112, "Bots make up two-thirds of requests for web pages."]]}, {"id": "rules", "name": "Who writes the rules?", "q": "Who is writing the rules for AI-generated content, and who are they written for?", "so": "Rules are arriving, but several have been delayed, challenged or limited to disclosure. Whether disclosure alone shifts responsibility onto the people who build and deploy these tools is an open question.", "steps": [[12, "The EU AI Act enters into force."], [66, "OpenAI backs an Illinois bill to limit AI firms’ liability."], [67, "Anthropic breaks ranks and opposes the Illinois liability shield."], [104, "EU transparency rules take effect, with key pieces delayed."], [91, "A House bill would require labels on AI-generated campaign content."]]}];
+var THREADS = [{"id": "check", "name": "Who checks?", "q": "When fabricated text reaches editors, journals and courts, who is the check, and does it hold?", "so": "In most of these cases the catch came from someone outside the institution, or after publication. It may be that editorial, peer-review and court systems were built to catch bad writers, not fluent fabrication at volume.", "steps": [[3, "CNET is found to have quietly published AI-written articles."], [20, "A fake freelancer, “Margaux Blanchard,” gets published at real outlets."], [22, "Reporting documents AI fraud inside peer-reviewed journals."], [54, "An NYT book critic’s AI-assisted review plagiarizes another critic."], [49, "Wikipedia bans AI-generated content."], [72, "Federal courts report a flood of AI-generated lawsuits."], [98, "An Iranian operation places about 100 ChatGPT-written articles under fake bylines."]]}, {"id": "work", "name": "Whose work?", "q": "As AI is granted authorship, whose labor and credit is it drawing on?", "so": "Protections so far have come from union contracts, platform policies and individual lawsuits rather than general rules. Credit and consent are being settled case by case, which may favor people with lawyers and unions.", "steps": [[34, "Visual artists sue Stability AI, Midjourney and DeviantArt."], [33, "The WGA strike wins the first AI protections in Hollywood contracts."], [18, "A fully AI-generated band, Velvet Sundown, passes a million Spotify plays."], [40, "Hachette pulls a novel over AI use, a first for a major publisher."], [105, "Spotify says it will badge “AI Persona” artists and drop them from recommendations."], [92, "The Third Circuit affirms a ruling against AI firm ROSS over Westlaw headnotes."]]}, {"id": "pays", "name": "Who pays?", "q": "When the harm lands, who absorbs it, and what remedies exist?", "so": "Disaster responders, school districts, teachers and victims appear to carry much of the cost, while remedies that would shift it keep stalling in court or arriving one case at a time. It is too early to say whether that is a temporary lag.", "steps": [[15, "AI flood images are used as political attack during Hurricane Helene."], [61, "Fake Artemis II photos flood social media during a real mission."], [103, "AI fakes follow the Nepal-Tibet floods."], [108, "“Cat in the Hat” threat videos trigger school lockdowns across several states."], [106, "A federal appeals ruling suggests private possession of AI-generated abuse imagery may be protected speech."], [101, "A Korean court orders a former student to pay a teacher damages over deepfake nudes."], [111, "An appeals court pauses Minnesota’s AI “nudification” ban."]]}, {"id": "real", "name": "Who says what’s real?", "q": "As AI imagery enters official and paid political speech, who decides what counts as real?", "so": "Political AI imagery has moved from fringe posts to official accounts and paid campaign ads. With 31 states requiring labels and no federal rule, the line between satire, advertising and deception is being drawn mostly by disclosure.", "steps": [[14, "Trump posts AI “Swifties for Trump” images."], [19, "A national network airs AI-generated Sora videos as real footage."], [23, "An AI Pope image appears on an official government account."], [51, "AI propaganda becomes a tool of war."], [55, "Trump posts an AI image of himself as Jesus, then deletes it."], [110, "Deepfake ads become a staple of the midterm campaigns."], [112, "Bots make up two-thirds of requests for web pages."], [117, "The Israeli prime minister posts an AI image of a nuclear blast over Tel Aviv before the election."]]}, {"id": "rules", "name": "Who writes the rules?", "q": "Who is writing the rules for AI-generated content, and who are they written for?", "so": "Rules are arriving, but several have been delayed, challenged or limited to disclosure. Whether disclosure alone shifts responsibility onto the people who build and deploy these tools is an open question.", "steps": [[12, "The EU AI Act enters into force."], [66, "OpenAI backs an Illinois bill to limit AI firms’ liability."], [67, "Anthropic breaks ranks and opposes the Illinois liability shield."], [104, "EU transparency rules take effect, with key pieces delayed."], [91, "A House bill would require labels on AI-generated campaign content."]]}];
 var _threadIdx = 0, _threadSet = null;
 function _threadNodes(){ const t=THREADS[_threadIdx]; if(!t) return []; const vis=new Set(getVisible().map(n=>n.id)); return t.steps.map((st,i)=>({n:nodes.find(x=>x.id===st[0]),i:i+1,beat:st[1]})).filter(o=>o.n&&vis.has(o.n.id)); }
 function drawFeaturedArc(){
